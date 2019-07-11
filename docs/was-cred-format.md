@@ -1,6 +1,6 @@
 ---
 layout: default
-title: WAS: Web Authentication Service
+title: WAS Credential Format
 nav_order: 7
 ---
 
