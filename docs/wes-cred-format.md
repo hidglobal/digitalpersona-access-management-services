@@ -11,8 +11,8 @@ nav_order: 6
 
 ## WES Credential Format
 
-In the IDPWebEnroll interface (see IDPWebEnroll interface
-<mark style="color:Red;"> on page 15)</mark> we define a number of methods for credential enrollment which have as an input parameter an object of the Credential class. This topic describes the format of the data member for each Credential supported by DigitalPersona.
+In the [IDPWebEnroll interface](wes.md#idpwebenroll-interface),
+we define a number of methods for credential enrollment which have as an input parameter an object of the Credential class. This topic describes the format of the data member for each Credential supported by DigitalPersona.
 
 - Fingerprint Credential
 - Password Credential
