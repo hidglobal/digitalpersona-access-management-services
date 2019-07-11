@@ -1,6 +1,7 @@
 ---
 layout: default
-title: WSMS: Web Secret Management Service
+title: (WSMS) Web Secret Management Service  
+has_toc: false
 nav_order: 3
 ---
 
