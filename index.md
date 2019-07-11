@@ -10,7 +10,7 @@ nav_order: 1
 ![](docs/assets/HID-DPAM-access-mgmt-svcs.png)       
 
 ## Overview
-
+1
 The DigitalPersona Access Management Services are a collection of RESTful services used to implement various features of the DigitalPersona solution in web-applications.
 
 These services are:

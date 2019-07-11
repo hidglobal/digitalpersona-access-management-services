@@ -1,11 +1,12 @@
 ---
 layout: default
-title: Web Authentication Service (WAS)  
+title: Web Authentication Service (WAS)
+has_toc: false
 nav_order: 4
 ---
 
 ## Web Authentication Service
-
+1
 The purpose of the DigitalPersona Web Authentication Service (WAS) is user authentication and identification. WAS is a GUI-less web service which should be located inside the enterprise firewall, where it directs authentication (identification) requests to the DigitalPersona Server over DCOM. The DigitalPersona Server is the only one who can process authentication requests.  
 
 The result of successful authentication is a JSON token signed by the Web Service.  

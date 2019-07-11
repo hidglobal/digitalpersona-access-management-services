@@ -1,11 +1,12 @@
 ---
 layout: default
-title: Web Authentication Policy Service (WAPS)
+title: Web Authentication Policy Service  (WAPS)
+has_toc: false
 nav_order: 5
 ---
 
 ## Web Authentication Policy Service
-
+1
 The goal of the Web Authentication Policy Service (WAPS) is to specify the authentication policy required for a specific user to manage a Resource.  
 
 It is implemented as a GUI-less Web Service that  can be located inside or outside the firewall, depending on the logic of the specific WAPS implementation. Location inside the firewall is more common since WAPS may need connection to Active Directory, the DigitalPersona Server or other customer Databases.  
