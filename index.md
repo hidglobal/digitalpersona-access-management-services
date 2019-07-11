@@ -26,3 +26,5 @@ Also, see the following topics:
 
 - [WES Credential Format](https://hidglobal.github.io/digitalpersona-access-management-services/docs/wes-cred-format.html)  
 - [WAS Credential Format](https://hidglobal.github.io/digitalpersona-access-management-services/docs/was-cred-format.html)
+- [Web Smart Card Support](https://hidglobal.github.io/digitalpersona-access-management-services/docs/web-smart-card-support.html)
+- [Smart Card Data Format](https://hidglobal.github.io/digitalpersona-access-management-services/docs/smart-card-data-format.html)

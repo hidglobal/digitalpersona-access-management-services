@@ -47,8 +47,7 @@ The following ID is defined for Fingerprint Credentials.
 
 {AC184A13-60AB-40e5-A514-E10F777EC2F9}
 
-
-<mark style="color:Red;">We described BioSample class will be used in description below in the chapter WAS Credentials Data Format on page 99.</mark>
+The [BioSample class](was-cred-format.md#biosample-class) will be used in the description below.
 
 ##### GetEnrollmentDataResult  
 
@@ -142,12 +141,12 @@ public class BioEnrollment
   </tr>
   <tr>
   <td valign="top">position</td>
-  <td valign="top">	 Fingerprint position to enroll. For a list of valid fingerprint positions, see the table on the previous page.
+  <td valign="top">	 Fingerprint position to enroll. For a list of valid fingerprint positions, see the previous table.
 </td>
   </tr>
   <tr>
   <td valign="top">  samples</td>
-  <td valign="top">	List BioSample with fingerprint data to enroll for such position. List could include from one BioSample to any BioSamples (see BioSample class <mark style="color:Red;">on page 99.</mark></td>
+  <td valign="top">	List BioSample with fingerprint data to enroll for such position. List could include one or more  [BioSamples](was-cred-format.md#biosample-class).</mark></td>
   </tr>
 </table>
 
@@ -235,8 +234,8 @@ For example:
 
 ##### CustomAction  
 
-CustomAction information is detailed in the  
-<mark style="color:Red;">"Web Authentication Service Credentials Data Format" document</mark>.  
+CustomAction information is specific to each credential. See CustomAction under each credential in the
+[WAS Credential Format](was-cred-format.md) topic.
 
 #### Password Credential  
 
@@ -294,8 +293,8 @@ This call is not supported for password credential.
 
 ##### CustomAction  
 
-CustomAction information is detailed in
-<mark style="color:Red;">"Web Authentication Service Credentials Data Format" document</mark>.  
+CustomAction information is specific to each credential. See CustomAction under each credential in the
+[WAS Credential Format](was-cred-format.md) topic.  
 
 #### PIN Credential  
 
@@ -334,8 +333,8 @@ The data member of the credential argument of DeleteUserCredential should be nul
 
 ##### CustomAction  
 
-CustomAction information is detailed in
-<mark style="color:Red;">"Web Authentication Service Credentials Data Format" </mark>document.  
+CustomAction information is specific to each credential. See CustomAction under each credential in the
+[WAS Credential Format](was-cred-format.md) topic.   
 
 #### Recovery Questions Credential
 
@@ -400,8 +399,8 @@ The data member of the credential argument of DeleteUserCredential should be nul
 
 ##### CustomAction  
 
-CustomAction information is detailed in
-<mark style="color:Red;">"Web Authentication Service Credentials Data Format" document</mark>.
+CustomAction information is specific to each credential. See CustomAction under each credential in the
+[WAS Credential Format](was-cred-format.md) topic.  
 
 #### Proximity Card Credential  
 
@@ -443,8 +442,8 @@ The data member of the credential argument of the DeleteUserCredential should be
 
 ##### CustomAction  
 
-CustomAction information is specific to each credential. See CustomAction under each credential in the WAS Credentials Data Format topic
-<mark style="color:Red;">beginning on page 96.</mark>  
+CustomAction information is specific to each credential. See CustomAction under each credential in the
+[WAS Credential Format](was-cred-format.md) topic.   
 
 #### Time-Based OTP (TOTP) Credential  
 
@@ -456,8 +455,7 @@ The following ID is defined for the TOTP Credential.
 
 ##### GetEnrollmentData  
 
-The result of a GetEnrollmentData call is specific to each credential. See GetEnrollmentData under each credential in the WAS Credentials Data Format topic
-<mark style="color:Red;">beginning on page 96.</mark>  
+The result of a GetEnrollmentData call is specific to each credential. See GetEnrollmentData under each credential in the [WAS Credentials Data Format](was-cred-format.md) topic.
 
 ##### EnrollUserCredentials  
 
@@ -608,14 +606,28 @@ The data member of the credential argument of DeleteUserCredential should be nul
 
 #### CustomAction  
 
-CustomAction information is specific to each credential. See CustomAction under each credential in the [WAS Credentials Data Format topic](was-cred-format.md).
-Smart Card Credential
-The following ID is defined for Smart Card Credential:
+CustomAction information is specific to each credential. See CustomAction under each credential in the
+[WAS Credential Format](was-cred-format.md) topic.  
+
+### Smart Card Credential  
+
+The following ID is defined for the Smart Card Credential.
+
+~~~
 {D66CC98D-4153-4987-8EBE-FB46E848EA98}
-GetEnrollmentData
-This method is not supported for the Smart Card credential.
-EnrollUserCredntials
-The data for smart card credential is a Base64url encoded UTF-8 representation of the JSON representation of the CDPJsonSCEnrollData class. CDPJsonSCEnrollData class is defined as following:
+~~~
+
+#### GetEnrollmentData  
+
+This method is not supported for the Smart Card credential.  
+
+#### EnrollUserCredntials  
+
+The data for the Smart Card credential is a Base64url encoded UTF-8 representation of the JSON representation of the CDPJsonSCEnrollData class.  
+
+The CDPJsonSCEnrollData class is defined as follows.  
+
+~~~
 [DataContract]
 public class CDPJsonSCEnrollData
 {
@@ -626,60 +638,145 @@ public class CDPJsonSCEnrollData
 	[DataMember]
 	public String nickname { get; set; } // token's nickname
 }
+~~~
+
 where:
-Parameter	Description
-Byte version	Version of CDPJsonSCEnrollData object, must be set to 1 for current implementation
-String key	Public key, Base64url UTF-8 encoded string. The public key from the Smart Card must be imported in the PUBLICKEYBLOB format. After that, it must be Base64url encoded to the string as shown below.
-Key = Base64urlEncode( (PUBLICKEYBLOB (PuK) )
-String nickname	The nickname of the smart card token. It's suggested to use the card name, like "SmartCafe Expert 72K DI v3.2", as a part of the nickname. The server limits the length of the nickname to 255 symbols, the exceeding symbols will be cut off.
 
-To create the Smart Card Credential for enrollment, following steps must be performed on the client:
-Enumerate the asymmetric key pairs on the Smart Card and select the exact key pair to use. WASSC supports RSA keys of any length but at least 1024 bit length key is suggested for security reason.
-Create a JSON representation of the CDPJsonSCEnrollData class for the public key selected in step #1 above.
-Base64Url encode string created in step #2 above.
-Finally, create a JSON representation of the Credential class using Smart Card Credential ID as id member and string created in step #3 as a data member.
-DeleteUserCredentials
-To delete the particular Smart Card credential, the input data for this call must be a string presenting the Smart Card Public key's hash, calculated or received from the server as described in the chapter Web Smart Card support on page 153.
-Parameter	Description
-String keyHash	Public key's hash, Base64url UTF-8 encoded string. The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format. After that, the RSA256 hash  of the key must be calculated. The resulting 32 bytes must be Base64url encoded to the string:
-KeyHash	Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))
 
-To delete all the Smart Card credentials enrolled for particular user, the input data for this call must be an empty string (not a NULL pointer).
-CustomAction
-CustomAction information is specific to each credential. See CustomAction under each credential in the WAS Credentials Data Format chapter beginning on page 96.
-Face Credential
-The following ID is defined for Face Credentials.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>version</i></td>
+  <td valign="top">n	Version of CDPJsonSCEnrollData object, must be set to 1 for current implementation</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>key</i></td>
+  <td valign="top">	Public key, Base64url UTF-8 encoded string. The public key from the Smart Card must be imported in the PUBLICKEYBLOB format. After that, it must be Base64url encoded to the string as shown below.<BR><BR>
+	Key = Base64urlEncode( (PUBLICKEYBLOB (PuK) )</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>nickname</i></td>
+  <td valign="top">	The nickname of the smart card token. It's suggested to use the card name, like "SmartCafe Expert 72K DI v3.2", as a part of the nickname. The server limits the length of the nickname to 255 symbols, the exceeding symbols will be cut off.</td>
+  </tr>
+</table>
+
+To create the Smart Card Credential for enrollment, the following steps must be performed on the client.
+
+1. Enumerate the asymmetric key pairs on the Smart Card and select the exact key pair to use. WASSC supports RSA keys of any length but at least 1024 bit length key is suggested for security reason.
+2. Create a JSON representation of the CDPJsonSCEnrollData class for the public key selected in step #1 above.
+3. Base64Url encode string created in step #2 above.
+4. Finally, create a JSON representation of the Credential class using the Smart Card Credential ID as the id member and the string created in step #3 as a data member.  
+
+#### DeleteUserCredentials
+To delete the particular Smart Card credential, the input data for this call must be a string presenting the Smart Card Public key's hash, calculated or received from the server as described in [Web Smart Card Support](web-smart-card-support.md) topic.  
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">String <i>keyHash</i></td>
+  <td valign="top">	Public key's hash, Base64url UTF-8 encoded string. The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format. After that, the RSA256 hash  of the key must be calculated. The resulting 32 bytes must be Base64url encoded to the string:</td>
+  </tr>
+  <tr>
+  <td valign="top"><i>KeyHash</i></td>
+  <td valign="top">	Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))</td>
+  </tr>
+</table>
+
+To delete all the Smart Card credentials enrolled for a particular user, the input data for this call must be an empty string (not a NULL pointer).
+
+#### CustomAction
+CustomAction information is specific to each credential. See CustomAction under each credential in the
+[WAS Credential Format](was-cred-format.md) topic.  
+
+### Face Credential  
+
+The following ID is defined for Face Credentials.  
+
+~~~
 {85AEAA44-413B-4DC1-AF09-ADE15892730A}
-One of the following third-party SDKs can be used to support the Face Credential in your application.
-Cognitec FVSDK ver. 9.1.0
-Innovatrics IFace SDK ver. 3.1.0
-All the DigitalPersona Servers and Clients in the environment must use the same SDK. Enrollment data is not compatible between the SDKs!
-The BioSample class used in description below is declared in "Altus 1 1 WAS Credentials Format.docx"
-EnrollUserCredentials
-The data for Face credential enrollment is a Base64url encoded UTF-8 representation of the JSON array, containing BioSample objects(s).
-The following data members for BioSample should be provided for authentication.
-Data member	Description
-BioFactor	Must be set to 2 (DP_BIO_FACTOR::FACIAL_FEATURES)
-BioSamplePurpose	Must be set to 0 (Any purpose) or 3 (purpose Enroll)
-BioSampleEncryption	Must be 0 (not encrypted) or 1 (XTEA encryption)
-BioSampleType	Must be one of the following:
-	DP_BIO_SAMPLE_TYPE::PROCESSED
-	DP_BIO_SAMPLE_TYPE::RAW
+~~~
+One of the following third-party SDKs can be used to support the Face Credential in your application.  
+
+- Cognitec FVSDK ver. 9.1.0
+- Innovatrics IFace SDK ver. 3.1.0  
+
+<mark style="color:Red;">All the DigitalPersona Servers and Clients in the environment must use the same SDK. Enrollment data is not compatible between the SDKs!</mark>
+
+The [BioSample class](was-cred-format#biosample-class) is used in the description below.  
+
+#### EnrollUserCredentials  
+
+The data for Face credential enrollment is a Base64url encoded UTF-8 representation of the JSON array, containing BioSample objects(s).  
+
+The following data members for BioSample should be provided for authentication.  
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">BioFactor</td>
+  <td valign="top">	Must be set to 2 (DP_BIO_FACTOR::FACIAL_FEATURES)</td>
+  </tr>
+  <tr>
+  <td valign="top">BioSamplePurpose</td>
+  <td valign="top">	Must be set to 0 (Any purpose) or 3 (purpose Enroll)</td>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleEncryption</td>
+  <td valign="top">	Must be 0 (not encrypted) or 1 (XTEA encryption)</td>
+  </tr>
+	<tr>
+  <td valign="top">BioSampleType</td>
+  <td valign="top">	Must be one of the following:<BR><BR>
+		DP_BIO_SAMPLE_TYPE::PROCESSED<BR>
+		DP_BIO_SAMPLE_TYPE::RAW</td>
+  </tr>
+</table>
 
 The following types of BioSampleType are supported for Face credential enrollment.
-DP_BIO_SAMPLE_TYPE::PROCESSED image
-Indicates a face template in one of the following internal SDK formats.
-	Cognitec FIR format;
-	Innovatrics Template format.
-When the input credential data is already a face template (type 4), then only one BioSample object is expected in the array.
-Data member	Description
-BioSampleType	Must be 4.
-BioSampleFormat->FormatOwner	"Organization Identifier" number from the International Biometrics Identity Association.
-0x63 (99) for Cognitec
-0x35 (53) for Innovatrics
-BioSampleEncryption	Must be 0 (not encrypted) or 1 (XTEA encryption)
-Data	Base64url encoded JSON representation of the CDPJsonFIR class described below:
 
+##### DP_BIO_SAMPLE_TYPE::PROCESSED image  
+
+Indicates a face template in one of the following internal SDK formats.
+- Cognitec FIR format  
+- Innovatrics Template format  
+
+When the input credential data is already a face template (type 4), then only one BioSample object is expected in the array.  
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleType</td>
+  <td valign="top">	Must be 4.</td>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleFormat->FormatOwner</td>
+  <td valign="top">	"Organization Identifier" number from the International Biometrics Identity Association.<BR><BR>  
+	0x63 (99) for Cognitec<BR>
+	0x35 (53) for Innovatrics</td>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleEncryption</td>
+  <td valign="top">	Must be 0 (not encrypted) or 1 (XTEA encryption).</td>
+  </tr>
+	<tr>
+  <td valign="top">Data</td>
+  <td valign="top">	Base64url encoded JSON representation of the CDPJsonFIR class described below.</td>
+  </tr> 	
+</table>
+
+~~~
 [DataContract]
 public class CDPJsonFIR
 {
@@ -690,19 +787,38 @@ public class CDPJsonFIR
 	[DataMember]
 	public String Data { get; set; }     // FIR object
 }
+~~~
+
 where:
-Data member	Description
-Byte Version	Specifies the version of the CDPJsonFIR object. It must be set to 1.   
-ULONG SDKVersion	Specifies the version of the SDK:
-Cognitec FVSDK, must be not less than 0x90100 (ver. 9.1.0).
-Innovatrics IFace SDK, must be not less than 0x30100 (ver. 3.1.0).
-String Data 	Contains a Base64url encoded BYTE array.
-Cognitec SDK: this BYTE array is a serialized Cognitec FIR object, created using FIR::writeTo() method.
-Innovatrics SDK: this BYTE array is a Template object, created using IFACE_CreateTemplate function.
 
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>Version</i></td>
+  <td valign="top">	Specifies the version of the CDPJsonFIR object. It must be set to 1.</td>
+  </tr>
+  <tr>
+  <td valign="top">ULONG <i>SDKVersion</i></td>
+  <td valign="top">	Specifies the version of the SDK:
+	Cognitec FVSDK, must be not less than 0x90100 (ver. 9.1.0).
+	Innovatrics IFace SDK, must be not less than 0x30100 (ver. 3.1.0).</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>Data</i></td>
+  <td valign="top"> 	Contains a Base64url encoded BYTE array.<BR><BR>
+	Cognitec SDK: this BYTE array is a serialized Cognitec FIR object, created using the FIR::writeTo() method.<BR><BR>
+	Innovatrics SDK: this BYTE array is a Template object, created using IFACE_CreateTemplate function.</td>
+  </tr>
+</table>
 
-If BioSampleEncryption is set to 1 (XTEA encryption), then this data is encrypted.
-Below is an example of JSON representation of the CDPJsonFIR object containing the Cognitec FIR object.
+If BioSampleEncryption is set to 1 (XTEA encryption), then this data is encrypted.  
+
+Below is an example of JSON representation of the CDPJsonFIR object containing the Cognitec FIR object.  
+
+~~~
 {
 	"Version":1,
 	"SDKVersion":?590080??, //? ?0x90100?, ver. 9.1.0           				
@@ -710,7 +826,11 @@ Below is an example of JSON representation of the CDPJsonFIR object containing t
 	EsIm51bWJlciI6NiwidGV4dCI6IkNhbnlvbiBNaWRkbGUifSx7InZlcnNpb24iOjEsIm51bW
 	JlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ" // Base64url encoded 	serialized FIR object
        }
-Example of JSON representation of the enrollment array containing the face FIR template:
+~~~
+
+This is an example of JSON representation of the enrollment array containing the face FIR template.
+
+~~~
 {
 	[{
 	"Version":1,
@@ -731,16 +851,34 @@ Example of JSON representation of the enrollment array containing the face FIR t
 		CDPJsonFIR object
 	}]
 }
-DP_BIO_SAMPLE_TYPE::RAW image
-Indicates a raw face image. It's recommended to have a minimum of ten BioSample objects containing raw images in the authentication array for successful verification.
+~~~
+
+##### DP_BIO_SAMPLE_TYPE::RAW image  
+
+Indicates a raw face image. It's recommended to have a minimum of ten BioSample objects containing raw images in the authentication array for successful verification.  
+
 The only type of raw image supported by the current version is a jpeg file.
-Data member	Description
-BioSampleType	Must be 1.
 
-BioSampleFormat->FormatOwner 	Not used, must be 0.
-Data	Base64url encoded JSON representation of the CDPJsonFaceImage class described below.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleType</td>
+  <td valign="top">	Must be 1.</td>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleFormat->FormatOwner</td>
+  <td valign="top"> 	Not used, must be 0.</td>
+  </tr>
+  <tr>
+  <td valign="top">Data</td>
+  <td valign="top">	Base64url encoded JSON representation of the CDPJsonFaceImage class described below.</td>
+  </tr>
+</table>
 
-[DataContract]
+~~~[DataContract]
 public class CDPJsonFaceImage
 {
 	[DataMember]
@@ -750,18 +888,38 @@ public class CDPJsonFaceImage
 	[DataMember]
 	public String ImageData { get; set; } // face image
 }
-where:
-Data member	Description
-Byte Version 	version of CDPJsonFaceImage object, must be set to 1.
-DP_FACE_IMAGE_TYPE ImageType	type of image. Must be set to 1, JPEG_FILE:
+~~~
 
+where:  
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>Version</i></td>
+  <td valign="top"> 	version of CDPJsonFaceImage object, must be set to 1.</td>
+  </tr>
+  <tr>
+  <td valign="top">DP_FACE_IMAGE_TYPE <i>ImageType</i></td>
+  <td valign="top"> 	Type of image. Must be set to 1, JPEG_FILE.</td>
+  </tr>
+</table>
+
+~~~
 typedef enum DP_FACE_IMAGE_TYPE
 {
    JPEG_FILE = 1, // Base64Url encoded JPEG file
 }
 DP_FACE_IMAGE_TYPE;
-String ImageData - contains Base64Url encoded raw image data, according to the ImageType. In the current version, it's a jpeg file. If BioSampleEncryption is set to 1 (XTEA encryption), this data is encrypted.
-Below is an example of JSON representation of the CDPJsonFaceImage object containing the raw face image (jpeg file):
+~~~
+
+String <i>ImageData</i> - contains Base64Url encoded raw image data, according to the ImageType. In the current version, it's a jpeg file. If BioSampleEncryption is set to 1 (XTEA encryption), this data is encrypted.  
+
+Below is an example of JSON representation of the CDPJsonFaceImage object containing the raw face image (jpeg file).
+
+~~~
 {
 	"Version":1,
 	"ImageType":1,											// JPEG_FILE
@@ -770,7 +928,11 @@ Below is an example of JSON representation of the CDPJsonFaceImage object contai
 	b24iOjEsIm51bWJlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ" // Base64url
 	encoded jpeg file
        }
-Example of JSON representation of the authentication array containing the raw face images (jpeg files).
+~~~
+
+This is an example of JSON representation of the authentication array containing the raw face images (jpeg files).
+
+~~~
 {
 	[{
 		"Version":1,
@@ -815,26 +977,53 @@ Example of JSON representation of the authentication array containing the raw fa
 	wNCwiaURhdGFBY3F1a" // Base64url encoded CDPJsonFaceImage object
 }]
 }
-The following steps will be needed to create the Face credential enrollment packet.
-Create JSON representation of BioSample(s).
-Combine those JSON representations in a JSON array ([]).
-Base64Url encode the string created in step #2.
-Create a JSON representation of the Credential class using Face Credential ID as id member and a string created in step #3 as a data member.
-NOTE: If user already has the face credentials enrolled at this position, then the old credential data will be replaced with new one. If user does not have the face credentials enrolled at this position, then the face credentials will be added to the user record.
-DeleteUserCredentials
-The data member of credential argument of DeleteUserCredential should be null and will be ignored. For example:
-{"id":"85AEAA44-413B-4DC1-AF09-ADE15892730A","data":null}
-GetEnrollmentDataResult
-This method is not supported.
-CustomAction
-CustomAction information is specific to each credential. See CustomAction under each credential in the WAS Credentials Data Format chapter beginning on page 96.
-Contactless Card Credential
-The following ID is defined for Contactless Card Credential:
-{F674862D-AC70-48ca-B73E-64A22F3BAC44}
-GetEnrollmentData
-This method is not supported by the Contactless Card credential.
-EnrollUserCredentials
-The data for the Contactless Card credential is a Base64url encoded UTF-8 representation of the JSON CDPJsonCLCEnrollData class, which is defined as the following:
+~~~
+
+The following steps will be needed to create the Face credential enrollment packet.  
+
+1. Create JSON representation of BioSample(s).  
+2. Combine those JSON representations in a JSON array ([]).  
+3. Base64Url encode the string created in step #2.  
+4. Create a JSON representation of the Credential class using Face Credential ID as id member and a string created in step #3 as a data member.
+
+**Note**: If a user already has the face credentials enrolled at this position, then the old credential data will be replaced with the new data.  
+
+If a user does not have the face credentials enrolled at this position, then the face credentials will be added to the user record.  
+
+#### DeleteUserCredentials  
+
+The data member of the credential argument of DeleteUserCredential should be null and will be ignored.  
+For example:  
+
+~~~
+{"id":"85AEAA44-413B-4DC1-AF09-ADE15892730A","data":null}  
+~~~  
+
+#### GetEnrollmentDataResult  
+
+This method is not supported.  
+
+#### CustomAction  
+
+#### CustomAction
+CustomAction information is specific to each credential. See CustomAction under each credential in the
+[WAS Credential Format](was-cred-format.md) topic.
+
+### Contactless Card Credential  
+
+The following ID is defined for the Contactless Card Credential.
+
+{F674862D-AC70-48ca-B73E-64A22F3BAC44}  
+
+#### GetEnrollmentData  
+
+This method is not supported by the Contactless Card credential.  
+
+#### EnrollUserCredentials  
+
+The data for the Contactless Card credential is a Base64url encoded UTF-8 representation of the JSON CDPJsonCLCEnrollData class, which is defined as follows.
+
+~~~
 [DataContract]
 	public class CDPJsonCLCEnrollData
 	{
@@ -849,34 +1038,72 @@ The data for the Contactless Card credential is a Base64url encoded UTF-8 repres
 		[DataMember]
 		public int32 address { get; set; }   // address of card record
 	}
-where:
-Data member	Description
-Byte Version 	version of CDPJsonCLCEnrollData object, must be set to 1.
-String key 	Card's symmetric key, presented as a Base64Url UTF-8 encoded string. The key must be imported in the PLAINTEXTKEYBLOB format. After that, it must be Base64url encoded to the string:
-Key = Base64urlEncode( (PLAINTEXTKEYBLOB (Ps) )
-String nickname	The nickname of the smart card token. It's suggested to use the card name, like "iClass ISO 14443 A", as a part of the nickname. The server limits the length of the nickname to 255 symbols, the exceeding symbols will be cut off.
-String UID	Card's unique ID, array of 64 bytes, presented as Base64url UTF-8 encoded string.
-int32 address	A DWORD containing the information on the physical address of the DP CA data on the card. This information will be used to speed up the card access.
+~~~
 
-To create the Contactless Card Credential for enrollment, following steps must be performed on the client:
-Read the card UID and the symmetric key stored on the Contactless card, create the SHA 256 hash of this key.
-Use the key hash as a TOTP seed, generate the OTP.
-Create a JSON representation of the CDPJsonCLCAuthToken class.
-Use the OTP string created in step #2;
-Base64url UTF-8 encode the card UID;
-Base64Url encode the JSON representation of the CDPJsonCLCAuthToken class;
-Create a JSON representation of the Credential class using Contactless Card Credential ID as id member and string created in step #4 as a data member.
-DeleteUserCredentials
-The data member of credential argument of DeleteUserCredential should be null and will be ignored.
-CustomAction
-CustomAction is not currently supported for the Contactless Card credential.
-U2F Device Credential
-The following ID is defined for the U2F Credential.
+where:
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>Version</i></td>
+  <td valign="top"> 	version of CDPJsonCLCEnrollData object, must be set to 1.</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>key</i></td>
+  <td valign="top"> 	Card's symmetric key, presented as a Base64Url UTF-8 encoded string. <BR><BR>The key must be imported in the PLAINTEXTKEYBLOB format. After that, it must be Base64url encoded to the string:
+	Key = Base64urlEncode( (PLAINTEXTKEYBLOB (Ps) )</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>nickname</i></td>
+  <td valign="top">	The nickname of the smart card token.<BR><BR> It's suggested to use the card name, like "iClass ISO 14443 A", as a part of the nickname.<BR><BR> The server limits the length of the nickname to 255 symbols, any additional symbols will be cut off.
+	</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>UID</i></td>
+  <td valign="top">	Card's unique ID, array of 64 bytes, presented as Base64url UTF-8 encoded string.</td>
+  </tr>
+  <tr>
+  <td valign="top">int32 <i>address</i></td>
+  <td valign="top">	A DWORD containing the information on the physical address of the DP CA data on the card. This information will be used to speed up the card access.</td>
+  </tr> 	
+</table>
+
+To create the Contactless Card Credential for enrollment, following steps must be performed on the client.  
+
+1. Read the card UID and the symmetric key stored on the Contactless card, create the SHA 256 hash of this key.  
+2. Use the key hash as a TOTP seed, generate the OTP.  
+3. Create a JSON representation of the CDPJsonCLCAuthToken class.  
+- Use the OTP string created in step #2.
+- Base64url UTF-8 encode the card UID.
+4. Base64Url encode the JSON representation of the CDPJsonCLCAuthToken class;
+5. Create a JSON representation of the Credential class using Contactless Card Credential ID as id member and string created in step #4 as a data member.  
+
+#### DeleteUserCredentials
+The data member of the credential argument of DeleteUserCredential should be null and will be ignored.  
+
+#### CustomAction  
+
+CustomAction is not currently supported for the Contactless Card credential.  
+
+### FIDO Device Credential  
+
+The following ID is defined for the U2F Credential.  
+
+~~~
 {5D5F73AF-BCE5-4161-9584-42A61AED0E48}
-GetEnrollmentData
-This method is not supported.
-EnrollUserCredentials
-The data for U2F Device credential is a Base64url encoded UTF-8 representation of the JSON representation of the CDPJsonU2FEnrollData class. CDPJsonU2FEnrollData class is defined as following:
+~~~
+#### GetEnrollmentData  
+
+This method is not supported.  
+
+#### EnrollUserCredentials  
+
+The data for the FIDO Device credential is a Base64url encoded UTF-8 representation of the JSON representation of the CDPJsonU2FEnrollData class.  
+
+The CDPJsonU2FEnrollData class is defined as follows.
 [DataContract]
 	public class CDPJsonU2FEnrollData
 	{
