@@ -6,4 +6,3 @@ nav_order: 7
 ---
 
 ## WAS Credential Format
-1

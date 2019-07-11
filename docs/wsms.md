@@ -4,7 +4,7 @@ title: Web Secret Management Service  (WSMS)
 has_toc: false
 nav_order: 3
 ---
-1
+
 ## Web Secret Management Service
 
 The Web Secret Management Service (WSMS) is part of the DigitalPersona Web Secret Service Provider (WSSP), a set of Web Services whose goal is to provide Secret Management functionality such as writing, reading and deleting protected data (Secrets). Generally speaking the main goal is to give access to Secret Management by applications running on computers outside the firewall. The actual secrets are stored protected in the DigitalPersona Server Database and to access them WSSP needs to send a request to the DigitalPersona Server.  

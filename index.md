@@ -10,7 +10,7 @@ nav_order: 1
 ![](docs/assets/HID-DPAM-access-mgmt-svcs.png)       
 
 ## Overview
-1
+
 The DigitalPersona Access Management Services are a collection of RESTful services used to implement various features of the DigitalPersona solution in web-applications.
 
 These services are:
@@ -21,3 +21,8 @@ These services are:
 - [Web Authentication Policy Service (WAPS)](https://hidglobal.github.io/digitalpersona-access-management-services/docs/waps.html)
 
 The last three of the services mentioned above were formerly part of the DigitalPersona Web AUTH SDK.
+
+Also, see the following topics:
+
+- [WES Credential Format](https://hidglobal.github.io/digitalpersona-access-management-services/docs/wes-cred-format.html)  
+- [WAS Credential Format](https://hidglobal.github.io/digitalpersona-access-management-services/docs/was-cred-format.html)

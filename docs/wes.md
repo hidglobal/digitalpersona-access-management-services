@@ -6,7 +6,7 @@ nav_order: 2
 ---
 
 ## Web Enrollment Service
-1
+
 The DigitalPersona Web Enrollment Service (WES) provides the methods necessary for  
 - Creating users in the DigitalPersona LDS database  
 - Enrolling both DigitalPersona AD and DigitalPersona LDS users  
