@@ -1,7 +1,7 @@
 ---
 layout: default
 title: WAS: Web Authentication Service
-nav_order: 5
+nav_order: 4
 ---
 
 ## Web Authentication Service

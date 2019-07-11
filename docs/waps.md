@@ -1,7 +1,7 @@
 ---
 layout: default
 title: WAPS: Web Authentication Policy Service
-nav_order: 6
+nav_order: 5
 ---
 
 ## Web Authentication Policy Service

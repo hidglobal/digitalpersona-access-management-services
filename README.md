@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Overview
-nav_order: 1
 nav_exclude: true
 ---
 ###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / Overview&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/digitalpersona-access-management-services/)  
