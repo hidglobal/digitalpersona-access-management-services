@@ -5,6 +5,10 @@ has_toc: false
 nav_order: 5
 ---
 
+###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / Web Authentication Policy Service (WAPS)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/access-management-services)  
+
+![](assets/HID-DPAM-access-mgmt-svcs.png)       
+
 ## Web Authentication Policy Service
 
 The goal of the Web Authentication Policy Service (WAPS) is to specify the authentication policy required for a specific user to manage a Resource.  
