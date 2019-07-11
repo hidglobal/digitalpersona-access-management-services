@@ -1,6 +1,7 @@
 ---
 layout: default
 title: WES Credential Format
+nav_order: 6
 ---
 
 ## WES Credential Format
@@ -501,27 +502,42 @@ public class OTPEnrollData
 The following steps are needed to create a  TOTP Enrollment Credential.
 
 1. Base64Url encode the TOTP Key.  We support a TOTP Key of any length, but at least a 160 bit TOTP Key is suggested for security reasons.  
-2. Create a JSON representation of the  OTPEnrollData class where the otp assign OTP verification code typed by user and  key is string created in step #1.
-Base64Url encode string created in step #2.
-Create JSON representation to Credential class setting TOTP Credential ID as id member and string we created in step #3 as data member.
-For example client gets TOTP Key and it could be represented by following byte array:
-[123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,
-34,32,82,83,50,53,54,34,125]
-The Base64url encoded value of TOTP Key is:
-eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9
-User types the following verification code:
-123456
-JSON representation of TOTP enrolment data would be the following:
+2. Create a JSON representation of the  OTPEnrollData class where the otp assign OTP verification code typed by user and  key is string created in step #1.  
+3. Base64Url encode string created in step #2.  
+4.Create JSON representation to Credential class setting TOTP Credential ID as id member and string we created in step #3 as data member.  
+
+	For example client gets TOTP Key and it could be represented by following byte array:  
+
+	[123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,34,32,82,83,50,53,54,34,125]  
+
+	The Base64url encoded value of the TOTP Key is:
+
+	eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9  
+
+	The user types the following verification code:  
+
+	123456  
+
+	The JSON representation of TOTP enrollment data would be the following:
+~~~
 {
 "otp":":"123456",
 "key":":"eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9"
 }
-Finally by Base64Url encoding string above we can create a JSON representation of Credential class which we can send for TOTP enrollment to the DigitalPersona Server:
+~~~
+4. Finally by Base64Url encoding string above we create a JSON representation of the Credential class which we can send for TOTP enrollment to the DigitalPersona Server.
+
+	~~~
 {"id":"324C38BD-0B51-4E4D-BD75-200DA0C8177F",
 "data":"eyahsadHKJjahdsdjlaJHKHLhalkdhsj1298475JHLHGLglagd"}
-NOTE: If TOTP is already enrolled, it will be replaced with new data.
-Hardware OTP token enrollment
-The following class will represent enrollment sample for TOTP credentials:
+	~~~
+**Note**: If a TOTP is already enrolled, it will be replaced with new data.  
+
+###### Hardware OTP token enrollment  
+
+The following class will represent an  enrollment sample for TOTP credentials.  
+
+~~~
 [DataContract]
 public class OTPHDEnrollData
 {
@@ -531,34 +547,63 @@ public class OTPHDEnrollData
 	public String serialNumber{ get; set; } // String with hardware token
 																							 manufacturing serial number.
 }
+~~~
 
-Parameter	Description
-otp	 String with OTP verification code. If OTP code cannot be verified, enrollment operation will fail with the following error: "The operation being requested was not performed because the user has not been authenticated.". NOTE: verification can fail only for two reasons:
-The user mistyped OTP code
-The clocks on the phone and the DigitalPersona Server are not synchronized.
-serialNumber	Hardware token serial number. This serial number was assign to the token during manufacturing and usually written on the token itself.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">otp</td>
+  <td valign="top">A string with an OTP verification code. If the OTP code cannot be verified, the enrollment operation will fail with the following error: "The operation being requested was not performed because the user has not been authenticated.".<BR><BR>
+	<b>Note</b>: Verification can fail for two reasons. Either the user mistyped the OTP code or the clocks on the phone and the DigitalPersona Server are not synchronized.</td>
+  </tr>
+  <tr>
+  <td valign="top">serialNumber</td>
+  <td valign="top">	 
+		Hardware token serial number. This serial number is assigned to the token during manufacturing and usually written on the token itself.
+</td>
+  </tr>
+</table>
 
-The following steps are needed to create TOTP Enrollment Credential:
-Create JSON representation of OTPHDEnrollData class where to otp assign OTP verification code typed by user and  serialNumber is token serial number also typed by user.
-Base64Url encode string created in step #1.
-Create JSON representation to Credential class setting TOTP Credential ID as id member and string we created in step #2 as data member.
-For example user types the following verification code:
-123456
-And the following serial number:
-2608513503936
-JSON representation of TOTP enrolment data would be the following:
+The following steps are needed to create a TOTP Enrollment Credential.
+
+1. Create a JSON representation of the  OTPHDEnrollData class where *otp* is the OTP verification code typed by the user and *serialNumber* is the token serial number assigned by the manufacture and also typed by the user.  
+2. Base64Url encode string created in step #1.  
+3. Create a JSON representation of the  Credential class setting the TOTP Credential ID as the id member and the  string created in step #2 as the data member.  
+
+	For example, the user types the following verification code:  
+
+	123456  
+
+	And the following serial number:  
+
+	2608513503936  
+
+	The JSON representation of the TOTP enrolment data would be the following:
+~~~
 {
 "otp":":"123456",
 "serialNumber":":"2608513503936"
 }
-Finally by Base64Url encoding string above we can create a JSON representation of Credential class which we can send for TOTP enrollment to the DigitalPersona Server:
+~~~
+4. Finally by Base64Url encoding the string above, we create a JSON representation of the Credential class which we send for TOTP enrollment to the DigitalPersona Server.
+
+~~~
 {"id":"324C38BD-0B51-4E4D-BD75-200DA0C8177F",
 "data":"eyahsadHKJjahdsdjlaJHKHLhalkdhsj1298475JHLHGLglagd"}
-NOTE: If TOTP is already enrolled, it will be replaced with new data.
-DeleteUserCredentials
-The data member of credential argument of DeleteUserCredential should be null and will be ignored.
-CustomAction
-CustomAction informationis specific to each credential. See CustomAction under each credential in the WAS Credentials Data Format chapter beginning on page 96.
+~~~
+
+**Note**: If a TOTP is already enrolled, it will be replaced with the new data.
+
+#### DeleteUserCredentials  
+
+The data member of the credential argument of DeleteUserCredential should be null and will be ignored.  
+
+#### CustomAction  
+
+CustomAction information is specific to each credential. See CustomAction under each credential in the [WAS Credentials Data Format topic](was-cred-format.md).
 Smart Card Credential
 The following ID is defined for Smart Card Credential:
 {D66CC98D-4153-4987-8EBE-FB46E848EA98}

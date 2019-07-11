@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Web Enrollment Service
+title: WES: Web Enrollment Service
 nav_order: 2
 ---
 
