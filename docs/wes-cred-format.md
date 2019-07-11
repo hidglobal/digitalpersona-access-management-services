@@ -1104,6 +1104,8 @@ This method is not supported.
 The data for the FIDO Device credential is a Base64url encoded UTF-8 representation of the JSON representation of the CDPJsonU2FEnrollData class.  
 
 The CDPJsonU2FEnrollData class is defined as follows.
+
+~~~
 [DataContract]
 	public class CDPJsonU2FEnrollData
 	{
@@ -1118,16 +1120,40 @@ The CDPJsonU2FEnrollData class is defined as follows.
 		[DataMember]
 		public String clientData { get; set; }
 	}
-where:
-Data member	Description
-String version	 - version of supported FIDO standard, must be set to "U2F_V2" for current implementation;   
-String appId	 - facet ID of the caller.    
-String serialNum	 - U2F Device serial number.
-String registrationData	 - registration response from U2F device, Base64url UTF-8 encoded string.
-String clientData 	- Base64Url encoded client data (see https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html for details). Client data contains challenged.
+~~~
 
+where:  
 
-DeleteUserCredentials
-The data member of credential argument of DeleteUserCredential should be null and will be ignored.
-CustomAction
-None? No entry in document for this cred.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">String <i>version</i></td>
+  <td valign="top">Version of supported FIDO standard, must be set to "U2F_V2" for current implementation. </td>
+  </tr>
+  <tr>
+  <td valign="top">String >i>appId</i></td>
+  <td valign="top">Facet ID of the caller. </td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>serialNum</i></td>
+  <td valign="top">U2F Device serial number.</td>
+  </tr>
+	<tr>
+  <td valign="top">String <i>registrationData</i></td>
+  <td valign="top">Registration response from the U2F device, Base64url UTF-8 encoded string.</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>clientData</i></td>
+  <td valign="top">Base64Url encoded client data (see <A HREF="https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html">https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html</ for details). Client data contains <font style="color:Yellow;">challenged.</font></td>
+  </tr> 	
+</table>
+
+#### DeleteUserCredentials  
+
+The data member of credential argument of DeleteUserCredential should be null and will be ignored.  
+
+#### CustomAction  
+CustomAction is not currently supported for this credential.
