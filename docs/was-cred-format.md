@@ -10,11 +10,7 @@ nav_order: 7
 ![](assets/HID-DPAM-access-mgmt-svcs.png)    
 ## WAS Credential Format
 
-#### BioSample Class  
-
-
-
-In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credentials.
+In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 
 <table style="width:95%;margin-left:auto;margin-right:auto;">
 
@@ -213,8 +209,12 @@ public class BioSample
   public String Data { get; set; }                   
 		// Base64url encoded biometric sample data
 }
-BioSample class
-The BioSample class represents a general biometric sample.
+~~~
+#### BioSample class  
+
+The BioSample class represents a general biometric sample.  
+
+~~~
 [DataContract]
 public class BioSample
 {
@@ -280,16 +280,48 @@ public class BioSampleHeader
   public BioSampleEncryption Encryption { get; set; }
 		// Encryption of biometric sample.
 }
-Data Member	Description
-Factor	Biometric factor presented in this Biometric sample. This version only supports fingerprint, so this member should be set to 8.
-Format	Format of Biometric sample. See “BioSampleFormat class” on page 100.
-Type	Type of Biometric sample. See “BioSampleType enumeration” on page 101.
-Purpose	Purpose of Biometric sample. See “BioSamplePurpose enumeration” on page 102.
-Quality	Quality of Biometric sample. Unsupported in this version. Set to -1.
-Encryption	Define what kind of encryption algorithm was used to protect the Biometric sample. See “BioSampleEncryption enumeration” on page 103 for details).
+~~~
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Factor</td>
+  <td valign="top">	Biometric factor presented in this Biometric sample. This version only supports fingerprint, so this member should be set to 8.</td>
+  </tr>
+  <tr>
+  <td valign="top">Format	</td>
+  <td valign="top">Format of Biometric sample. See <i>BioSampleFormat class</i> below</td>
+  </tr>
+  <tr>
+  <td valign="top">Type</td>
+  <td valign="top">	Type of Biometric sample. See <A HREF="#biosampletype-enum">BioSampleType enumeration</A>.
+</td>
+  </tr>
+  <tr>
+  <td valign="top">Purpose</td>
+  <td valign="top">
+  	Purpose of Biometric sample. See <A HREF="#biosamplepurpose-enum"> BioSamplePurpose enumeration</A>.</td>
+  </tr>
+  <tr>
+  <td valign="top">Quality</td>
+  <td valign="top">
+  	Quality of Biometric sample. Unsupported in this version. Set to -1.</td>
+  </tr>
+  <tr>
+  <td valign="top">Encryption</td>
+  <td valign="top">
+  	Define what kind of encryption algorithm was used to protect the Biometric sample. See “BioSampleEncryption enumeration” on page 103 for details).</td>
+  </tr>   
+</table>
 
 
-BioSampleFormat class
+
+
+
+### BioSampleFormat class  
+
 BioSampleFormat describes the vendor-specific format of the Biometric sample.
 
 [DataContract]
@@ -314,7 +346,9 @@ FormatOwner	Represents the vendor which produced this Biometric sample. Values a
 49 – for Neurotechnology
 FormatID	This value is assigned by the Format Owner and may optionally be registered by the IBIA. Unsupported in this version, so it should be set to 0.
 
-BioSampleType enumeration
+
+### <A NAME="biosampletype-enum"></A>BioSampleType enumeration
+
 The BioSampleType enumeration defines the type of Biometric sample.
 [DataContract][Flags]
 public enum BioSampleType
@@ -372,7 +406,10 @@ IDENTIFY - biometric sample can be used for identification only.
 Notes
 If a fingerprint image is sent as the biometric sample, the ANY purpose should be set.
 If feature extraction is done by the DigitalPersona engine, with any flag except FT_PRE_REG_FTR and FT_REG_FTR, it can be used for both verification and identification so ANY purpose could be provided.
-BioSampleEncryption enumeration
+
+#### BioSampleEncryption enumeration
+
+
 BioSampleEncryption specifies the encryption algorithm that was used to protect the biometric sample.
 [DataContract]
 public enum BioSampleEncryption
