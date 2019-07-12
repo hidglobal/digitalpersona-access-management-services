@@ -19,38 +19,38 @@ In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number o
 <table style="width:95%;margin-left:auto;margin-right:auto;">
 
   <tr>
-  <td style="width:50%" ALIGN="left" valign="top"><A HREF="#fingerprint- credential">Fingerprint Credential</A>
+  <td style="width:50%" ALIGN="left" valign="top"><A HREF="#fingerprint-credential">Fingerprint Credential</A>
   </td>
-  <td valign="top">Windows Integrated Authentication (WIA) Credential</td>
+  <td valign="top"><A HREF="#wia-credential">Windows Integrated Authentication (WIA) Credential</A></td>
   </tr>
   <tr>
-  <td valign="top">Password Credential
+  <td valign="top"><A HREF="#password-credential">Password Credential</A>
 </td>
-  <td valign="top">  PIN Credential</td>
+  <td valign="top"><A HREF="#pin-credential">  PIN Credential</A></td>
   </tr>
   <tr>
-  <td valign="top">
-  Email Credential
+  <td valign="top"><A HREF="#email-credential">
+  Email Credential</A>
     </td>
-  <td valign="top">Contactless Card Credentials</td>
+  <td valign="top"><A HREF="#contacless-card-credential">Contactless Card Credential</A></td>
   </tr>
   <tr>
-  <td valign="top">Live Questions Credential
+  <td valign="top"><A HREF="#recovery-credential">Recovery  Questions Credential</A>
 </td>
-  <td valign="top">  Proximity Card Credential
+  <td valign="top"><A HREF="#prox-card-credential">  Proximity Card Credential</A>
   </td>
   </tr>
   <tr>
-  <td valign="top">Smart Card Credential
+  <td valign="top"><A HREF="#smart-card-credential">Smart Card Credential</A>
     </td>
-  <td valign="top">
-  Face Credential
+  <td valign="top"><A HREF="#face-credential">
+  Face Credential</A>
   </td>
   </tr>
   <tr>
-  <td valign="top">Time-Based OTP (TOTP) Credential</td>
-  <td valign="top">
-  FIDO Device Credential</td>
+  <td valign="top"><A HREF="#totp-credential">Time-Based OTP (TOTP) Credential</A></td>
+  <td valign="top"><A HREF="#fido-credential">
+  FIDO Device Credential</A></td>
   </tr>   
 </table>
 
