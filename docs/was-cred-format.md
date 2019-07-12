@@ -19,8 +19,7 @@ In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number o
 <table style="width:95%;margin-left:auto;margin-right:auto;">
 
   <tr>
-  <td style="width:50%" ALIGN="left" valign="top"><A HREF="#Fingerrint Credential">Fingerprint Credential</A>
-  Fingerprint credential
+  <td style="width:50%" ALIGN="left" valign="top"><A HREF="#Fingerprint  Credential">Fingerprint Credential</A>
   </td>
   <td valign="top">Windows Integrated Authentication (WIA) Credential</td>
   </tr>
@@ -69,7 +68,7 @@ public class Credential
 ~~~
 It is obvious that the data member of the Credential class should be different for different types of credentials. For example, the data member of the Fingerprint Credential is different from the same member of the Password Credential.
 
-### Fingerprint credential.  
+### <A NAME="Fingerprint credential"></A>Fingerprint Credential
 
 The following ID is defined for Fingerprint credentials.  
 
