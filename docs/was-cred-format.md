@@ -19,7 +19,7 @@ In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number o
 <table style="width:95%;margin-left:auto;margin-right:auto;">
 
   <tr>
-  <td style="width:50%" ALIGN="left" valign="top">
+  <td style="width:50%" ALIGN="left" valign="top"><A HREF="#Fingerrint Credential">Fingerprint Credential</A>
   Fingerprint credential
   </td>
   <td valign="top">Windows Integrated Authentication (WIA) Credential</td>
@@ -246,20 +246,19 @@ public class BioSample
   </tr>
   <tr>
   <td valign="top">Header</td>
-  <td valign="top">	Base64url encoded biometric sample data. See Base64url encoded biometric sample data. See **BioSampleHeader class** below.</td>
+  <td valign="top">	Base64url encoded biometric sample data. See Base64url encoded biometric sample data. See <b>BioSampleHeader class</b> below.</td>
   </tr>
   <tr>
   <td valign="top">Data</td>
-  <td valign="top">	Base64url encoded biometric sample data. See [Biometric Sample Data](#biometric-sample-data).</td>
+  <td valign="top">	Base64url encoded biometric sample data. See <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services#biometric-sample-data">Biometric Sample Data</A>.</td>
   </tr>
 </table>
 
+### BioSampleHeader class  
 
+The BioSampleHeader provides detailed information about a Biometric sample.   
 
-
-
-BioSampleHeader class
-The BioSampleHeader provides detailed information about a Biometric sample.
+~~~
 [DataContract]
 public class BioSampleHeader
 {
@@ -749,8 +748,9 @@ Right little finger		5
 The following GetEnrollmentDataResult indicates that the user has their right thumb, right index finger and left middle fingers enrolled.
 [{"position":1},{"position":2},{"position":8}]
 CustomAction
-CustimAction is not currently supported for the Fingerprint Credential.
-Password Credential
+CustimAction is not currently supported for the Fingerprint Credential.  
+
+### Password Credential
 The following ID is defined for Password Credential.
 {D1A1F561-E14A-4699-9138-2EB523E132CC}
 Follow these steps to create a Password Credential:
