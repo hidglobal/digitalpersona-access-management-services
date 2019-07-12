@@ -10,4 +10,4 @@ nav_order: 7
 ![](assets/HID-DPAM-access-mgmt-svcs.png)    
 ## WAS Credential Format
 
-#### BioSample Class
+#### BioSample Class  
