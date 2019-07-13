@@ -1074,10 +1074,7 @@ Follow these steps to create a Password Credential.
 
   UEBzc3cwcmQ  
 
-3. testing
-
-<ol start="3">
-<li>Finally we create a JSON representation of the Credential class which we can send for password authentication to the DigitalPersona Server.</li></ol>  
+Finally we create a JSON representation of the Credential class which we can send for password authentication to the DigitalPersona Server.
 
 ~~~
 {"id":"D1A1F561-E14A-4699-9138-2EB523E132CC",
@@ -1431,6 +1428,7 @@ CJ0eXBlIjoxLCJ2ZXJzaW9uIjoxfV0
 	"text":"Date of your employment."
 }
   ~~~
+
 ##### Creating the Live Questions Credential  
 
 The LiveAnswer class represents the answers to LiveQuestion.  
@@ -1525,7 +1523,7 @@ To create the Live Questions Credential, perform the following steps.
   ~~~
 {"id":"B49E99C6-6C94-42DE-ACD7-FD6B415DF503",
 "data":"W3sidmVyc2lvbiI6MSwibnVtYmVyIjoyLCJ0ZXh0IjoiTmV3IFlvcmsifSx7InZlcnNpb24iOjEsIm51bWJlciI6NiwidGV4dCI6IkNhbnlvbiBNaWRkbGUifSx7InZlcnNpb24iOjEsIm51bWJlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ"}
-  ~~~
+~~~  
 
 #### AuthenticateUser  
 
@@ -1587,6 +1585,7 @@ Follow these steps to create the Prox Card Credential.
   {"id":"1F31360C-81C0-4EE0-9ACD-5A4400F66CC2",
 "data":"eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9"}  
   ~~~
+
 #### AuthenticateUser  
 
 To call the AuthenticateUser() method, the caller must create a Proximity Card credential as described above.  
@@ -1979,18 +1978,18 @@ where:
   The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format (see https://msdn.microsoft.com/en-us/library/ee442238.aspx). After that, the RSA256 hash (see https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) of the key must be calculated. The resulting 32 bytes must be Base64url encoded to the string - KeyHash = Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))</td>
   </tr>
   <tr>
-  <td valign="top"></td>
-  <td valign="top"></td>
+  <td valign="top">String <i>signature</i></td>
+  <td valign="top">  	Timestamp and Public key’s hash, Base64url UTF-8 encoded string.<BR><BR>
+  The Timestamp (8 bytes) and Public key’s RSA256 Hash (32 bytes) must be combined into a 40 byte array, where the first 8 bytes is the Timestamp and the remainder is the hash.<BR><BR>
+  This 40 bytes blob must be hashed again with RSA256 and then signed with the Smart Card’s Private Key.
+  The signature algorithm used is specified when the Smart Card key pair is originally created, usually RSA. The resulting signature blob must be Base64url encoded into the string:
+  KeyHash = Base64urlEncode(Sign(PrK)( RSA256 Hash( Timestamp + RSA256 Hash (PUBLICKEYBLOB (PuK))))</td>
   </tr>   
 </table>
 
 
 
- String signature 	Timestamp and Public key’s hash, Base64url UTF-8 encoded string.
-The Timestamp (8 bytes) and Public key’s RSA256 Hash (32 bytes) must be combined into a 40 byte array, where the first 8 bytes is the Timestamp and the remainder is the hash.
-This 40 bytes blob must be hashed again with RSA256 and then signed with the Smart Card’s Private Key.
-The signature algorithm used is specified when the Smart Card key pair is originally created, usually RSA. The resulting signature blob must be Base64url encoded into the string:
-KeyHash = Base64urlEncode(Sign(PrK)( RSA256 Hash( Timestamp + RSA256 Hash (PUBLICKEYBLOB (PuK))))
+
 
 To create the Smart Card Credential for authentication, follow these steps on the client.
 1	Enumerate the asymmetric key pairs on the Smart Card or select the exact key pair to use.
