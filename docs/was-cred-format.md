@@ -941,7 +941,7 @@ W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoi
 {"id":"AC184A13-60AB-40e5-A514-E10F777EC2F9",
 "data":"W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K"}  
   ~~~
-### AuthenticateUser  
+#### AuthenticateUser  
 
 To call the AuthenticateUser() method, a fingerprint credential must already have been created as described in the previous section.  
 
@@ -966,7 +966,7 @@ Below is an example of HTTP Body for fingerprint authentication with the fingerp
 }
 ~~~
 
-### IdentifyUser  
+#### IdentifyUser  
 
 To call the IdentifyUser() method, the caller must create a fingerprint credential as described previously.  
 
@@ -986,7 +986,7 @@ Below is an example of HTTP Body for fingerprint identification with the fingerp
 }
 ~~~
 
-### GetEnrollmentData  
+#### GetEnrollmentData  
 
 To ask information about enrolled fingerprints, the client should send an IDPWebAuth-> GetEnrollmentData request to the server. Below is an example of such a request.
 
@@ -999,33 +999,94 @@ The result of a successful GetEnrollmentData request should be a Base64url encod
 
 Below is the ANSI 381 list of valid fingerprint positions.  
 
-Fingerprint position	Value		Fingerprint position	Value
-Unknown		0		Left thumb		6
-Right thumb		1		Left index finger		7
-Right index finger		2		Left middle finger		8
-Right middle finger		3		Left ring finger		9
-Right ring finger		4		Left little finger		10
-Right little finger		5			
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:27%" ALIGN="left">Fingerprint position		</th>
+    <th style="width:5%" ALIGN="left">Value</th>
+    <th style="width:2%" ALIGN="left"></th>
+    <th style="width:27%" ALIGN="left">Fingerprint position</th>
+    <th style="width:5%" ALIGN="left">Value</th>            
+  </tr>
+  <tr>
+    <td valign="top">Unknown</td>
+    <td valign="top">0  </td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+  <td valign="top">Right thumb</td>
+  <td valign="top">		1</td>
+  <td valign="top"></td>
+  <td valign="top">Left thumb</td>
+  <td valign="top">6</td>
+  </tr>
+  <tr>
+  <td valign="top">Right index finger	</td>
+  <td valign="top">	2
+  	</td>
+  <td valign="top"></td>
+  <td valign="top">Left index finger</td>
+  <td valign="top">		7		</td>
+  </tr>
+  <tr>
+  <td valign="top">Right middle finger</td>
+  <td valign="top">3</td>
+  <td valign="top"></td>
+  <td valign="top">Left middle finger</td>
+  <td valign="top">8</td>
+  </tr>
+  <tr>
+  <td valign="top">Right ring finger</td>
+  <td valign="top">4</td>
+  <td valign="top"></td>
+  <td valign="top">Left ring finger</td>
+  <td valign="top">9</td>
+  </tr>
+  <tr>
+  <td valign="top">Right little finger</td>
+  <td valign="top">5</td>
+  <td valign="top"></td>
+  <td valign="top">Left little finger</td>
+  <td valign="top">10</td>
+  </tr>    
+</table>
 
-The following GetEnrollmentDataResult indicates that the user has their right thumb, right index finger and left middle fingers enrolled.
-[{"position":1},{"position":2},{"position":8}]
-CustomAction
+The following GetEnrollmentDataResult indicates that the user has their right thumb, right index finger and left middle fingers enrolled.  
+
+[{"position":1},{"position":2},{"position":8}]  
+
+#### CustomAction
 CustimAction is not currently supported for the Fingerprint Credential.  
 
-### Password Credential
-The following ID is defined for Password Credential.
-{D1A1F561-E14A-4699-9138-2EB523E132CC}
-Follow these steps to create a Password Credential:
-1	Base64url encode UTF-8 representation of the password. NOTE: It is not necessary to include null terminating character to the UTF-8 representation.
-2	Create a JSON representation of the Password credential, setting the Password Credential ID as the id member and the string we created in step #1 as the data member.
-For example, we create a JSON representation of the following password: P@ssw0rd. The Base64url encoded UTF-8 representation of this password is:
-UEBzc3cwcmQ
-Finally we create a JSON representation of the Credential class which we can send for password authentication to the DigitalPersona Server.
+### Password Credential  
+
+The following ID is defined for Password Credential.  
+
+{D1A1F561-E14A-4699-9138-2EB523E132CC}  
+
+Follow these steps to create a Password Credential.
+
+1. Base64url encode UTF-8 representation of the password. NOTE: It is not necessary to include null terminating character to the UTF-8 representation.
+2. Create a JSON representation of the Password credential, setting the Password Credential ID as the id member and the string we created in step #1 as the data member.  
+
+  For example, we create a JSON representation of the following password: P@ssw0rd. The Base64url encoded UTF-8 representation of this password is:
+
+  UEBzc3cwcmQ  
+
+3. Finally we create a JSON representation of the Credential class which we can send for password authentication to the DigitalPersona Server.  
+
+~~~
 {"id":"D1A1F561-E14A-4699-9138-2EB523E132CC",
-"data":"UEBzc3cwcmQ"}
-AuthenticateUser
-To call the AuthenticateUser() method, the caller must create a password credential as described above.
-Below is an example of HTTP Body for password authentication with the password credential created above:
+"data":"UEBzc3cwcmQ"}  
+~~~
+
+#### AuthenticateUser
+To call the AuthenticateUser() method, the caller must create a password credential as described above.  
+
+Below is an example of HTTP Body for password authentication with the password credential created above.
+
+~~~
 {
 	"user":
 	{
@@ -1038,16 +1099,25 @@ Below is an example of HTTP Body for password authentication with the password c
 		"data":"UEBzc3cwcmQ"
 	}
 }
-IdentifyUser
-The Password credential does not support user identification, so an IdentifyUser() call with a Password credential will return a "Not implemented" error.
-GetEnrollmentData
-The password credential does not support the GetEnrollmentData() call and will return a "Not implemented"error.
-CustomAction
+~~~
+
+#### IdentifyUser  
+
+The Password credential does not support user identification, so an IdentifyUser() call with a Password credential will return a "Not implemented" error.  
+
+#### GetEnrollmentData  
+
+The password credential does not support the GetEnrollmentData() call and will return a "Not implemented"error.  
+
+#### CustomAction
 The following CustomAction operations are supported for the Password Credential.
-•	Password Randomization
-•	Password Reset
-Password Randomization
-For Password Randomization, the Action ID is "4".
+- Password Randomization
+- Password Reset
+
+##### Password Randomization  
+
+For Password Randomization, the Action ID is "4".  
+
 A valid ticket has to be provided to perform Password Randomization. The ticket owner has to have the rights to randomize the user password.
 A valid user for whom the password needs to be randomized needs to be provided.
 The data parameter of the Credential class should be set to "null".
