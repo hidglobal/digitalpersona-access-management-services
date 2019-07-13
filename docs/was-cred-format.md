@@ -932,13 +932,15 @@ Follow these steps to create a JSON representation of the Credential class which
 
   ~~~
 W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K  
-  ~~~
-6. Finally we create a JSON representation of the Credential class which we can send for identification (verification).
 
-  ~~~
+~~~
+Finally we create a JSON representation of the Credential class which we can send for identification (verification).
+
+~~~
 {"id":"AC184A13-60AB-40e5-A514-E10F777EC2F9",
 "data":"W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K"}  
-  ~~~
+~~~
+
 #### AuthenticateUser  
 
 To call the AuthenticateUser() method, a fingerprint credential must already have been created as described in the previous section.  
@@ -1072,7 +1074,8 @@ Follow these steps to create a Password Credential.
 
   UEBzc3cwcmQ  
 
-3. Finally we create a JSON representation of the Credential class which we can send for password authentication to the DigitalPersona Server.  
+<ol start="3">
+<li>Finally we create a JSON representation of the Credential class which we can send for password authentication to the DigitalPersona Server.</li></ol>  
 
 ~~~
 {"id":"D1A1F561-E14A-4699-9138-2EB523E132CC",
