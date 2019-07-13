@@ -1118,10 +1118,15 @@ The following CustomAction operations are supported for the Password Credential.
 
 For Password Randomization, the Action ID is "4".  
 
-A valid ticket has to be provided to perform Password Randomization. The ticket owner has to have the rights to randomize the user password.
-A valid user for whom the password needs to be randomized needs to be provided.
-The data parameter of the Credential class should be set to "null".
-Below is a valid example of HTTP Body of Password Randomization request.
+A valid ticket has to be provided to perform Password Randomization. The ticket owner has to have the rights to randomize the user password.  
+
+A valid user for whom the password needs to be randomized needs to be provided.  
+
+The data parameter of the Credential class should be set to "null".  
+
+Below is a valid example of HTTP Body of Password Randomization request.  
+
+~~~
 {
 	"ticket":{"jwt":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"},
 	"user":
@@ -1136,19 +1141,29 @@ Below is a valid example of HTTP Body of Password Randomization request.
 	},
 	"actionId":4
 }
-This call will send a Password Randomization request for a Non AD user with the account name of "klozin".
-NOTE: We can guarantee successful Password Randomization only for Non AD Users in DigitalPersona LDS installations. We can randomize password for AD user only in DigitalPersona AD installation.
-Password Reset
-Password Reset Action ID is "13".
-Valid ticket has to be provided to perform Password Reset. Ticket owner has to have rights to "set user password".
-Valid user to whom password needs to be reset needs to be provided.
-Data parameter of Credential class should be set to Base64Url encoded UTF8 representation of user new password.
-Below is a valid example of HTTP Body of Password Reset request:
+~~~
+
+This call will send a Password Randomization request for a Non AD user with the account name of "someone".  
+
+**Note**: We can guarantee successful Password Randomization only for Non AD Users in DigitalPersona LDS installations. We can randomize the  password for an AD user only in a  DigitalPersona AD installation.
+
+##### Password Reset
+
+Password Reset Action ID is "13".  
+
+A valid ticket has to be provided to perform Password Reset. The ticket owner has to have rights to *set user password*.
+
+A valid user to whom password needs to be reset needs to be provided and the
+Data parameter of the Credential class should be set to Base64Url encoded UTF8 representation of the user's new password.  
+
+Below is a valid example of the HTTP Body for a Password Reset request.  
+
+~~~
 {
  "ticket":{"jwt":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"},
  "user":
 {
-"name":"klozin",
+"name":"someone",
 "type":9
 },
  "credential":
@@ -1158,22 +1173,40 @@ Below is a valid example of HTTP Body of Password Reset request:
 },
 "actionId":13
 }
-This call will send Password Reset request for Altus user with account name "klozin".
-NOTE: We can guarantee successful Password Reset only for Altus Users in Altus LDS installations. We can reset password for AD user only in Altus AD installation.
-PIN Credential
-The following ID is defined for the PIN Credential.
-{8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05}
-Follow these steps to create a PIN Credential:
-1	Base64url encode UTF-8 representation of PIN. NOTE: It is not necessary to include null terminating character to UTF-8 representation.
-2	Create a JSON representation of the PIN credential, setting PIN Credential ID as id member and the string we created in step #1 as data member;
-For example, we create a JSON representation of the following PIN: 1234. The Base64url encoded UTF-8 representation of this PIN is:
-MTIzNA
-Finally we create a JSON representation of Credential class which we can send for PIN authentication to the DigitalPersona Server.
-{"id":"8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05",
+~~~
+
+This call will send Password Reset request for Altus user with account name "someone".  
+
+**Note**: We can only guarantee a successful Password Reset  for Altus Users in Altus LDS installations and can only reset the password for AD users in Altus AD installations.  
+
+### PIN Credential  
+
+The following ID is defined for the PIN Credential.  
+
+{8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05}  
+
+Follow these steps to create a PIN Credential.  
+
+1. Base64url encode the UTF-8 representation of the PIN. Note that it is not necessary to include null terminating character to the UTF-8 representation.  
+2.	Create a JSON representation of the PIN credential, setting the PIN Credential ID as the id member and the string created in step #1 as the data member.  
+
+  For example, we create a JSON representation of the following PIN: 1234. The Base64url encoded UTF-8 representation of this PIN is:  
+
+  MTIzNA  
+
+3. Finally we create a JSON representation of Credential class which we can send for PIN authentication to the DigitalPersona Server.  
+
+~~~{"id":"8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05",
 "data":"MTIzNA"}
-AuthenticateUser
-To call the AuthenticateUser() method, the caller must create a PIN credential as described above.
-Below is an example of HTTP Body for PIN authentication with the previously created PIN credential.
+~~~
+
+#### AuthenticateUser  
+
+To call the AuthenticateUser() method, the caller must create a PIN credential as described above.  
+
+Below is an example of the HTTP Body for PIN authentication with the previously created PIN credential.  
+
+~~~
 {
 	"user":
 	{
@@ -1186,21 +1219,41 @@ Below is an example of HTTP Body for PIN authentication with the previously crea
 		"data":"MTIzNA"
 	}
 }
-IdentifyU[ser
-The PIN credential does not support user identification, so an IdentifyUser() call with a PIN credential will return a "Not implemented" error.
-GetEnrollmentData
-The PIN credential does not support the GetEnrollmentData() call, and will return a "Not implemented" error.
-CustomAction
+~~~
+
+#### IdentifyUser  
+
+The PIN credential does not support user identification, so an IdentifyUser() call with a PIN credential will return a "Not implemented" error.  
+
+#### GetEnrollmentData  
+
+The PIN credential does not support the GetEnrollmentData() call, and will return a "Not implemented" error.  
+
+#### CustomAction  
+
 CustomAction is not currently supported for the PIN Credential.
-Live Questions Credential
-The following ID is defined for the Live Questions Credential.
-{B49E99C6-6C94-42DE-ACD7-FD6B415DF503}
-Before a user can answer their Live Questions, the software needs to know which questions to ask the user, the user language id, etc. To ask for this information, the software sends a IDPWebAuth-> GetEnrollmentData request to the server. Below is an example of such a request.
+
+### Recovery Questions Credential  
+
+The following ID is defined for the Recovery Questions Credential.  
+
+{B49E99C6-6C94-42DE-ACD7-FD6B415DF503}  
+
+Before a user can answer their  Recovery Questions, the software needs to know which questions to ask the user, the user language id, etc. To ask for this information, the software sends a IDPWebAuth-> GetEnrollmentData request to the server.  
+
+Below is an example of such a request.  
+
+~~~
 https://www.digitalpersona.com/DPWebAuthService.svc/GetEnrollmentData?user=
 someone@mycompany.com&type=6&cred_id=B49E99C6-6C94-42DE-ACD7-FD6B415DF503
-In the following topic, details are provided about the data returned as a result of this request.
-GetEnrollmentData
-The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation of the list (array) of questions enrolled by the user. The LiveQuestion class represents every question in the list.
+~~~
+In the following topic, details are provided about the data returned as a result of this request.  
+
+#### GetEnrollmentData  
+
+The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation of the list (array) of questions enrolled by the user. The LiveQuestion class represents every question in the list.  
+
+~~~
 [DataContract]
 public enum LiveQuestionType
 {
@@ -1232,16 +1285,49 @@ public class LiveQuestion
   public String text { get; set; }     
 		// Custom question text. For custom questions only.
 }
-Value	Description
-version	Version of Live Question format. Must be 1 in this version.
-number	Live Question number. This number has a meaning only for regular questions (see below).
-type	Type of Live Question. We support two types of Live Question: 1) Regular and 2) Custom.
-lang_id	This primary language id was used to display the question during enrollment. The client application should (if possible) use the same primary language id to display the question.
-sublang_id	This sublanguage id was used to display the question during enrollment. The client application should (if possible) use the same sublanguage id to display the question.
-keyboard_layout	This keyboard layout was used for typing an answer to the question during enrollment. The client application must use the same keyboard layout for the user to enter the answer to this question.
-text	Question text. Text should be provided for both Custom and Regular questions and must be in the appropriate language (correspond lang_id and sublang_id as described above).
+~~~
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">version</td>
+  <td valign="top">	Version of Live Question format. Must be 1 in this version.</td>
+  </tr>
+  <tr>
+  <td valign="top">number</td>
+  <td valign="top">
+  	Live Question number. This number has a meaning only for regular questions (see below).</td>
+  </tr>
+  <tr>
+  <td valign="top">type</td>
+  <td valign="top">
+  	Type of Live Question. We support two types of Live Question: 1) Regular and 2) Custom.</td>
+  </tr>
+  <tr>
+  <td valign="top">lang_id</td>
+  <td valign="top">	This primary language id was used to display the question during enrollment. The client application should (if possible) use the same primary language id to display the question.</td>
+  </tr>
+  <tr>
+  <td valign="top">sublang_id</td>
+  <td valign="top">
+  	This sublanguage id was used to display the question during enrollment. The client application should (if possible) use the same sublanguage id to display the question.</td>
+  </tr>
+  <tr>
+  <td valign="top">keyboard_layout</td>
+  <td valign="top">	This keyboard layout was used for typing an answer to the question during enrollment. The client application must use the same keyboard layout for the user to enter the answer to this question.</td>
+  </tr>
+  <tr>
+  <td valign="top">text</td>
+  <td valign="top">
+  	Question text. Text should be provided for both Custom and Regular questions and must be in the appropriate language (correspond lang_id and sublang_id as described above).</td>
+  </tr>      
+</table>
 
-Below is an example of the JSON representation of a Regular Live Question:
+Below is an example of the JSON representation of a Regular Live Question.
+
+~~~
 {
 	"version":1,														// must be set to 1
 	"number":2,														// question number in regular question list
@@ -1262,15 +1348,22 @@ Below is an example of JSON representation of a Custom Live Question:
 	"keyboard_layout":1033,														// Keyboard layout - English US
 	"text":"Date of your employment."																			// custom question text
 }
-Parsing GetEnrollmentDataResult
-These are the steps to process (parse) GetEnrollmentDataResult.
-1	Get the string provided in GetEnrollmentDataResult.
-2	Base64url decode the string to get the UTF-8 representation of the Live Questions list.
-3	Decode the UTF-8 string to a format compatible with the JSON parser.
-4	Using the JSON parser, parse the string to objects of the LiveQuestion class.
-The following is an example of GetEnrollmentDataResult parsing.
-The client application makes the following call:
-https://www.mycompany.com/DPWebAuthService.svc/GetEnrollmentData?user=
+~~~
+##### Parsing GetEnrollmentDataResult  
+
+These are the steps to process (parse) GetEnrollmentDataResult.  
+
+1. Get the string provided in GetEnrollmentDataResult.
+2.	Base64url decode the string to get the UTF-8 representation of the Live Questions list.
+3.	Decode the UTF-8 string to a format compatible with the JSON parser.
+4.	Using the JSON parser, parse the string to objects of the LiveQuestion class.  
+
+The following is an example of <A NAME="getenrollmentdata-parsing">GetEnrollmentDataResult parsing</A>.  
+
+1. The client application makes the following call.  
+
+  ~~~
+  https://www.mycompany.com/DPWebAuthService.svc/GetEnrollmentData?user=
 someone@mycompany.com&type=6&cred_id=B49E99C6-6C94-42DE-ACD7-FD6B415DF503
 and receives the following result:
 {"GetEnrollmentDataResult":"W3sia2V5Ym9hcmRfbGF5b3V0IjoxMDMzLCJsYW5nX2lkIjo5L
@@ -1279,21 +1372,30 @@ F9LHsia2V5Ym9hcmRfbGF5b3V0IjoxMDMzLCJsYW5nX2lkIjo5LCJudW1iZXIiOjYsInN1Ymxhbmd
 aWQiOjEsInRleHQiOm51bGwsInR5cGUiOjAsInZlcnNpb24iOjF9LHsia2V5Ym9hcmRfbGF5b3V0I
 joxMDMzLCJsYW5nX2lkIjo5LCJudW1iZXIiOjYsInN1YmxhbmdfaWQiOjEsInRleHQiOiJEYXRlIG
 9mIHlvdXIgZW1wbG95bWVudC4iLCJ0eXBlIjoxLCJ2ZXJzaW9uIjoxfV0"}
-Parsing the result would give us the following string:
-W3sia2V5Ym9hcmRfbGF5b3V0IjoxMDMzLCJsYW5nX2lkIjo5LCJudW1iZXIiOjIsInN1Ymxhbmdfa
+  ~~~
+2. Parsing the result would give us the following string.  
+
+  ~~~
+  W3sia2V5Ym9hcmRfbGF5b3V0IjoxMDMzLCJsYW5nX2lkIjo5LCJudW1iZXIiOjIsInN1Ymxhbmdfa
 WQiOjEsInRleHQiOm51bGwsInR5cGUiOjAsInZlcnNpb24iOjF9LHsia2V5Ym9hcmRfbGF5b3V0Ij
 oxMDMzLCJsYW5nX2lkIjo5LCJudW1iZXIiOjYsInN1YmxhbmdfaWQiOjEsInRleHQiOm51bGwsInR
 5cGUiOjAsInZlcnNpb24iOjF9LHsia2V5Ym9hcmRfbGF5b3V0IjoxMDMzLCJsYW5nX2lkIjo5LCJu
 dW1iZXIiOjYsInN1YmxhbmdfaWQiOjEsInRleHQiOiJEYXRlIG9mIHlvdXIgZW1wbG95bWVudC4iL
 CJ0eXBlIjoxLCJ2ZXJzaW9uIjoxfV0
-Base64url decoding the string above will give us the following JSON representation:
+  ~~~
+3. Base64url decoding the string above will give us the following JSON representation.
+
+    ~~~
 [{"keyboard_layout":1033,"lang_id":9,"number":2,"sublang_id":1,
 "text":”What was the name of the first school you attended?”,
 "type":0,"version":1},{"keyboard_layout":1033,"lang_id":9,"number":6,
 "sublang_id":1,"text":”Who was your first employer?”,
 "type":0,"version":1},{"keyboard_layout":1033,"lang_id":9,"number":102,
 "sublang_id":1,"text":"Date of your employment.","type":1,"version":1}]
-Using the JSON parser, we have the following Live Questions:
+  ~~~
+4. Using the JSON parser, we have the following Live Questions.  
+
+  ~~~
 {
 	"version":1,
 	"number":2,		
@@ -1321,8 +1423,12 @@ Using the JSON parser, we have the following Live Questions:
 	"keyboard_layout":1033,
 	"text":"Date of your employment."
 }
-Creating the Live Questions Credential
-The LiveAnswer class represents the answers to LiveQuestion.
+  ~~~
+##### Creating the Live Questions Credential  
+
+The LiveAnswer class represents the answers to LiveQuestion.  
+
+~~~
 [DataContract]
 public class LiveAnswer
 {
@@ -1334,29 +1440,56 @@ public class LiveAnswer
   [DataMember]
   public String text { get; set; }     // Question answer
 }
-Value	Description
-version	Version of Live Answer format. Must be 1 in this version.
-number	Live Question number. This number must correspond to the question number received in GetEnrollmentDataResult.
-text	Answer text.
+~~~
 
-Below is the JSON representation of LiveAnswer to the question number 102 from example in “Parsing GetEnrollmentDataResult” on page 117.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">version</td>
+  <td valign="top">	Version of Live Answer format. Must be 1 in this version.</td>
+  </tr>
+  <tr>
+  <td valign="top">number</td>
+  <td valign="top">
+  	Live Question number. This number must correspond to the question number received in GetEnrollmentDataResult.</td>
+  </tr>
+  <tr>
+  <td valign="top">text</td>
+  <td valign="top">
+  	Answer text.</td>
+  </tr>
+</table>
+
+Below is the JSON representation of LiveAnswer to the question number 102 from the [Parsing GetEnrollmentDataResult](#getenrollmentdata-parsing).
+
+~~~
 {
 	"version":1,		// must be set to 1
 	"number":102,		// question number
 	"text":"04/24/2009"	// custom question text
 }
-Steps to create a Live Questions Credential
-To create the Live Questions Credential, perform the following steps.
-1	Collect user answers.
-2	Create a JSON representation of LiveAnswer for every answer.
-3	Combine those answers in a JSON array.
-4	Base64url encode UTF-8 representation of string created in step #3 above.
-5	Create a JSON representation of the Credential class using Live Question Credential ID as id member and the string created in step #4 as the data member.
-For example, assume the user gave the following answers to the Live Questions in the above example.
-Canyon Middle
-SampleCo
-04/24/2009
-Based on those answers, the client application must create the following JSON representation for the array of LiveAnswer objects:
+~~~~
+
+##### Steps to create a Live Questions Credential  
+
+To create the Live Questions Credential, perform the following steps.  
+
+1. Collect user answers.
+2. Create a JSON representation of LiveAnswer for every answer.
+3. Combine those answers in a JSON array.
+4. Base64url encode UTF-8 representation of string created in step #3 above.
+5. Create a JSON representation of the Credential class using Live Question Credential ID as id member and the string created in step #4 as the data member.
+  For example, assume the user gave the following answers to the Live Questions in the above example.  
+
+  Canyon Middle  
+  SampleCo  
+  04/24/2009  
+
+  Based on those answers, the client application must create the following JSON representation for the array of LiveAnswer objects:
+  ~~~
 [
 {
 	"version":1,
@@ -1374,14 +1507,26 @@ Based on those answers, the client application must create the following JSON re
 	"text":"04/24/2009"
 }
 ]
-Base64url encoding UTF-8 representation of string above, creates the following value:
-W3sidmVyc2lvbiI6MSwibnVtYmVyIjoyLCJ0ZXh0IjoiTmV3IFlvcmsifSx7InZlcnNpb24iOjEsIm51bWJlciI6NiwidGV4dCI6IkNhbnlvbiBNaWRkbGUifSx7InZlcnNpb24iOjEsIm51bWJlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ
-Finally we create the JSON representation of the Live Question Credentials:
+  ~~~
+  Base64url encoding UTF-8 representation of string above, creates the following value.
+
+  ~~~
+  W3sidmVyc2lvbiI6MSwibnVtYmVyIjoyLCJ0ZXh0IjoiTmV3IFlvcmsifSx7InZlcnNpb24iOjEsIm51bWJlciI6NiwidGV4dCI6IkNhbnlvbiBNaWRkbGUifSx7InZlcnNpb24iOjEsIm51bWJlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ  
+  ~~~
+6. Finally we create the JSON representation of the Live Question Credentials.
+
+  ~~~
 {"id":"B49E99C6-6C94-42DE-ACD7-FD6B415DF503",
 "data":"W3sidmVyc2lvbiI6MSwibnVtYmVyIjoyLCJ0ZXh0IjoiTmV3IFlvcmsifSx7InZlcnNpb24iOjEsIm51bWJlciI6NiwidGV4dCI6IkNhbnlvbiBNaWRkbGUifSx7InZlcnNpb24iOjEsIm51bWJlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ"}
-AuthenticateUser
-To call the AuthenticateUser() method, the caller must create the LiveQuestions credential as described above.
-Below is an example of HTTP Body for LiveQuestions authentication with the LiveQuestion credential previously created.
+  ~~~
+
+#### AuthenticateUser  
+
+To call the AuthenticateUser() method, the caller must create the LiveQuestions credential as described above.  
+
+Below is an example of an HTTP Body for LiveQuestions authentication with the LiveQuestion credential previously created.  
+
+~~~
 {
 	"user":
 	{
@@ -1396,26 +1541,52 @@ Below is an example of HTTP Body for LiveQuestions authentication with the LiveQ
 		OjEsIm51bWJlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ"
 	}
 }
-IdentifyUser
-The LiveQuestions credential does not support user identification, so an IdentifyUser() call with a LiveQuestions credential will return a "Not implemented" error.
-CustomAction
-CustomAction is not currently supported for the Live Questions Credential.
-Proximity Card Credential
-The following ID is defined for the Proximity Card Credential:
-{1F31360C-81C0-4EE0-9ACD-5A4400F66CC2}
-We treat the Proximity Card Data (Prox Card ID) as an opaque blob. Follow these steps to create the Prox Card Credential.
-1	Base64url encode Prox Card ID.
-2	Create the JSON representation of the Credential class, setting the Proximity Card Credential ID as the id member and the string we created in step #1 as the data member;.
-For example, the client gets Prox Card ID and it is represented by the following byte array:
-[123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,34,32,82,83,50,53,54,34,125]
-The Base64url encoded value of Prox Card ID is:
-eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9
-Then we create a JSON representation of the Credential class which we can send for Prox Card identification or authentication to the DigitalPersona Server:.
-{"id":"1F31360C-81C0-4EE0-9ACD-5A4400F66CC2",
-"data":"eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9"}
-AuthenticateUser
-To call the AuthenticateUser() method, the caller must create a Proximity Card credential as described above.
-Below is an example of HTTP Body for Proximity Card authentication with a previously created Proximity card credential.
+~~~
+
+#### IdentifyUser  
+
+The LiveQuestions credential does not support user identification, so an IdentifyUser() call with a LiveQuestions credential will return a "Not implemented" error.  
+
+#### CustomAction  
+
+CustomAction is not currently supported for the Live Questions Credential.  
+
+### Proximity Card Credential  
+
+The following ID is defined for the Proximity Card Credential.  
+
+{1F31360C-81C0-4EE0-9ACD-5A4400F66CC2}  
+
+We treat the Proximity Card Data (Prox Card ID) as an opaque blob.  
+
+Follow these steps to create the Prox Card Credential.  
+
+1. Base64url encode the Prox Card ID.
+2. Create the JSON representation of the Credential class, setting the Proximity Card Credential ID as the id member and the string created in step #1 as the data member.  
+
+  For example, the client gets the Prox Card ID and it is represented by the following byte array.  
+
+  ~~~
+  [123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,34,32,82,83,50,53,54,34,125]  
+  ~~~  
+
+  The Base64url encoded value of the Prox Card ID is:  
+
+  eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9  
+
+  Then we create a JSON representation of the Credential class which we can send for Prox Card identification or authentication to the DigitalPersona Server.  
+
+  ~~~
+  {"id":"1F31360C-81C0-4EE0-9ACD-5A4400F66CC2",
+"data":"eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9"}  
+  ~~~
+#### AuthenticateUser  
+
+To call the AuthenticateUser() method, the caller must create a Proximity Card credential as described above.  
+
+Below is an example of an HTTP Body for Proximity Card authentication with a previously created Proximity card credential.  
+
+~~~
 {
 	"user":
 	{
@@ -1428,9 +1599,15 @@ Below is an example of HTTP Body for Proximity Card authentication with a previo
 		"data":"eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9"
 	}
 }
-IdentifyUser
-To call the IdentifyUser() method, the caller must create a Proximity Card credential as described above.
-Below is an example of HTTP Body for Proximity Card identification with the previously created Proximity card credential.
+~~~
+
+#### IdentifyUser  
+
+To call the IdentifyUser() method, the caller must create a Proximity Card credential as described above.  
+
+Below is an example of HTTP Body for Proximity Card identification with the previously created Proximity card credential.  
+
+~~~
 {
 	"credential":
 	{
@@ -1438,15 +1615,27 @@ Below is an example of HTTP Body for Proximity Card identification with the prev
 		"data":"eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9"
 	}
 }
-GetEnrollmentData
-The Proximity Card credential does not support the GetEnrollmentData() call, and will return a "Not implemented" error.
-CustomAction
-CustomAction is not currently supported for the Proximity Card Credential.
-Time-Based OTP (TOTP) Credential
-The following ID is defined for the TOTP Credential:
-{324C38BD-0B51-4E4D-BD75-200DA0C8177F}
-We treat the OTP code as a regular string. Follow these steps to create an OTP Credential.
-1	Base64url encode the UTF-8 representation of the OTP code. NOTE: It is not necessary to include a null terminating character in the UTF-8 representation.
+~~~
+
+#### GetEnrollmentData  
+
+The Proximity Card credential does not support the GetEnrollmentData() call, and will return a "Not implemented" error.  
+
+#### CustomAction  
+
+CustomAction is not currently supported for the Proximity Card Credential.  
+
+### Time-Based OTP (TOTP) Credential  
+
+The following ID is defined for the TOTP Credential.
+
+{324C38BD-0B51-4E4D-BD75-200DA0C8177F}  
+
+We treat the OTP code as a regular string.  
+
+Follow these steps to create an OTP Credential.  
+
+1. Base64url encode the UTF-8 representation of the OTP code. NOTE: It is not necessary to include a null terminating character in the UTF-8 representation.
 2	Create a JSON representation of the OTP credential, setting TOTP Credential ID as the id member and the string we created in step #1 as the data member;
 For example, to create a JSON representation of the following OTP: 123456:
 The Base64url encoded UTF-8 representation of such OTP is:
