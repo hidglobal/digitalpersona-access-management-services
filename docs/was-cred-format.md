@@ -1973,35 +1973,41 @@ where:
   </tr>
   <tr>
   <td valign="top">String <i>keyHash</i></td>
-  <td valign="top">	Public key's hash, Base64url UTF-8 encoded string.<BR><BR>  
-
-  The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format (see https://msdn.microsoft.com/en-us/library/ee442238.aspx). After that, the RSA256 hash (see https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) of the key must be calculated. The resulting 32 bytes must be Base64url encoded to the string - KeyHash = Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))</td>
+  <td valign="top">	Public key's hash, Base64url UTF-8 encoded string.<BR><BR>The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format (see <A HREF="https://msdn.microsoft.com/en-us/library/ee442238.aspx">https://msdn.microsoft.com/en-us/library/ee442238.aspx</A>. After that, the RSA256 hash (see <A HREF="https://en.wikipedia.org/wiki/Secure_Hash_Algorithm">https://en.wikipedia.org/wiki/Secure_Hash_Algorithm</A> of the key must be calculated. The resulting 32 bytes must be Base64url encoded to the string - KeyHash = Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))</td>
   </tr>
   <tr>
   <td valign="top">String <i>signature</i></td>
   <td valign="top">  	Timestamp and Public key’s hash, Base64url UTF-8 encoded string.<BR><BR>
   The Timestamp (8 bytes) and Public key’s RSA256 Hash (32 bytes) must be combined into a 40 byte array, where the first 8 bytes is the Timestamp and the remainder is the hash.<BR><BR>
-  This 40 bytes blob must be hashed again with RSA256 and then signed with the Smart Card’s Private Key.
+  This 40 bytes blob must be hashed again with RSA256 and then signed with the Smart Card’s Private Key.<BR><BR>
   The signature algorithm used is specified when the Smart Card key pair is originally created, usually RSA. The resulting signature blob must be Base64url encoded into the string:
   KeyHash = Base64urlEncode(Sign(PrK)( RSA256 Hash( Timestamp + RSA256 Hash (PUBLICKEYBLOB (PuK))))</td>
   </tr>   
 </table>
 
+To create the Smart Card Credential for authentication, follow these steps on the client.  
 
+1. Enumerate the asymmetric key pairs on the Smart Card or select the exact key pair to use.  
+2. Create a JSON representation of the CDPJsonSCAuthToken class for every key pair from step #1.  
+3. Combine the CDPJsonSCAuthToken classes into JSON array, even if there's only one CDPJsonSCAuthToken.  
+4. Base64url UTF-8 encode the representation of the string created in step 3.  
+5. Create a JSON representation of the Credential class using the Smart Card Credential ID as the id member and the string created in step 4 as a data member.  
 
+#### IdentifyUser  
 
+The Smart Card token does not support user identification.  
 
-To create the Smart Card Credential for authentication, follow these steps on the client.
-1	Enumerate the asymmetric key pairs on the Smart Card or select the exact key pair to use.
-2	Create a JSON representation of the CDPJsonSCAuthToken class for every key pair from step #1.
-3	Combine the CDPJsonSCAuthToken classes into JSON array, even if there's only one CDPJsonSCAuthToken.
-4	Base64url UTF-8 encode the representation of the string created in step 3.
-5	Create a JSON representation of the Credential class using the Smart Card Credential ID as the id member and the string created in step 4 as a data member.
-IdentifyUser
-This method is not supported. The Smart Card token does not support user identification.
-GetEnrollmentData
-This method returns the list of Smart Card credentials enrolled for the user. It can be used to select the Smart Card token for authentication or to delete the token using the DeleteUserCredentials method. Te method does not require that the Smart Card be inserted into the reader when it is called.
-As result of this call, a string presenting the Base64url encoded UTF-8 representation of the JSON array of the CDPJsonSCEnrolledToken classes will be returned. Every enrolled Smart Card credential is represented by the CDPJsonSCEnrolledToken class:
+#### GetEnrollmentData  
+
+This method returns the list of Smart Card credentials enrolled for the user. It can be used to select the Smart Card token for authentication or to delete the token using the DeleteUserCredentials method.  
+
+The method does not require that the Smart Card be inserted into the reader when it is called.  
+
+As result of this call, a string presenting the Base64url encoded UTF-8 representation of the JSON array of the CDPJsonSCEnrolledToken classes will be returned.  
+
+Every enrolled Smart Card credential is represented by the CDPJsonSCEnrolledToken class.
+
+~~~
 [DataContract]
 public class CDPJsonSCEnrolledToken
 {
@@ -2014,19 +2020,39 @@ public class CDPJsonSCEnrolledToken
 	[DataMember]
 	public String nickname { get; set; }     // token's nickname
 }
+~~~
+
 where:
 
- Parameter	 Description
-Byte version	The version of the CDPJsonSCEnrolledToken object, which must be set to 1 for the current implementation.
-UInt64 timeStamp	The UTC time when the token is enrolled (64-bit value representing the number of 100-nanosecond intervals since January 1, 1601).
-String keyHash	Public key's hash, Base64url UTF-8 encoded string.
-The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format (see http://msdn.microsoft.com/en-us/library/aa387459(VS.85).aspx). After that, the RSA256 hash (see https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) of the key is calculated. The resulting 32 bytes are Base64url encoded to the string - KeyHash = Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))
-This unique string can be used to unambiguously indicate the card token in the DeleteUserCredentials method.
- String nickname 	The nickname of the smart card token.This string, along with enrollment time, can be used in the UI to list enrolled tokens.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>version</i></td>
+  <td valign="top">	The version of the CDPJsonSCEnrolledToken object, which must be set to 1 for the current implementation.</td>
+  </tr>
+  <tr>
+  <td valign="top">UInt64 <i>timeStamp</i></td>
+  <td valign="top">	The UTC time when the token is enrolled (64-bit value representing the number of 100-nanosecond intervals since January 1, 1601).</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>keyHash</i></td>
+  <td valign="top">	Public key's hash, Base64url UTF-8 encoded string.<BR><BR>The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format (see <A HREF="https://msdn.microsoft.com/en-us/library/ee442238.aspx">https://msdn.microsoft.com/en-us/library/aa387459(VS.85)</A>. After that, the RSA256 hash (see <A HREF="https://en.wikipedia.org/wiki/Secure_Hash_Algorithm">https://en.wikipedia.org/wiki/Secure_Hash_Algorithm</A> of the key must be calculated. The resulting 32 bytes must be Base64url encoded to the string - KeyHash = Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))<BR><BR>This unique string can be used to unambiguously indicate the card token in the DeleteUserCredentials method.</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>nickname</i></td>
+  <td valign="top">  	The nickname of the smart card token.This string, along with enrollment time, can be used in the UI to list enrolled tokens.</td>
+  </tr>   
+</table>
 
-CustomAction
-CustomAction is not currently supported for the Smart Card Credential.
-Face Credential
+#### CustomAction  
+
+CustomAction is not currently supported for the Smart Card Credential.  
+
+### Face Credential
+
 One of the following third-party SDKs can be used to support the Face Credential in your application.
 •	Cognitec FVSDK ver. 9.1.0
 •	Innovatrics IFace SDK ver. 3.1.0
