@@ -1635,7 +1635,7 @@ We treat the OTP code as a regular string.
 
 Follow these steps to create an OTP Credential.  
 
-1. Base64url encode the UTF-8 representation of the OTP code. NOTE: It is not necessary to include a null terminating character in the UTF-8 representation.
+1. Base64url encode the UTF-8 representation of the OTP code. Note thatOTE: It is not necessary to include a null terminating character in the UTF-8 representation.
 2	Create a JSON representation of the OTP credential, setting TOTP Credential ID as the id member and the string we created in step #1 as the data member;
 For example, to create a JSON representation of the following OTP: 123456:
 The Base64url encoded UTF-8 representation of such OTP is:
