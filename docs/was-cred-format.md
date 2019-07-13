@@ -838,9 +838,10 @@ Base64url encoding UTF-8 representation of image above, we get the following str
   ~~~
 eyJDb21wcmVzc2lvbiI6MCwiRGF0YSI6ImV5SjBlWEFpT2lKS1YxUWlMQTBLSUNKaGJHY2lPaUpJVXpJMU5pSjkiLCJGb3JtYXQiOnsiaUhlaWdodCI6NDAwLCJpV2lkdGgiOjQwMCwiaVhkcGkiOjUwMCwiaVlkcGkiOjUwMCwidUJQUCI6OCwidURhdGFUeXBlIjoxLCJ1SW1hZ2VUeXBlIjoyLCJ1UGFkZGluZyI6MiwidVBsYW5lcyI6MSwidVBvbGFyaXR5IjoyLCJ1UkdCY29sb3JSZXByZXNlbnRhdGlvbiI6MCwidVNpZ25pZmljYW50QnBwIjo4fSwiSGVhZGVyIjp7IkRldmljZUlkIjowLCJEZXZpY2VUeXBlIjo0OTI2NDQxNzM0NzI3MjcwNCwiaURhdGFBY3F1aXNpdGlvblByb2dyZXNzIjoxMDAsInVEYXRhVHlwZSI6MX0sIlZlcnNpb24iOjF9
   ~~~
-6. Finally we can create a JSON representation of BioSample:
 
-  ~~~
+Finally, we create a JSON representation of BioSample.
+
+~~~
 {
 	"Version":1,
 	"Header":
@@ -864,7 +865,7 @@ eyJDb21wcmVzc2lvbiI6MCwiRGF0YSI6ImV5SjBlWEFpT2lKS1YxUWlMQTBLSUNKaGJHY2lPaUpJVXpJ
 	ZUlkIjowLCJEZXZpY2VUeXBlIjo0OTI2NDQxNzM0NzI3MjcwNCwiaURhdGFBY3F1aXNpdGlv
 	blByb2dyZXNzIjoxMDAsInVEYXRhVHlwZSI6MX0sIlZlcnNpb24iOjF9"
 }
-  ~~~
+~~~
 
 #### Creating Fingerprint Credentials from BioSample(s)  
 
