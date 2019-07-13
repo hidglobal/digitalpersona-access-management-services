@@ -932,8 +932,8 @@ Follow these steps to create a JSON representation of the Credential class which
 
   ~~~
 W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K  
-
 ~~~
+
 Finally we create a JSON representation of the Credential class which we can send for identification (verification).
 
 ~~~
@@ -1073,6 +1073,8 @@ Follow these steps to create a Password Credential.
   For example, we create a JSON representation of the following password: P@ssw0rd. The Base64url encoded UTF-8 representation of this password is:
 
   UEBzc3cwcmQ  
+
+3. testing
 
 <ol start="3">
 <li>Finally we create a JSON representation of the Credential class which we can send for password authentication to the DigitalPersona Server.</li></ol>  
