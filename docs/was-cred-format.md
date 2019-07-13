@@ -312,18 +312,15 @@ public class BioSampleHeader
   <tr>
   <td valign="top">Encryption</td>
   <td valign="top">
-  	Define what kind of encryption algorithm was used to protect the Biometric sample. See “BioSampleEncryption enumeration” on page 103 for details).</td>
+  	Define what kind of encryption algorithm was used to protect the Biometric sample. See <A HREF = "biosample-encryption-enumeration"> BioSampleEncryption enumeration</A>.</td>
   </tr>   
 </table>
-
-
-
-
 
 ### BioSampleFormat class  
 
 BioSampleFormat describes the vendor-specific format of the Biometric sample.
 
+~~~
 [DataContract]
 public class BioSampleFormat
 {
@@ -340,16 +337,30 @@ public class BioSampleFormat
 	[DataMember]
   	public UInt16 FormatID;  // Vendor specific format ID
 }
-Data Member	Description
-FormatOwner	Represents the vendor which produced this Biometric sample. Values are assigned and registered by the International Biometric Industry Association (IBIA) (http://www.ibia.org/base/cbeff/_biometric_org.phpx). The supported values are:
-51 – for DigitalPersona
-49 – for Neurotechnology
-FormatID	This value is assigned by the Format Owner and may optionally be registered by the IBIA. Unsupported in this version, so it should be set to 0.
+~~~
 
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:50%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">FormatOwner</td>
+  <td valign="top">	Represents the vendor which produced this Biometric sample. Values are assigned and registered by the International Biometric Industry Association (IBIA) (http://www.ibia.org/base/cbeff/_biometric_org.phpx). The supported values are:<BR>&nbsp;&nbsp;&nbsp;
+  51 – for DigitalPersona<BR>&nbsp;&nbsp;&nbsp;
+  49 – for Neurotechnology</td>
+  </tr>
+  <tr>
+  <td valign="top">FormatID</td>
+  <td valign="top">	This value is assigned by the Format Owner and may optionally be registered by the IBIA. Unsupported in this version, so it should be set to 0.</td>
+  </tr>
+</table>
 
 ### <A NAME="biosampletype-enum"></A>BioSampleType enumeration
 
 The BioSampleType enumeration defines the type of Biometric sample.
+
+~~~
 [DataContract][Flags]
 public enum BioSampleType
 {
@@ -364,16 +375,44 @@ public enum BioSampleType
   [EnumMember]
   SIGNED		= 0x20,
 }
+~~~
 
-Data Member	Description
-RAW	The sample is a raw (unprocessed) biometric sample. For fingerprints, this means the sample is a Fingerprint Image.
-INTERMEDIATE	The sample is a partially processed biometric sample.For fingerprints, this means the sample is a Fingerprint Feature Set.
-PROCESSED	The sample is a fully processed biometric sample. For fingerprints, this means the sample is a Fingerprint Template.
-ENCRYPTED	Not supported in this version.
-SIGNED	Not supported in this version.
+<table style="width:90%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:10%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">RAW</td>
+  <td valign="top">	The sample is a raw (unprocessed) biometric sample. For fingerprints, this means the sample is a Fingerprint Image.</td>
+  </tr>
+  <tr>
+  <td valign="top">
+  INTERMEDIATE	</td>
+  <td valign="top">The sample is a partially processed biometric sample.For fingerprints, this means the sample is a Fingerprint Feature Set.</td>
+  </tr>
+  <tr>
+  <td valign="top">
+  PROCESSED	</td>
+  <td valign="top">The sample is a fully processed biometric sample. For fingerprints, this means the sample is a Fingerprint Template.</td>
+  </tr>
+  <tr>
+  <td valign="top">
+  ENCRYPTED	</td>
+  <td valign="top">Not supported in this version.</td>
+  </tr>
+  <tr>
+  <td valign="top">
+  SIGNED	</td>
+  <td valign="top">Not supported in this version.</td>
+  </tr>   
+</table>
 
-BioSamplePurpose enumeration
+### BioSamplePurpose enumeration  
+
 The BioSamplePurpose details the purpose of this biometric sample.
+
+~~~
 [DataContract]
 public enum BioSamplePurpose
 {
@@ -392,25 +431,47 @@ public enum BioSamplePurpose
   [EnumMember]
   AUDIT = 6,                        																				// Audit
 }
-Data Member	Description
-ANY	The purpose of this biometric sample is undefined and it can be used for any purpose.
-VERIFY	This biometric sample was created for verification (authentication) purposes only.
-IDENTIFY	This biometric sample was created for identification purposes only.
-ENROLL	This biometric sample was created for enrollment purposes.
-ENROLL_FOR_VERIFICATION_ONLY	This biometric sample was created for audit purposes.
+~~~
 
-This document is describing data for authentication SDK which means we are concerning about verification and identification so the following purposes should be supported: [Is this still relevant?]
-ANY - biometric sample can be used for both verification and identification.
-VERIFY - biometric sample can be used for verification only.
-IDENTIFY - biometric sample can be used for identification only.
-Notes
-If a fingerprint image is sent as the biometric sample, the ANY purpose should be set.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">ANY</td>
+  <td valign="top">	The purpose of this biometric sample is undefined and it can be used for any purpose.</td>
+  </tr>
+  <tr>
+  <td valign="top">VERIFY</td>
+  <td valign="top">This biometric sample was created for verification (authentication) purposes only.</td>
+  </tr>
+  <tr>
+  <td valign="top">IDENTIFY</td>
+  <td valign="top">This biometric sample was created for identification purposes only.</td>
+  </tr>
+  <tr>
+  <td valign="top">ENROLL</td>
+  <td valign="top">This biometric sample was created for enrollment purposes.</td>
+  </tr>
+  <tr>
+  <td valign="top"> 	
+  ENROLL_FOR_VERIFICATION_ONLY	</td>
+  <td valign="top">This biometric sample was created for audit purposes.</td>
+  </tr>
+</table>
+
+#### Notes  
+
+If a fingerprint image is sent as a  biometric sample, the ANY purpose should be set.  
+
 If feature extraction is done by the DigitalPersona engine, with any flag except FT_PRE_REG_FTR and FT_REG_FTR, it can be used for both verification and identification so ANY purpose could be provided.
 
-#### BioSampleEncryption enumeration
-
+#### <A NAME="biosample-encryption-enumeration">BioSampleEncryption enumeration</A>
 
 BioSampleEncryption specifies the encryption algorithm that was used to protect the biometric sample.
+
+~~~
 [DataContract]
 public enum BioSampleEncryption
 {
@@ -419,28 +480,74 @@ public enum BioSampleEncryption
 	[EnumMember]
   XTEA = 1,     // XTEA encryption with well-known key
 }
-Enum Member	Description
-NONE	The biometric sample provided is not encrypted.
-XTEA	The biometric sample provided is encrypted using the DigitalPersona implementation of XTEA with a hardcoded key.
+~~~
 
-Notes
-We strongly recommend using XTEA encryption for biometric samples (as we do in DigitalPersona Pro and DigitalPersona products), but we recognize the complexity of XTEA implementation on different platforms (such as Android) so unencrypted samples are accepted as well.
-Biometric Sample Data
-The following data formats for fingerprint samples are supported.
-•	Fingerprint Feature Set
-•	Raw Fingerprint Image
-Fingerprint Feature Set
-To specify a Fingerprint Feature Set in the Biometric sample, the following values in BioSampleHeader must be set.
-Value	Description
-Factor	must be set to 8 (FINGERPRINT).
-FormatOwner	If the DigitalPersona engine was used for feature extraction, FormatOwner must be set to 51. If Neurotechnologija engine was used for feature extraction, FormatOwner must be set to 49.
-Type	must be set to 2 (INTERMEDIATE).
-Purpose	can be set to 0 (ANY).
-Quality	should be set to -1.
-Encryption	If XTEA encryption was used, Encryption must be set to 1. Otherwise, set to 0.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Enum Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">NONE</td>
+  <td valign="top">	The biometric sample provided is not encrypted.</td>
+  </tr>
+  <tr>
+  <td valign="top">XTEA</td>
+  <td valign="top">	The biometric sample provided is encrypted using the DigitalPersona implementation of XTEA with a hardcoded key.</td>
+  </tr>
+</table>
 
-Because we treat Fingerprint Feature Set as an opaque blob, we should provide the Base64Url encoded feature set blob as the Data member of BioSample.
-Below is an example of JSON representation of Fingerprint Feature Set.
+#### Notes  
+
+We strongly recommend using XTEA encryption for biometric samples (as we do in DigitalPersona products), but we recognize the complexity of XTEA implementation on different platforms (such as Android) so unencrypted samples are accepted as well.  
+
+### Biometric Sample Data  
+
+The following data formats for fingerprint samples are supported.  
+- Fingerprint Feature Set  
+-	Raw Fingerprint Image  
+
+#### Fingerprint Feature Set  
+
+To specify a Fingerprint Feature Set in the Biometric sample, the following values in BioSampleHeader must be set.  
+
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Factor</td>
+  <td valign="top">Must be set to 8. (FINGERPRINT).</td>
+  </tr>
+  <tr>
+  <td valign="top">FormatOwner</td>
+  <td valign="top">	If the DigitalPersona engine was used for feature extraction, FormatOwner must be set to 51.<BR><BR> If the Neurotechnologija engine was used for feature extraction, FormatOwner must be set to 49.</td>
+  </tr>
+  <tr>
+  <td valign="top">Type</td>
+  <td valign="top">Must be set to 2. (INTERMEDIATE).</td>
+  </tr>
+  <tr>
+  <td valign="top">Purpose</td>
+  <td valign="top">Can be set to 0 (ANY).</td>
+  </tr>
+  <tr>
+  <td valign="top">Quality</td>
+  <td valign="top">Should be set to -1.</td>
+  </tr>
+  <tr>
+  <td valign="top">Encryption</td>
+  <td valign="top">	If XTEA encryption was used, Encryption must be set to 1. Otherwise, set to 0.</td>
+  </tr>       
+</table>
+
+Because we treat the Fingerprint Feature Set as an opaque blob, we must provide the Base64Url encoded feature set blob as the Data member of BioSample.  
+
+Below is an example of JSON representation of a Fingerprint Feature Set.
+
+~~~
 {
 	"Version":1,
 	"Header":
@@ -459,21 +566,55 @@ Below is an example of JSON representation of Fingerprint Feature Set.
 	"Data":"eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9"
 		// Base64url encoded Feature Set
 }
-Fingerprint image
-To specify a Fingerprint Image in the Biometric sample, the following values in BioSampleHeader must be set.
-Value	Description
-Factor	must be set to 8 (FINGERPRINT).
-FormatOwner	is ignored and could be set to 51;
-Type	must be set to 1 (RAW);
-Purpose	is ignored and can be set to 0 (ANY);
-Quality	should be set to -1.
-Encryption	If XTEA encryption was used, Encryption must be set to 1. Otherwise, set to 0.
+~~~
+#### Fingerprint image  
 
-Notes
-We cannot treat fingerprint image as an opaque blob because the image has many parameters which need to be passed like image size, image resolution, etc.
-We use the FD_Image format which we are using in “C” code as a prototype for Web image representation to simplify the image conversion on the DigitalPersona Server.
+To specify a Fingerprint Image in the Biometric sample, the following values in BioSampleHeader must be set.  
+
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Factor</td>
+  <td valign="top">Must be set to 8 (FINGERPRINT).
+  </td>
+  </tr>
+  <tr>
+  <td valign="top">FormatOwner</td>
+  <td valign="top">Is ignored and could be set to 51.</td>
+  </tr>
+  <tr>
+  <td valign="top">Type</td>
+  <td valign="top">Must be set to 1 (RAW).</td>
+  </tr>
+  </tr>
+  <tr>
+  <td valign="top">Purpose</td>
+  <td valign="top">Is ignored and can be set to 0 (ANY).</td>
+  </tr>
+  </tr>
+  <tr>
+  <td valign="top">Quality</td>
+  <td valign="top">Should be set to -1.</td>
+  </tr>  
+  <tr>
+  <td valign="top">Encryption</td>
+  <td valign="top">	If XTEA encryption was used, Encryption must be set to 1. Otherwise, set to 0.</td>
+  </tr>    
+</table>
+
+#### Notes  
+
+We cannot treat fingerprint image as an opaque blob because the image has many parameters which need to be passed, such as image size, image resolution, etc.  
+
+Therefore, we use the FD_Image format which we are using in “C” code as a prototype for Web image representation to simplify the image conversion on the DigitalPersona Server.  
+
 The following classes are defined in WBF terminology for specifying an image in the biometric sample.
 
+~~~
 /* uImageType */
 [DataContract]
 public enum FpImageType
@@ -606,14 +747,41 @@ public class FpImage
   [DataMember]
   public String Data { get; set; }
 }
-Value	Description
-Version	Version of Fingerprint Image format. Must be 1 in this version.
-Header	Header which specifies details of the fingerprint imaging device.
-Format	Format of the fingerprint image. It details image size, image resolution, etc.
-Compression	Compression algorithm used to compress the fingerprint image. In this version the only supported compression algorithm is Jasper JPEG.
-Data	Base64url encoded fingerprint image.
+~~~
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+
+  <td valign="top">Version</td>
+  <td valign="top">	Version of Fingerprint Image format. Must be 1 in this version.</td>
+  </tr>
+  <tr>
+  <td valign="top">Header</td>
+  <td valign="top">Header which specifies details of the fingerprint imaging device.</td>
+  </tr>
+  <tr>  
+  <tr>
+  <td valign="top">Format</td>
+  <td valign="top">Format of the fingerprint image. It details image size, image resolution, etc.
+  	</td>
+  </tr>
+  <tr>
+  <td valign="top">Compression</td>
+  <td valign="top">Compression algorithm used to compress the fingerprint image. In this version the only supported compression algorithm is Jasper JPEG.</td>
+  </tr>
+  <tr>
+  <td valign="top">
+  Data	</td>
+  <td valign="top">Base64url encoded fingerprint image.</td>
+  </tr>   
+</table>
 
 Below is an example of fingerprint image JSON representation.
+
+~~~
 {
 	"Version":1,
 	"Header":
@@ -641,24 +809,41 @@ Below is an example of fingerprint image JSON representation.
 	"Compression":0,      												// uncompressed
 	"Data":"eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9" // Base64url encoded image
 }
-Creating a JSON representation of a BioSample from a fingerprint image
-To create a JSON representation of BioSample from a fingerprint image, perform the following steps.
-1	Capture a fingerprint image using any supported capturing device.
-2	Base64url encode the image raw bytes. These raw bytes should not include any metadata like image size or resolution; those data will be provided in the JSON Header and Format sections.
-3	Knowing the fingerprint image metadata information, create a JSON representation of the FpImage class.
-4	Base64url encode UTF-8 representation of JSON representation of FpImage;
-5	Create JSON representation of BioSample as described in “BioSample class” on page 99, setting the string we got in step #5 as Data member of BioSample;
-Below we give an example of how to create a JSON representation of BioSample from a fingerprint image.
-Let’s assume you capture a fingerprint image using a U.are.U 5200 device. The raw image bytes are the following:
-[123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,34,32,82,83,50,53,54,34,125]
-The Base64url representation of this image is:
-eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9
-Knowing the image width and height, resolution, etc we can create a JSON representation of the FpImage class. (Note that the sequence of nodes in JSON representation is unimportant.)
-{"Compression":0,"Data":"eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9","Format":{"iHeight":400,"iWidth":400,"iXdpi":500,"iYdpi":500,"uBPP":8,"uDataType":1,"uImageType":2,"uPadding":2,"uPlanes":1,"uPolarity":2,"uRGBcolorRepresentation":0,"uSignificantBpp":8},"Header":{"DeviceId":0,"DeviceType":49264417347272704,"iDataAcquisitionProgress":100,"uDataType":1},"Version":1}
-Base64url encoding UTF-8 representation of image above, we get the following string:
-eyJDb21wcmVzc2lvbiI6MCwiRGF0YSI6ImV5SjBlWEFpT2lKS1YxUWlMQTBLSUNKaGJHY2lPaUpJVXpJMU5pSjkiLCJGb3JtYXQiOnsiaUhlaWdodCI6NDAwLCJpV2lkdGgiOjQwMCwiaVhkcGkiOjUwMCwiaVlkcGkiOjUwMCwidUJQUCI6OCwidURhdGFUeXBlIjoxLCJ1SW1hZ2VUeXBlIjoyLCJ1UGFkZGluZyI6MiwidVBsYW5lcyI6MSwidVBvbGFyaXR5IjoyLCJ1UkdCY29sb3JSZXByZXNlbnRhdGlvbiI6MCwidVNpZ25pZmljYW50QnBwIjo4fSwiSGVhZGVyIjp7IkRldmljZUlkIjowLCJEZXZpY2VUeXBlIjo0OTI2NDQxNzM0NzI3MjcwNCwiaURhdGFBY3F1aXNpdGlvblByb2dyZXNzIjoxMDAsInVEYXRhVHlwZSI6MX0sIlZlcnNpb24iOjF9
-Finally we can create a JSON representation of BioSample:
+~~~
 
+#### Creating a JSON representation of a BioSample from a fingerprint image  
+
+To create a JSON representation of BioSample from a fingerprint image, perform the following steps.  
+
+1. Capture a fingerprint image using any supported capturing device.  
+2. Base64url encode the image raw bytes. These raw bytes should not include any metadata like image size or resolution; those data will be provided in the JSON Header and Format sections.
+3.	Knowing the fingerprint image metadata information, create a JSON representation of the FpImage class.
+4.	Base64url encode UTF-8 representation of JSON representation of FpImage;
+5.	Create JSON representation of BioSample as described in [BioSample class](#biosample-class), setting the string from step #5 as the Data member of BioSample.
+
+  Below we give an example of how to create a JSON representation of BioSample from a fingerprint image.  
+
+  Let’s assume you capture a fingerprint image using a U.are.U 5200 device. The raw image bytes are the following.
+
+  [123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,34,32,82,83,50,53,54,34,125]  
+
+  The Base64url representation of this image is:  
+
+  eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9
+
+  Knowing the image width and height, resolution, etc we can create a JSON representation of the FpImage class. (Note that the sequence of nodes in JSON representation is unimportant.)  
+
+  ~~~
+{"Compression":0,"Data":"eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9","Format":{"iHeight":400,"iWidth":400,"iXdpi":500,"iYdpi":500,"uBPP":8,"uDataType":1,"uImageType":2,"uPadding":2,"uPlanes":1,"uPolarity":2,"uRGBcolorRepresentation":0,"uSignificantBpp":8},"Header":{"DeviceId":0,"DeviceType":49264417347272704,"iDataAcquisitionProgress":100,"uDataType":1},"Version":1}
+  ~~~
+Base64url encoding UTF-8 representation of image above, we get the following string:
+
+  ~~~
+eyJDb21wcmVzc2lvbiI6MCwiRGF0YSI6ImV5SjBlWEFpT2lKS1YxUWlMQTBLSUNKaGJHY2lPaUpJVXpJMU5pSjkiLCJGb3JtYXQiOnsiaUhlaWdodCI6NDAwLCJpV2lkdGgiOjQwMCwiaVhkcGkiOjUwMCwiaVlkcGkiOjUwMCwidUJQUCI6OCwidURhdGFUeXBlIjoxLCJ1SW1hZ2VUeXBlIjoyLCJ1UGFkZGluZyI6MiwidVBsYW5lcyI6MSwidVBvbGFyaXR5IjoyLCJ1UkdCY29sb3JSZXByZXNlbnRhdGlvbiI6MCwidVNpZ25pZmljYW50QnBwIjo4fSwiSGVhZGVyIjp7IkRldmljZUlkIjowLCJEZXZpY2VUeXBlIjo0OTI2NDQxNzM0NzI3MjcwNCwiaURhdGFBY3F1aXNpdGlvblByb2dyZXNzIjoxMDAsInVEYXRhVHlwZSI6MX0sIlZlcnNpb24iOjF9
+  ~~~
+6. Finally we can create a JSON representation of BioSample:
+
+  ~~~
 {
 	"Version":1,
 	"Header":
@@ -682,19 +867,30 @@ Finally we can create a JSON representation of BioSample:
 	ZUlkIjowLCJEZXZpY2VUeXBlIjo0OTI2NDQxNzM0NzI3MjcwNCwiaURhdGFBY3F1aXNpdGlv
 	blByb2dyZXNzIjoxMDAsInVEYXRhVHlwZSI6MX0sIlZlcnNpb24iOjF9"
 }
-Creating Fingerprint Credentials from BioSample(s)
-Follow these steps to create a JSON representation of Credential class which we can send in one of the IDPWebAuth interface methods from one or more biometric samples.
-1	Base64url encode the binary representation of any fingerprint feature set(s) or encode any fingerprint image(s) as described in the previous topic.
-2	Create a JSON representation BioSample(s).
-3	Combine one or more BioSamples in a JSON array using square brackets []. NOTE: we support multiple biometric samples in one Credential to handle two (multi) finger identification/verification.
-4	Base64url encode UTF-8 representation of JSON array of BioSamples in a string;
-5	Create a JSON representation of the credentials using the Fingerprint ID as the id member and the string created in step 4 as the data member.
-For example we have a fingerprint feature set which we would like to send to the DigitalPersona Server for identification. This feature set is created using the DigitalPersona fingerprint engine and the following bytes array represents this feature set.
-[123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,34,32,82,83,50,53,54,34,125]
-The Base64url encoded representation of this fingerprint feature set is:
-eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9
-The JSON representation of BioSample class for this feature set is:
-{
+  ~~~
+
+#### Creating Fingerprint Credentials from BioSample(s)  
+
+Follow these steps to create a JSON representation of the Credential class which we can send in one of the IDPWebAuth interface methods from one or more biometric samples.  
+
+1.	Base64url encode the binary representation of any fingerprint feature set(s) or encode any fingerprint image(s) as described in the previous topic.
+2.	Create a JSON representation BioSample(s).
+3.	Combine one or more BioSamples in a JSON array using square brackets []. NOTE: we support multiple biometric samples in one Credential to handle two (multi) finger identification/verification.
+4.	Base64url encode UTF-8 representation of JSON array of BioSamples in a string;
+5.	Create a JSON representation of the credentials using the Fingerprint ID as the id member and the string created in step 4 as the data member.  
+
+  For example we have a fingerprint feature set which we would like to send to the DigitalPersona Server for identification. This feature set is created using the DigitalPersona fingerprint engine and the following bytes array represents this feature set.  
+
+  [123,34,116,121,112,34,58,34,74,87,84,34,44,10,32,34,97,108,103,34,58,34,32,82,83,50,53,54,34,125]  
+
+  The Base64url encoded representation of this fingerprint feature set is:  
+
+  eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9  
+
+  The JSON representation of BioSample class for this feature set is:  
+
+  ~~~
+  {
 	"Version":1,
 	"Header":
 	{
@@ -711,8 +907,11 @@ The JSON representation of BioSample class for this feature set is:
 	},
 	"Data":"eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9"				
 }
-Combining the BioSample(s) in an array we have the following JSON representation:
-[{
+  ~~~
+  Combining the BioSample(s) in an array we have the following JSON representation:
+
+  ~~~
+  [{
 	"Version":1,
 	"Header":
 	{
@@ -729,15 +928,26 @@ Combining the BioSample(s) in an array we have the following JSON representation
 		},
 	"Data":"eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9"				
 }]
-The Base64url encoded UTF-8 representation of the JSON array above is:
-W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K
-Finally we create a JSON representation of the Credential class which we can send for identification (verification):
-{"id":"AC184A13-60AB-40e5-A514-E10F777EC2F9",
-"data":"W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K"}
-AuthenticateUser
-To call the AuthenticateUser() method, a fingerprint credential must already have been created as described in the previous section.
-Below is an example of HTTP Body for fingerprint authentication with the fingerprint credential created in the previous section.
+  ~~~
 
+  The Base64url encoded UTF-8 representation of the JSON array above is:  
+
+  ~~~
+W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K  
+  ~~~
+6. Finally we create a JSON representation of the Credential class which we can send for identification (verification).
+
+  ~~~
+{"id":"AC184A13-60AB-40e5-A514-E10F777EC2F9",
+"data":"W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K"}  
+  ~~~
+### AuthenticateUser  
+
+To call the AuthenticateUser() method, a fingerprint credential must already have been created as described in the previous section.  
+
+Below is an example of HTTP Body for fingerprint authentication with the fingerprint credential created in the previous section.  
+
+~~~
 {
 	"user":
 	{
@@ -754,9 +964,15 @@ Below is an example of HTTP Body for fingerprint authentication with the fingerp
 		9XQ0K"
 	}
 }
-IdentifyUser
-To call the IdentifyUser() method, the caller must create a fingerprint credential as described previously.
+~~~
+
+### IdentifyUser  
+
+To call the IdentifyUser() method, the caller must create a fingerprint credential as described previously.  
+
 Below is an example of HTTP Body for fingerprint identification with the fingerprint credential created previously.
+
+~~~
 {
 	"credential":
 	{
@@ -768,11 +984,21 @@ Below is an example of HTTP Body for fingerprint identification with the fingerp
 		9XQ0K"
 	}
 }
-GetEnrollmentData
-To ask information about enrolled fingerprints, the client should send an IDPWebAuth-> GetEnrollmentData request to the server. Below is an example of such a request:
+~~~
+
+### GetEnrollmentData  
+
+To ask information about enrolled fingerprints, the client should send an IDPWebAuth-> GetEnrollmentData request to the server. Below is an example of such a request.
+
+~~~
 https://www.mycompany.com/DPWebAuthService.svc/GetEnrollmentData?user=
-someone@mycompany.com&type=6&cred_id=AC184A13-60AB-40e5-A514-E10F777EC2F9
-The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation of a list (array) of fingerprints (fingerprint positions) enrolled by the user. Below is the ANSI 381 list of valid fingerprint positions.
+someone@mycompany.com&type=6&cred_id=AC184A13-60AB-40e5-A514-E10F777EC2F9  
+~~~
+
+The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation of a list (array) of fingerprints (fingerprint positions) enrolled by the user.  
+
+Below is the ANSI 381 list of valid fingerprint positions.  
+
 Fingerprint position	Value		Fingerprint position	Value
 Unknown		0		Left thumb		6
 Right thumb		1		Left index finger		7
