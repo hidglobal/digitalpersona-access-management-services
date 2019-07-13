@@ -1338,7 +1338,11 @@ Below is an example of the JSON representation of a Regular Live Question.
 	"text”:”What was the name of the first school you attended?”
 															// text of the question
 }
-Below is an example of JSON representation of a Custom Live Question:
+~~~
+
+Below is an example of JSON representation of a Custom Live Question.
+
+~~~
 {
 	"version":1,														// must be set to 1
 	"number":102,														// question number
@@ -1635,20 +1639,37 @@ We treat the OTP code as a regular string.
 
 Follow these steps to create an OTP Credential.  
 
-1. Base64url encode the UTF-8 representation of the OTP code. Note thatOTE: It is not necessary to include a null terminating character in the UTF-8 representation.
-2	Create a JSON representation of the OTP credential, setting TOTP Credential ID as the id member and the string we created in step #1 as the data member;
-For example, to create a JSON representation of the following OTP: 123456:
-The Base64url encoded UTF-8 representation of such OTP is:
-MTIzNAdT
-We then create a JSON representation of the Credential class which we can send for OTP authentication to the DigitalPersona 		Server:
-{"id":"324C38BD-0B51-4E4D-BD75-200DA0C8177F",
-"data":"MTIzNAdT"}
-NOTE: To use Push Notification OTP caller must use word "push" instead of OTP code. Below is example of JSON representation of Credential class which we can send for Push Notification OTP authentication to the DigitalPersona Server:
+1. Base64url encode the UTF-8 representation of the OTP code. Note thatit is not necessary to include a null terminating character in the UTF-8 representation.
+2. Create a JSON representation of the OTP credential, setting the TOTP Credential ID as the id member and the string  created in step #1 as the data member.  
+
+  For example, to create a JSON representation of the following OTP: 123456:
+
+  The Base64url encoded UTF-8 representation of such OTP is:  
+
+  MTIzNAdT  
+
+  We then create a JSON representation of the Credential class which we can send for OTP authentication to the DigitalPersona Server.
+
+  ~~~
+  {"id":"324C38BD-0B51-4E4D-BD75-200DA0C8177F","data":"MTIzNAdT"}
+  ~~~
+
+**Note**: To use Push Notification, the OTP caller must use the word "push" instead of the OTP code.  
+
+Below is example of JSON representation of Credential class which we can send for Push Notification OTP authentication to the DigitalPersona Server.
+
+~~~
 {"id":"324C38BD-0B51-4E4D-BD75-200DA0C8177F",
 "data":"cHVzaA"}
-AuthenticateUser
-To call the AuthenticateUser() method, the caller must create a TOTP credential as described above.
-Below is an example of HTTP Body for TOTP authentication with a previously created TOTP credential.
+~~~
+
+#### AuthenticateUser  
+
+To call the AuthenticateUser() method, the caller must create a TOTP credential as described above.  
+
+Below is an example of HTTP Body for TOTP authentication with a previously created TOTP credential.  
+
+~~~
 {
 	"user":
 	{
@@ -1661,7 +1682,11 @@ Below is an example of HTTP Body for TOTP authentication with a previously creat
 		"data":"MTIzNAdT"
 	}
 }
-Below is an example of HTTP Body for Push Notification OTP authentication with TOTP credential created above.
+~~~  
+
+Below is an example of HTTP Body for Push Notification OTP authentication with TOTP credential created above.  
+
+~~~
 {
 	"user":
 	{
@@ -1674,10 +1699,17 @@ Below is an example of HTTP Body for Push Notification OTP authentication with T
 		"data":"cHVzaA"
 	}
 }
-IdentifyUser
-The TOTP credential does not support user identification, so an IdentifyUser() call with a TOTP credential will return a "Not implemented" error.
-GetEnrollmentData
-As result of successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation OTP based information. We introduce OTPEnrollmentData class to represent this information,
+~~~  
+
+#### IdentifyUser  
+
+The TOTP credential does not support user identification, so an IdentifyUser() call with a TOTP credential will return a "Not implemented" error.  
+
+#### GetEnrollmentData  
+
+The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation of our OTP-based information. The  OTPEnrollmentData class  represents this information.
+
+~~~
 [DataContract]
 public class OTPEnrollmentData
 {
@@ -1694,16 +1726,42 @@ public class OTPEnrollmentData
 	[DataMember]
 	public String serialNumber { get; set; } // Last 4 digits of HD OTP Serial number
 }
+~~~
 
-Value	Description
-pn_tenant_id	Push Notification Tenant Id. This is optional parameter and if customer does not subscribe for DigitalPersona Push Notification this parameter will be set to null.
-pn_api_key	Push Notification API Key. This is optional parameter and if customer does not subscribe for DigitalPersona Push Notification this parameter will be set to null.
-nexmo_api_key	API Key for Nexmo SMS Gateway. The real API key would not be returned here. If Nexmo API Key is set by the customer, world "set" would be returned here. Otherwise this parameter would be omitted.
-nexmo_api_secret	API Secret for Nexmo SMS Gateway. The real API Secret would not be returned here. If Nexmo API Secret is set by the customer, world "set" would be returned here. Otherwise this parameter would be omitted.
-phoneNumber	Last 4 digits of registered phone number which would be used for SMS OTP.
-serialNumber	Last 4 digits of hardware OTP token serial number assigned to this user.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+    <td valign="top">pn_tenant_id</td>
+    <td valign="top">	Push Notification Tenant Id. This is an optional parameter and if the customer does not subscribe to  DigitalPersona Push Notification this parameter will be set to null.</td>
+  </tr>
+  <tr>
+    <td valign="top">pn_api_key</td>
+    <td valign="top">	Push Notification API Key. This is an  optional parameter and if the customer does not subscribe for DigitalPersona Push Notification this parameter will be set to null.</td>
+  </tr>
+  <tr>
+    <td valign="top">nexmo_api_key</td>
+    <td valign="top">	API Key for Nexmo SMS Gateway. The real API key would not be returned here. If the Nexmo API Key is set by the customer, the word "set" would be returned here. Otherwise this parameter would be omitted</td>
+  </tr>
+  <tr>
+    <td valign="top">nexmo_api_secret</td>
+    <td valign="top">	API Secret for Nexmo SMS Gateway. The real API Secret would not be returned here. If the Nexmo API Secret is set by the customer, the word "set" would be returned here. Otherwise this parameter would be omitted.</td>
+  </tr>
+  <tr>
+    <td valign="top">phoneNumber</td>
+    <td valign="top">	Last 4 digits of registered phone number which would be used for SMS OTP.</td>
+  </tr>
+  <tr>
+    <td valign="top">serialNumber</td>
+    <td valign="top">	Last 4 digits of hardware OTP token serial number assigned to this user.</td>
+  </tr>
+</table  
 
-Below is an example of JSON representation of GetEnroomentDataResult:
+Below is an example of JSON representation of GetEnrollmentDataResult.  
+
+~~~
 {
 	"pn_tenant_id":"crossmatch.com",
 	"pn_api_key":"25317484582342934",
@@ -1712,26 +1770,45 @@ Below is an example of JSON representation of GetEnroomentDataResult:
 	"phoneNumber":"7304",
 	"serialNumber":"7895",
 }
-Parsing GetEnrollmentDataResult
-One must have the following steps to process (parse) GetEnrollmentDataResult:
-1	Get string provided in GetEnrollmentDataResult.
-2	Base64url decode the string above to get UTF-8 representation of OTPEnrollmentData.
-3	Decode UTF-8 string to format compatible with JSON parser (Unicode?).
-4	Using JSON parser, parse string above to objects of OTPEnrollmentData class.
-CustomAction
-The following CustomAction operations are currently supported for the TOTP Credential.
-•	Send SMS OTP Request
-•	Send E-Mail OTP Request
-Send SMS OTP Request
-There are two possible options for an SMS OTP request.
-•	SMS request for Enrollment
-•	SMS request for Authentication
-	Send SMS Request for Enrollment
-Send SMS Request operation Action ID is "513".
-Caller does not need to provide valid ticket to perform this operation so ticket parameter may be set to "null".
-Valid user to whom SMS needs to be send needs to be provided.
-Data parameter of Credential class should be set to Base64Url encoded Json Representation of OTPEnrollData class:
-The following class will represent enrollment sample for TOTP credentials:
+~~~
+
+##### Parsing GetEnrollmentDataResult  
+
+Perform the following steps to process (parse) GetEnrollmentDataResult.  
+
+1. Get the string provided in GetEnrollmentDataResult.  
+2. Base64url decode the string above to get the UTF-8 representation of OTPEnrollmentData.  
+3. Decode the UTF-8 string to a format compatible with JSON parser
+<mark style="color:Red;">(Unicode?)</mark>.
+4	Using a JSON parser, parse the string to objects of the OTPEnrollmentData class.  
+
+#### CustomAction  
+
+The following CustomAction operations are currently supported for the TOTP Credential.  
+
+- Send SMS OTP Request  
+- Send E-Mail OTP Request  
+
+##### Send SMS OTP Request  
+
+There are two possible options for an SMS OTP request.  
+
+- Send SMS request for Enrollment  
+- Send SMS request for Authentication  
+
+######	Send SMS Request for Enrollment  
+
+Send SMS Request operation Action ID is "513".  
+
+The caller does not need to provide a  valid ticket to perform this operation, so the ticket parameter may be set to "null".  
+
+A valid user to whom SMS needs to be send needs to be provided.  
+
+The Data parameter of the Credential class should be set to the Base64Url encoded Json Representation of OTPEnrollData class.
+
+The following class represents the  enrollment sample for TOTP credentials.
+
+~~~
 [DataContract]
 public class OTPEnrollData
 {
@@ -1742,12 +1819,31 @@ public class OTPEnrollData
 	[DataMember]
 	public String phoneNumber { get; set; }     // User phone number
 }
-Value	Description
-otp	String with OTP verification code. In case of Send SMS action this parameter should omitted or set to "null".
-key	Bease64Url Encoded TOTP key.
-phoneNumber	User's phone number.
+~~~
 
-Below is a valid example of HTTP Body of Send SMS request for Enrollment:
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">otp</td>
+  <td valign="top">	String with OTP verification code. In case of Send SMS action this parameter should omitted or set to "null".</td>
+  </tr>
+  <tr>
+  <td valign="top">key</td>
+  <td valign="top">	Bease64Url Encoded TOTP key.</td>
+  </tr>
+  <tr>
+  <td valign="top">phoneNumber</td>
+  <td valign="top">
+  	User's phone number.</td>
+  </tr>   
+</table>
+
+Below is an example of an HTTP Body of Send SMS request for Enrollment.
+
+~~~
 {
 	"ticket":{"jwt":null},
 	"user":
@@ -1762,13 +1858,22 @@ Below is a valid example of HTTP Body of Send SMS request for Enrollment:
 	},
 	"actionId":513
 }
-This call will send Enrolment Send SMS request for DigitalPersona user with account name "klozin".
-Send SMS Request for Authentication
-Send SMS Request operation Action ID is "513".
-Caller does not need to provide valid ticket to perform this operation so ticket parameter may be set to "null".
-Valid user to whom SMS needs to be send needs to be provided.
-Data parameter of Credential class should be set "null".
-Below is a valid example of HTTP Body of Send SMS request for Authentication.
+~~~
+
+This call will send Enrolment Send SMS request for DigitalPersona user with account name "someone".  
+
+###### Send SMS Request for Authentication  
+Send SMS Request operation Action ID is "513".  
+
+The caller does not need to provide a  valid ticket to perform this operation, so the ticket parameter may be set to "null".  
+
+A valid user to whom SMS needs to be sent has to be provided.  
+
+The Data parameter of the Credential class should be set "null".  
+
+Below is a example of an HTTP Body of Send SMS request for Authentication.
+
+~~~
 {
 	"ticket":{"jwt":null},
 	"user":
@@ -1783,14 +1888,27 @@ Below is a valid example of HTTP Body of Send SMS request for Authentication.
 	},
 	"actionId":513
 }
-This call will send Authentication Send SMS request for DigitalPersona user with account name "klozin".
-Send E-Mail OTP Request
-Send E-Mail OTP Request operation Action ID is "514".
-Caller does not need to provide valid ticket to perform this operation so ticket parameter may be set to "null".
-Valid user to whom E-mail needs to be send needs to be provided. User e-mail address would be retrieved from "E-mail-Addresses" attribute (Ldap-Display-Name is "mail") of user account object in Active Directory. If "mail" attribute is not set in user account in AD, call will fail. If multiple mails set in AD, OTP code will be send to all those mail addresses.
-Valid user to whom OTP code requests to be mailed needs to be provided.
-Data parameter of Credential class should be set "null".
-Below is a valid example of HTTP Body of Send E-Mail OTP request:
+~~~
+
+This call will send Authentication Send SMS request for DigitalPersona user with account name "someone".  
+
+###### Send E-Mail OTP Request
+
+The Send E-Mail OTP Request operation Action ID is "514".  
+
+The caller does not need to provide a  valid ticket to perform this operation, so the ticket parameter may be set to "null".  
+
+A valid user to whom the email needs to be sent has to be provided. The user email address would be retrieved from the "E-mail-Addresses" attribute (Ldap-Display-Name is "mail") of the user account object in Active Directory.  
+
+If the "mail" attribute is not set in the user account in AD, the call will fail. If multiple mail attributes are  set in AD, the OTP code will be sent to all of the addresses.  
+
+A valid user to whom the OTP code requests are to be mailed must be provided.  
+
+The Data parameter of the Credential class should be set "null".  
+
+Below is an example of an HTTP Body for a  Send E-Mail OTP request.  
+
+~~~
 {
 	"ticket":{"jwt":null},
 	"user":
@@ -1805,6 +1923,8 @@ Below is a valid example of HTTP Body of Send E-Mail OTP request:
 	},
 	"actionId":514
 }
+~~~
+
 This call will send OTP code over e-mail for AD user with UPN name "someone@mycompany.com".
 Smart Card Credential
 The following ID is defined for Smart Card Credential:
