@@ -754,28 +754,25 @@ public class FpImage
     <th style="width:20%" ALIGN="left">Value</th>
     <th style="width:35%" ALIGN="left">Description</th>
   </tr>
-
-  <td valign="top">Version</td>
-  <td valign="top">	Version of Fingerprint Image format. Must be 1 in this version.</td>
+    <td valign="top">Version</td>
+    <td valign="top">	Version of Fingerprint Image format. Must be 1 in this version.</td>
   </tr>
   <tr>
-  <td valign="top">Header</td>
-  <td valign="top">Header which specifies details of the fingerprint imaging device.</td>
+    <td valign="top">Header</td>
+    <td valign="top">Header which specifies details of the fingerprint imaging device.</td>
   </tr>
-  <tr>  
   <tr>
-  <td valign="top">Format</td>
-  <td valign="top">Format of the fingerprint image. It details image size, image resolution, etc.
+    <td valign="top">Format</td>
+    <td valign="top">Format of the fingerprint image. It details image size, image resolution, etc.
   	</td>
   </tr>
   <tr>
-  <td valign="top">Compression</td>
-  <td valign="top">Compression algorithm used to compress the fingerprint image. In this version the only supported compression algorithm is Jasper JPEG.</td>
+    <td valign="top">Compression</td>
+    <td valign="top">Compression algorithm used to compress the fingerprint image. In this version the only supported compression algorithm is Jasper JPEG.</td>
   </tr>
   <tr>
-  <td valign="top">
-  Data	</td>
-  <td valign="top">Base64url encoded fingerprint image.</td>
+    <td valign="top">Data	</td>
+    <td valign="top">Base64url encoded fingerprint image.</td>
   </tr>   
 </table>
 
