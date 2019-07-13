@@ -1759,7 +1759,7 @@ public class OTPEnrollmentData
     <td valign="top">serialNumber</td>
     <td valign="top">	Last 4 digits of hardware OTP token serial number assigned to this user.</td>
   </tr>
-</table  
+</table>  
 
 Below is an example of JSON representation of GetEnrollmentDataResult.  
 
