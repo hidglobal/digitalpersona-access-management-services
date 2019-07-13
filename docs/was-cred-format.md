@@ -1925,12 +1925,21 @@ Below is an example of an HTTP Body for a  Send E-Mail OTP request.
 }
 ~~~
 
-This call will send OTP code over e-mail for AD user with UPN name "someone@mycompany.com".
-Smart Card Credential
-The following ID is defined for Smart Card Credential:
-{D66CC98D-4153-4987-8EBE-FB46E848EA98}
-AuthenticateUser
-The data for a smart card credential is a Base64url encoded UTF-8 representation of the JSON array of the CDPJsonSCAuthToken classes. Every public key is represented by the CDPJsonSCAuthToken class.
+This call will send the OTP code over email for the AD user with the UPN name "someone@mycompany.com".  
+
+### Smart Card Credential  
+
+The following ID is defined for Smart Card Credential.  
+
+{D66CC98D-4153-4987-8EBE-FB46E848EA98}  
+
+#### AuthenticateUser  
+
+The data for a Smart Card credential is a Base64url encoded UTF-8 representation of the JSON array of the CDPJsonSCAuthToken classes.
+
+Every public key is represented by the CDPJsonSCAuthToken class.  
+
+~~~
 [DataContract]
 public class CDPJsonSCAuthToken
 {
@@ -1943,12 +1952,37 @@ public class CDPJsonSCAuthToken
 	[DataMember]
 	public String signature { get; set; }   // signature
 }
-where:
- Parameter	 Description
-Byte version	The version of the CDPJsonSCAuthToken object, which must be set to 1 for the current implementation.
-UInt64 timeStamp	The UTC time when the object is created (64-bit value representing the number of 100-nanosecond intervals since January 1, 1601).
-String keyHash	Public key's hash, Base64url UTF-8 encoded string.
-The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format (see https://msdn.microsoft.com/en-us/library/ee442238.aspx). After that, the RSA256 hash (see https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) of the key must be calculated. The resulting 32 bytes must be Base64url encoded to the string - KeyHash = Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))
+~~~
+
+where:  
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Value</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>version</i></td>
+  <td valign="top">	The version of the CDPJsonSCAuthToken object, which must be set to 1 for the current implementation.</td>
+  </tr>
+  <tr>
+  <td valign="top">UInt64 <i>timeStamp</i></td>
+  <td valign="top">	The UTC time when the object is created (64-bit value representing the number of 100-nanosecond intervals since January 1, 1601).</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>keyHash</i></td>
+  <td valign="top">	Public key's hash, Base64url UTF-8 encoded string.<BR><BR>  
+
+  The public key from the Smart Card must be imported in the PUBLICKEYBLOB  format (see https://msdn.microsoft.com/en-us/library/ee442238.aspx). After that, the RSA256 hash (see https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) of the key must be calculated. The resulting 32 bytes must be Base64url encoded to the string - KeyHash = Base64urlEncode(RSA256 Hash (PUBLICKEYBLOB (PuK))</td>
+  </tr>
+  <tr>
+  <td valign="top"></td>
+  <td valign="top"></td>
+  </tr>   
+</table>
+
+
+
  String signature 	Timestamp and Public key’s hash, Base64url UTF-8 encoded string.
 The Timestamp (8 bytes) and Public key’s RSA256 Hash (32 bytes) must be combined into a 40 byte array, where the first 8 bytes is the Timestamp and the remainder is the hash.
 This 40 bytes blob must be hashed again with RSA256 and then signed with the Smart Card’s Private Key.
