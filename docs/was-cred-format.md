@@ -2053,36 +2053,80 @@ CustomAction is not currently supported for the Smart Card Credential.
 
 ### Face Credential
 
-One of the following third-party SDKs can be used to support the Face Credential in your application.
-•	Cognitec FVSDK ver. 9.1.0
-•	Innovatrics IFace SDK ver. 3.1.0
-All the DigitalPersona Servers and Clients in the environment must use the same SDK. Enrollment data is not compatible between the SDKs!
-The following ID is defined for Face Credentials: {85AEAA44-413B-4DC1-AF09-ADE15892730A}
-The BioSample class used in description below is declared in "Altus 1 1 WAS Credentials Format.docx"
-AuthenticateUser
-The data for Face Authentication is a Base64url encoded UTF-8 representation of the JSON array, containing BioSample objects(s).
+One of the following third-party SDKs can be used to support the Face Credential in your application.  
+
+- Cognitec FVSDK ver. 9.1.0  
+- Innovatrics IFace SDK ver. 3.1.0  
+
+All the DigitalPersona Servers and Clients in the environment must use the same Face SDK. Enrollment data is not compatible between the SDKs!  
+
+The following ID is defined for Face Credentials.  
+
+{85AEAA44-413B-4DC1-AF09-ADE15892730A}  
+
+The [BioSample class](#biosample-class) used in the  description below is defined previously.  
+
+#### AuthenticateUser  
+
+The data for Face Authentication is a Base64url encoded UTF-8 representation of the JSON array, containing BioSample objects(s).  
+
 The following data members for BioSample should be provided for authentication.
 
-Data member	Description
-BioFactor	Must be set to 2 (DP_BIO_FACTOR::FACIAL_FEATURES)
-BioSamplePurpose	Must be set to 0 (Any purpose) or 1 (purpose Verification)
-BioSampleEncryption	Must be 0 (not encrypted) or 1 (XTEA encryption)
-BioSampleType	Must be one of the following:
-	DP_BIO_SAMPLE_TYPE::PROCESSED
-	DP_BIO_SAMPLE_TYPE::RAW
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">BioFactor</td>
+  <td valign="top">	Must be set to 2 (DP_BIO_FACTOR::FACIAL_FEATURES).
+  </td>
+  </tr>
+  <tr>
+  <td valign="top">BioSamplePurpose</td>
+  <td valign="top">	Must be set to 0 (Any purpose) or 1 (purpose Verification).</td>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleEncryption</td>
+  <td valign="top">	Must be 0 (not encrypted) or 1 (XTEA encryption).
+</td>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleType</td>
+  <td valign="top">	Must be one of the following.<BR><BR>
+  	DP_BIO_SAMPLE_TYPE::PROCESSED<BR>
+  	DP_BIO_SAMPLE_TYPE::RAW</td>
+  </tr>   
+</table>
 
-DP_BIO_SAMPLE_TYPE::PROCESSED image
+##### DP_BIO_SAMPLE_TYPE::PROCESSED image  
+
 Indicates a face template in the internal SDK format.
-•		Cognitec FIR format;
-•		Innovatrics Template format.
-When the input credential data is already a face template (type 4), then only one BioSample object is expected in the array.
-Data member	Description
-BioSampleType	Must be 4.
-BioSampleFormat->FormatOwner	"Organization Identifier" number from the International Biometrics Identity Association.
-•	0x63 (99) for Cognitec
-•	0x35 (53) for Innovatrics
-Data	Base64url encoded JSON representation of the CDPJsonFIR class described below.
+- Cognitec FIR format;
+- Innovatrics Template format.  
 
+When the input credential data is already a face template (type 4), then only one BioSample object is expected in the array.  
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleType</td>
+  <td valign="top">	Must be 4.
+  </tr>
+  <tr>
+  <td valign="top">BioSampleFormat->FormatOwner	</td>
+  <td valign="top">"Organization Identifier" number from the International Biometrics Identity Association.<BR><BR>- 0x63 (99) for Cognitec<BR>- 0x35 (53) for Innovatrics</td>
+  </tr>
+  <tr>
+  <td valign="top">Data</td>
+  <td valign="top">Base64url encoded JSON representation of the CDPJsonFIR class described below.</td>
+  </tr>
+</table>
+
+~~~
 [DataContract]
 public class CDPJsonFIR
 {
@@ -2093,19 +2137,35 @@ public class CDPJsonFIR
 	[DataMember]
 	public String Data { get; set; }     // FIR object
 }
+~~~
+
 where:
 
-Data member	Description
-Byte Version 	Specifies the version of the CDPJsonFIR object. It must be set to 1.   
-ULONG SDKVersion	 Specifies the version of the SDK:
-•	Cognitec FVSDK, must be not less than 0x90100 (ver. 9.1.0).
-•	Innovatrics IFace SDK, must be not less than 0x30100 (ver. 3.1.0).
-String Data	Contains a Base64url encoded BYTE array.
-•		Cognitec SDK: this BYTE array is a serialized Cognitec FIR object, created using FIR::writeTo() method.
-•		Innovatrics SDK: this BYTE array is a Template object, created using IFACE_CreateTemplate function.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>Version</i></td>
+  <td valign="top"> 	Specifies the version of the CDPJsonFIR object. It must be set to 1.   
+  </td>
+  </tr>
+  <tr>
+  <td valign="top">ULONG >i>SDKVersion</i></td>
+  <td valign="top">	 Specifies the version of the SDK:<BR><BR>- Cognitec FVSDK, must be not less than 0x90100 (ver. 9.1.0).<BR>- Innovatrics IFace SDK, must be not less than 0x30100 (ver. 3.1.0).</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>Data</i></td>
+  <td valign="top">	Contains a Base64url encoded BYTE array.<BR><BR>- Cognitec SDK: this BYTE array is a serialized Cognitec FIR object, created using the  FIR::writeTo() method.<BR>- 		Innovatrics SDK: this BYTE array is a Template object, created using IFACE_CreateTemplate function.</td>
+  </tr>
+</table>
 
-If BioSampleEncryption is set to 1 (XTEA encryption), then this data is encrypted.
-Below is an example of JSON representation of the CDPJsonFIR object containing the Cognitec FIR object:
+If BioSampleEncryption is set to 1 (XTEA encryption), then this data is encrypted.  
+
+Below is an example of JSON representation of the CDPJsonFIR object containing the Cognitec FIR object.  
+
+~~~
 {
 "Version":1,
 "SDKVersion":?590080??, //? ?0x90100?, ver. 9.1.0
@@ -2113,7 +2173,10 @@ Below is an example of JSON representation of the CDPJsonFIR object containing t
 m51bWJlciI6NiwidGV4dCI6IkNhbnlvbiBNaWRkbGUifSx7InZlcnNpb24iOjEsIm51bWJlciI6MT
 AyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ" // Base64url encoded serialized FIR object
 }
-Example of JSON representation of the authentication array containing the face FIR template:
+~~~
+This is an example of JSON representation of the authentication array containing the face FIR template.
+
+~~~
 {
 	[{
 	"Version":1,
@@ -2134,12 +2197,34 @@ Example of JSON representation of the authentication array containing the face F
 		// Base64url encoded CDPJsonFIR object
 	}]
 }
-DP_BIO_SAMPLE_TYPE::RAW image
-Indicates a raw face image. It's recommended to have a minimum of ten BioSample objects containing raw images in the authentication array for successful verification.
+~~~
+
+##### DP_BIO_SAMPLE_TYPE::RAW image
+
+Indicates a raw face image. It's recommended to have a minimum of ten BioSample objects containing raw images in the authentication array for successful verification.  
+
 The only type of raw image supported by the current version is a jpeg file.
-BioSampleType - must be 1.
-BioSampleFormat->FormatOwner - not used, must be 0.
-Data - Base64url encoded JSON representation of the CDPJsonFaceImage class described below:
+
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleType</td>
+  <td valign="top">Must be 1.</td>
+  </tr>
+  <tr>
+  <td valign="top">BioSampleFormat->FormatOwner</td>
+  <td valign="top">Not used, must be 0.</td>
+  </tr>
+  <tr>
+  <td valign="top">Data</td>
+  <td valign="top">Base64url encoded JSON representation of the CDPJsonFaceImage class described below.</td>
+  </tr>
+</table>
+
+~~~
 [DataContract]
 public class CDPJsonFaceImage
 {
@@ -2150,6 +2235,8 @@ public class CDPJsonFaceImage
 	[DataMember]
 	public String ImageData { get; set; } // face image
 }
+~~~
+
 where:
 
 Data member	Description
