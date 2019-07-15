@@ -1059,7 +1059,9 @@ The following GetEnrollmentDataResult indicates that the user has their right th
 #### CustomAction
 CustimAction is not currently supported for the Fingerprint Credential.  
 
-### <A NAME="password-credential">Password Credential</A>  
+### <A NAME="password-credential"></A>Password Credential  
+
+### <A NAME="fingerprint-credential"></A>Fingerprint Credential
 
 The following ID is defined for Password Credential.  
 
@@ -1233,7 +1235,7 @@ The PIN credential does not support the GetEnrollmentData() call, and will retur
 
 CustomAction is not currently supported for the PIN Credential.
 
-### <A HREF="recovery-questions-credential  ">Recovery Questions Credential</A>  
+### <A HREF="recovery-questions-credential  "></A>Recovery Questions Credential  
 
 The following ID is defined for the Recovery Questions Credential.  
 
@@ -1556,7 +1558,7 @@ The LiveQuestions credential does not support user identification, so an Identif
 
 CustomAction is not currently supported for the Live Questions Credential.  
 
-### Proximity Card Credential  
+### < A NAME="prox-credential"></A>Proximity Card Credential  
 
 The following ID is defined for the Proximity Card Credential.  
 
@@ -1631,7 +1633,7 @@ The Proximity Card credential does not support the GetEnrollmentData() call, and
 
 CustomAction is not currently supported for the Proximity Card Credential.  
 
-### Time-Based OTP (TOTP) Credential  
+### <A NAME="otp-credential"></A>Time-Based OTP (TOTP) Credential  
 
 The following ID is defined for the TOTP Credential.
 
@@ -1929,7 +1931,7 @@ Below is an example of an HTTP Body for a  Send E-Mail OTP request.
 
 This call will send the OTP code over email for the AD user with the UPN name "someone@mycompany.com".  
 
-### <A HREF="smart-card-credential">Smart Card Credential</A>    
+### <A HREF="smart-card-credential"></A>Smart Card Credential    
 
 The following ID is defined for Smart Card Credential.  
 
@@ -2443,7 +2445,7 @@ Below is an example of HTTP Body to destroy WIA authentication:
 {
 	"authId":657854
 }
-#### <A HREF="email-credential">Email Credential</A>
+#### <A HREF="email-credential"></A>Email Credential
 The following ID is defined for the Email Credential:
 {7845D71D-AB67-4EA7-913C-F81E75C3A087}
 The Email credential is an auxiliary credential and cannot be used alone to log on to STS. It has to be combined with other Primary credential(s).
