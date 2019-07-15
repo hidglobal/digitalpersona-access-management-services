@@ -8,7 +8,7 @@ nav_order: 7
 ###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / WAS Credential Format&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/access-management-services)  
 
 ![](assets/HID-DPAM-access-mgmt-svcs.png)    
-## WAS Credential Format [DRAFT 10]
+## WAS Credential Format [DRAFT 11]
 
 In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 
@@ -2616,29 +2616,54 @@ Below is a valid example of an HTTP Body of a Send Email Verification request.
 	"actionId":16
 }
 ~~~
-This call will send an email verification request to the user John.Doe@yourdomain.com. An example of the email request was provided above.
-NOTE: The user must have valid e-mail address stored in our database (AD or LDS) to be able to send the email. If the email address cannot be found in the user record, the following error will be returned.
-E_ADS_PROPERTY_NOT_FOUND (0x8000500D)
+
+This call will send an email verification request to the user John.Doe@yourdomain.com.  
+
+An example of the email request was provided above.  
+
+**Note: The user must have valid e-mail address stored in the DigitalPersona (AD or LDS) database to be able to send the email. If the email address cannot be found in the user record, the following error will be returned.  
+
+~~~
+E_ADS_PROPERTY_NOT_FOUND (0x8000500D)  
+
 The property was not found in the cache. The property may not have an attribute, or is invalid.
+~~~
 
 ### <A NAME="fido-credential"></A>FIDO Credential
 
-The following ID is defined for the FIDO (U2F) Credential.
-{5D5F73AF-BCE5-4161-9584-42A61AED0E48}
-AuthenticateUser
-This method is not supported.
-IdentifyUser
-This method is not supported.
-GetEnrollmentData
-This method is not supported.
-CustomAction
-The following CustomAction operations are currently supported by the FIDO U2F Credential.
-Request Application Id from Server
-Application Id request operation Action ID is "17".
-The caller does not need to provide a valid ticket to perform this operation, so the ticket parameter may be set to "null".
-The caller does not need to provide a valid user name or type to perform this operation, so the name parameter may be set to "null" and the type parameter can be set to 0.
-The data parameter of Credential class does not need to be provided and can be set to “null”.
-Below is a valid example of HTTP Body of Application Id request:
+The following ID is defined for the FIDO (U2F) Credential.  
+
+{5D5F73AF-BCE5-4161-9584-42A61AED0E48}  
+
+#### AuthenticateUser  
+
+This method is not supported.  
+
+#### IdentifyUser  
+
+This method is not supported.  
+
+#### GetEnrollmentData  
+
+This method is not supported.  
+
+#### CustomAction  
+
+The following CustomAction operations are currently supported by the FIDO U2F Credential.  
+
+##### Request Application Id from Server  
+
+The Application Id request operation Action ID is "17".  
+
+The caller does not need to provide a valid ticket to perform this operation, so the ticket parameter may be set to "null".  
+
+The caller does not need to provide a valid user name or type to perform this operation, so the name parameter may be set to "null" and the type parameter can be set to 0.  
+
+The data parameter of the Credential class does not need to be provided and can be set to “null”.  
+
+Below is a valid example of HTTP Body of Application Id request.  
+
+~~~
 {
 	"ticket":{"jwt":null},
 	"user":
@@ -2653,33 +2678,62 @@ Below is a valid example of HTTP Body of Application Id request:
 	},
 	"actionId":17
 }
-Below is a valid example of HTTP Body of Application Id response:
+~~~
+
+Below is a valid example of an HTTP Body of an  Application Id response.  
+
+~~~
 {
 	"AppId":"https://sts.crossmatch.com/AppId.json"
 }
-If the AppId is not set on the Server, an appropriate error will be returned.
-CreateUserAuthentication
-The credentialId parameter should be set to 5D5F73AF-BCE5-4161-9584-42A61AED0E48.
-Below is an example of HTTP Body required to create Extended Authentication for FIDO U2F:
+~~~
+
+If the AppId is not set on the Server, an appropriate error will be returned.  
+
+#### CreateUserAuthentication  
+
+The credentialId parameter should be set to 5D5F73AF-BCE5-4161-9584-42A61AED0E48.  
+
+Below is an example of an HTTP Body required to create Extended Authentication for FIDO U2F.  
+
+~~~
 {
 	"user":{"name":"John.Doe@yourdomain.com","type":6},
 	"credentialId":" 5D5F73AF-BCE5-4161-9584-42A61AED0E48"
 }
-CreateTicketAuthentication
-The ticket parameter of CreateTicketAuthentication must be a valid Ticket, and credentialId parameter should be set to 5D5F73AF-BCE5-4161-9584-42A61AED0E48.
-Below is an example of HTTP Body required to create Extended Authentication for WIA:
+~~~
+
+#### CreateTicketAuthentication   
+
+The ticket parameter of CreateTicketAuthentication must be a valid Ticket, and the credentialId parameter should be set to 5D5F73AF-BCE5-4161-9584-42A61AED0E48.  
+
+Below is an example of an HTTP Body required to create Extended Authentication for WIA.
+
+~~~
 {
 	"ticket":{"jwt":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"},
 	"credentialId":"5D5F73AF-BCE5-4161-9584-42A61AED0E48"
-}
-ContinueAuthentication
-The authId parameter of ContinueAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.  The authData parameter is Based64Url encoded data of FIDO U2F handshake.
-Below is an example of HTTP Body for FIDO U2F authentication handshake:
+}  
+~~~
+
+#### ContinueAuthentication  
+
+The authId parameter of ContinueAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.   
+
+The authData parameter is Based64Url encoded data of FIDO U2F handshake.  
+
+Below is an example of an HTTP Body for a FIDO U2F authentication handshake.  
+
+~~~
 {
 	"authId":657854,
 	"authData":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"
 }
-Handshake data is defined as:
+~~~
+
+Handshake data is defined as follows.
+
+~~~
 [DataContract]
 public class U2FHandshake
 {
@@ -2690,9 +2744,11 @@ public class U2FHandshake
 	public String handshakeData { get; set; }   
 		// Base64Url encoded handshake data.
 }
+~~~
 
 Where
 
+~~~
 /// <summary>
 /// Handshake types supported by U2F.
 /// </summary>
@@ -2723,26 +2779,44 @@ public enum HandshateType
 	[EnumMember]
 	AuthenticationResponse = 3,
 }
-The value of handshakeData depends on the handshake type. There are four types of handshake.
-•	Challenge Request
-•	Challenge Respond
-•	Authentication Request
-•	Authentication Respond
-Challenge Request
-Client send Challenge Request as first step of U2F authentication handshakes. handshakeData of Challenge Request is ignored and should be set to null.
-Below is an example of Json representation of Challenge Request:
+~~~
+
+The value of handshakeData depends on the handshake type. There are four types of handshake.  
+
+- Challenge Request
+- Challenge Respond
+- Authentication Request
+- Authentication Respond  
+
+##### Challenge Request  
+
+Client sends a Challenge Request as the first step of U2F authentication handshakes. handshakeData of the  Challenge Request is ignored and should be set to null.  
+
+Below is an example of Json representation of Challenge Request.  
+
+~~~
 {
 	"handshakeType":0,
 	"handshakeData":null
  }
-Challenge Respond
-Challenge Respond will be returned by the U2F Server as authData member of ExtendedAUTHResult returned by Challenge Request call.
-Below is an example of Challenge Respond:
+~~~
+
+##### Challenge Respond  
+
+Challenge Respond will be returned by the U2F Server as authData member of ExtendedAUTHResult returned by the Challenge Request call.  
+
+Below is an example of Challenge Respond.  
+
+~~~
 {
 	"handshakeType":1,
 	“handshakeData":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"
- }
-handshakeData of Challenge Respond should be provided in the following format:
+}
+~~~
+
+handshakeData of Challenge Respond should be provided in the following format.
+
+~~~
 [DataContract]
 public class U2FChallengeRespond
 {
@@ -2755,14 +2829,34 @@ public class U2FChallengeRespond
 	[DataMember]
 	public String keyHandle { get; set; } 																						// Base64Url encoded key handle.
 }
+~~~
 
-Data member	Description
-version	Version of supported FIDO standard, must be set to "U2F_V2" for current implementation.
-appId	Application ID.
-challenge	Base64Url encoded challenge.
-keyHandle	Base64Url encoded key handle.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">version</td>
+  <td valign="top">Version of supported FIDO standard, must be set to "U2F_V2" for current implementation.</td>
+  </tr>
+  <tr>
+  <td valign="top">appId</td>
+  <td valign="top">Application ID.</td>
+  </tr>
+  <tr>
+  <td valign="top">challenge</td>
+  <td valign="top">Base64Url encoded challenge.</td>
+  </tr>
+  <tr>
+  <td valign="top">keyHandle</td>
+  <td valign="top">
+  	Base64Url encoded key handle.</td>
+  </tr>   
+</table>
 
-Authentication Request
+#### Authentication Request  
+
 The client sends an Authentication Request as the second step of U2F authentication handshaking. handshakeData of the Authentication Request has the following format.
 [DataContract]
 public class U2FAuthenticationRequest
