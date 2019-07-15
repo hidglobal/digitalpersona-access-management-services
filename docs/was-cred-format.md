@@ -8,7 +8,7 @@ nav_order: 7
 ###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / WAS Credential Format&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/access-management-services)  
 
 ![](assets/HID-DPAM-access-mgmt-svcs.png)    
-## WAS Credential Format [DRAFT 1]
+## WAS Credential Format [DRAFT 2]
 
 In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 
@@ -1059,7 +1059,7 @@ The following GetEnrollmentDataResult indicates that the user has their right th
 #### CustomAction
 CustimAction is not currently supported for the Fingerprint Credential.  
 
-### Password Credential  
+### <A NAME = "password-credential">Password Credential</A>  
 
 The following ID is defined for Password Credential.  
 
