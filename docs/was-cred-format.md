@@ -2150,8 +2150,7 @@ where:
   </tr>
   <tr>
   <td valign="top">Byte <i>Version</i></td>
-  <td valign="top"> 	Specifies the version of the CDPJsonFIR object. It must be set to 1.</td>   
-  </td>
+  <td valign="top">Specifies the version of the CDPJsonFIR object. It must be set to 1.</td>
   </tr>
   <tr>
   <td valign="top">ULONG >i>SDKVersion</i></td>
@@ -2386,16 +2385,15 @@ where:
   </tr>
 </table>
 
+To create the Contactless Card Credential for authentication, perform the following steps on the client.  
 
-
-To create the Contactless Card Credential for authentication, following steps must be performed on the client:
-1	Read the card UID and the symmetric key stored on the Contactless card, create the SHA 256 hash of this key.
-2	Use the key hash as a TOTP seed, generate the OTP.
-3	Create a JSON representation of the CDPJsonCLCAuthToken class.
-•	Use the OTP string created in step #2;
-•	Base64url UTF-8 encode the card UID;
-4	Base64Url encode the JSON representation of the CDPJsonCLCAuthToken class;
-5	Create a JSON representation of the Credential class using Contactless Card Credential ID as id member and string created in step #4 as a data member.
+1. Read the card UID and the symmetric key stored on the Contactless card, create the SHA 256 hash of this key.
+2. Use the key hash as a TOTP seed, generate the OTP.
+3. Create a JSON representation of the CDPJsonCLCAuthToken class.  
+  -	Use the OTP string created in step #2.  
+  -	Base64url UTF-8 encode the card UID.  
+4.	Base64Url encode the JSON representation of the CDPJsonCLCAuthToken class.  
+5. Create a JSON representation of the Credential class using THE Contactless Card Credential ID as THE id member and THE string created in step #4 as a data member.
 IdentifyUser
 To call IdentifyUser() method, you must first create the Contactless Card credential (CDPJsonCLCAuthToken) as described above. Below is an example of HTTP Body for Contactless Card identification with Contactless card credential created above.
 {
