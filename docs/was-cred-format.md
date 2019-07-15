@@ -2918,13 +2918,16 @@ Client data contains the challenge which was generated previously.
 
 ##### Authentication Respond
 
-Authentication Respond is not supported at this time and is reserved for future use. The result of Authentication Request will be returned in ExtendedAUTHResult. A Json Web Token will be returned if authentication succeeded or error if authentication failed.  
+Authentication Respond is not supported at this time and is reserved for future use. The result of Authentication Request will be returned in <A HREF="extended-auth-result">ExtendedAUTHResult</A>. A Json Web Token will be returned if authentication succeeded or error if authentication failed.  
 
 ##### DestroyAuthentication  
 
 The authId parameter of DestroyAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.  
 
-Below is an example of an HTTP Body to destroy FIDO U2F authentication:
+Below is an example of an HTTP Body to destroy FIDO U2F authentication.
+
+~~~
 {
 	"authId":657854
 }
+~~~

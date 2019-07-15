@@ -913,7 +913,7 @@ AuthenticationStatus is enumeration for status of extended authentication operat
   </tr>
 </table>
 
-#### ExtendedAUTHResult class  
+#### <A NAME="extended-auth-result"></A>ExtendedAUTHResult class  
 
 ExtendedAUTHResult class represents result of Extended Authentication operation.
 
