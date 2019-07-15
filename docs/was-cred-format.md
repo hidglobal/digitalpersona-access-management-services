@@ -2857,7 +2857,11 @@ public class U2FChallengeRespond
 
 #### Authentication Request  
 
-The client sends an Authentication Request as the second step of U2F authentication handshaking. handshakeData of the Authentication Request has the following format.
+The client sends an Authentication Request as the second step of U2F authentication handshaking.  
+
+handshakeData of the Authentication Request has the following format.  
+
+~~~
 [DataContract]
 public class U2FAuthenticationRequest
 {
@@ -2874,20 +2878,49 @@ public class U2FAuthenticationRequest
 	public String clientData { get; set; }																							
 		//		U2F token authentication													counter.
 }
+~~~
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+    <td valign="top">version</td>
+    <td valign="top">	Version of supported FIDO standard, must be set to "U2F_V2" for current implementation.</td>
+  </tr>
+  <tr>
+    <td valign="top">appId</td>
+    <td valign="top">
+    	Application ID.</td>
+  </tr>
+  <tr>
+    <td valign="top">serialNum</td>
+    <td valign="top">
+    	U2F device serial number.</td>
+  </tr>
+  <tr>
+    <td valign="top">signatureData</td>
+    <td valign="top">
+    	Base64Url encoded signature of client data.</td>
+  </tr>
+  <tr>
+    <td valign="top">clientData</td>
+    <td valign="top">
+    	Base64Url encoded client data.</td>
+  </tr>
+</table>
 
-Data member	Description
-version	Version of supported FIDO standard, must be set to "U2F_V2" for current implementation.
-appId	Application ID.
-serialNum	U2F device serial number.
-signatureData	Base64Url encoded signature of client data.
-clientData	Base64Url encoded client data.
+See the following webpage for details.  
 
-See the following webpage for details:
-https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html
-Client data contains challenge which was generated previously.
-Authentication Respond
-Authentication Respond is not supported at this time and reserved for future use. The result of Authentication Request will be returned in ExtendedAUTHResult. Json Web Token will be returned if authentication succeeded or error if authentication failed (see topic 4.9 of Web Authentication Service design document for details).
-DestroyAuthentication
+<A HREF="https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html">https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html</A>  
+
+Client data contains the challenge which was generated previously.  
+
+##### Authentication Respond
+
+Authentication Respond is not supported at this time and is reserved for future use. The result of Authentication Request will be returned in ExtendedAUTHResult. A Json Web Token will be returned if authentication succeeded or error if authentication failed.  
+
+##### DestroyAuthentication  
 The authId parameter of DestroyAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.
 Below is an example of HTTP Body to destroy FIDO U2F authentication:
 {
