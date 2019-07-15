@@ -8,7 +8,7 @@ nav_order: 7
 ###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / WAS Credential Format&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/access-management-services)  
 
 ![](assets/HID-DPAM-access-mgmt-svcs.png)    
-## WAS Credential Format [DRAFT 9]
+## WAS Credential Format [DRAFT 10]
 
 In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 
@@ -2116,7 +2116,7 @@ When the input credential data is already a face template (type 4), then only on
   </tr>
   <tr>
   <td valign="top">BioSampleType</td>
-  <td valign="top">	Must be 4.
+  <td valign="top">	Must be 4.</td>
   </tr>
   <tr>
   <td valign="top">BioSampleFormat->FormatOwner	</td>
@@ -2150,7 +2150,7 @@ where:
   </tr>
   <tr>
   <td valign="top">Byte <i>Version</i></td>
-  <td valign="top"> 	Specifies the version of the CDPJsonFIR object. It must be set to 1.   
+  <td valign="top"> 	Specifies the version of the CDPJsonFIR object. It must be set to 1.</td>   
   </td>
   </tr>
   <tr>
