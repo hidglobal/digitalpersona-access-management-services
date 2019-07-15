@@ -2393,9 +2393,15 @@ To create the Contactless Card Credential for authentication, perform the follow
   -	Use the OTP string created in step #2.  
   -	Base64url UTF-8 encode the card UID.  
 4.	Base64Url encode the JSON representation of the CDPJsonCLCAuthToken class.  
-5. Create a JSON representation of the Credential class using THE Contactless Card Credential ID as THE id member and THE string created in step #4 as a data member.
-IdentifyUser
-To call IdentifyUser() method, you must first create the Contactless Card credential (CDPJsonCLCAuthToken) as described above. Below is an example of HTTP Body for Contactless Card identification with Contactless card credential created above.
+5. Create a JSON representation of the Credential class using THE Contactless Card Credential ID as THE id member and THE string created in step #4 as a data member.  
+
+#### IdentifyUser  
+
+To call the IdentifyUser() method, first create the Contactless Card credential (CDPJsonCLCAuthToken) as described above.  
+
+Below is an example of an HTTP Body for Contactless Card identification with the Contactless Card credential created above.  
+
+~~~
 {
 	"credential":
 	{
@@ -2403,66 +2409,120 @@ To call IdentifyUser() method, you must first create the Contactless Card creden
 		"data":"LAogImFs1QiLAogImFeyJ0eXAiOiJKVBSUzI18"
 	}
 }
-GetEnrollmentData
-This method is not supported.
-CustomAction
-CustomAction is not currently supported by Contactless Card Credential.  
+~~~
 
-### <A NAME="wia-credential"></A>Windows Integrated Authentication (WIA) Credential
-The following ID is defined for the WIA Credential.
-{AE922666-9667-49BC-97DA-1EB0E1EF73D2}
-The following functions are not supported by the WIA Credential:
-•		GetEnrollmentData
-•		IdentifyUser
-•		AuthenticateUser
-•		AuthenticateUserTicket
-•		CustomAction
-CreateUserAuthentication
-The User parameter of CreateuserAuthentication is ignored, and the credentialId parameter should be set to AE922666-9667-49BC-97DA-1EB0E1EF73D2.
-Below is an example of HTTP Body required to create Extended Authentication for WIA:
+#### GetEnrollmentData  
+
+This method is not supported.  
+
+#### CustomAction  
+
+The CustomAction is not currently supported by the  Contactless Card Credential.  
+
+### <A NAME="wia-credential"></A>Windows Integrated Authentication (WIA) Credential  
+
+The following ID is defined for the WIA Credential.  
+
+{AE922666-9667-49BC-97DA-1EB0E1EF73D2}  
+
+These functions are not supported by the WIA Credential.  
+
+- GetEnrollmentData
+- IdentifyUser
+- AuthenticateUser
+- AuthenticateUserTicket
+- CustomAction  
+
+#### CreateUserAuthentication  
+
+The User parameter of CreateuserAuthentication is ignored, and the credentialId parameter should be set to AE922666-9667-49BC-97DA-1EB0E1EF73D2.  
+
+Below is an example of HTTP Body required to create Extended Authentication for WIA.  
+
+~~~
 {
 	"user":null,
 	"credentialId":"AE922666-9667-49BC-97DA-1EB0E1EF73D2"
 }
-CreateTicketAuthentication
-The ticket parameter of CreateTicketAuthentication must be a valid Ticket, and the credentialId parameter should be set to AE922666-9667-49BC-97DA-1EB0E1EF73D2.
-Below is an example of HTTP Body required to create Extended Authentication for WIA:
+~~~
+
+#### CreateTicketAuthentication  
+
+The ticket parameter of CreateTicketAuthentication must be a valid Ticket, and the credentialId parameter should be set to AE922666-9667-49BC-97DA-1EB0E1EF73D2.  
+
+Below is an example of an HTTP Body for creating  Extended Authentication for WIA.  
+
+~~~
 {
 	"ticket":{"jwt":"Z3NhZGhhc2Rma0FTREZLYWZyZGtB"},
 	"credentialId":"AE922666-9667-49BC-97DA-1EB0E1EF73D2"
 }
-ContinueAuthentication
-The authId parameter of ContinueAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.  The authData parameter is Based64Url encoded data returned by the WIA client.
-Below is an example of HTTP Body for WIA authentication handshake:
+~~~
+
+#### ContinueAuthentication  
+
+The authId parameter of ContinueAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.  
+
+The authData parameter is Based64Url encoded data returned by the WIA client.  
+
+Below is an example of an HTTP Body for a   WIA authentication handshake.
+
+~~~
 {
 	"authId":657854,
 	"authData":"‘eypZ3NhZGhhc2Rma0FTREZLYWZyZGtB"
 }
-DestroyAuthentication
-The authId parameter of DestroyAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.
-Below is an example of HTTP Body to destroy WIA authentication:
+~~~
+
+#### DestroyAuthentication  
+
+The authId parameter of DestroyAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.  
+
+Below is an example of HTTP Body to destroy WIA authentication.  
+
+~~~
 {
 	"authId":657854
 }
+~~~
+
 #### <A NAME="email-credential"></A>Email Credential  
 
-The following ID is defined for the Email Credential:
-{7845D71D-AB67-4EA7-913C-F81E75C3A087}
-The Email credential is an auxiliary credential and cannot be used alone to log on to STS. It has to be combined with other Primary credential(s).
-The email credential is some string (details of the string is TBD) which will be sent to the user over e-mail and user can present the very same string during E-mail authentication.
-Upon initiating email verification (see the CustomAction defined on page 136), the user should receive an email similar to the following.
-To verify your email address, please click the following link:
+The following ID is defined for the Email Credential.  
+
+{7845D71D-AB67-4EA7-913C-F81E75C3A087}  
+
+The Email credential is an auxiliary credential and cannot be used alone to log on to STS, but must be  combined with other Primary credential(s).  
+
+The email credential is some string
+<mark style="color:Red;">(details of the string is TBD)</mark> which will be sent to the user over email and user can present the very same string during email authentication.  
+
+Upon <A HREF="send-email-request">initiating email verification</A>, the user should receive an email similar to the following.
+
+~~~
+To verify your email address, please click the following link:  
+
 https://sts.yourdomain.com/verifymail&user=John.Doe@yourdomain.com&type=6
-&data=COqe3faVtaeWdBD4ncmH4r3C9EQ
-The URL in the example above has several components.
-1	The URL of the service which will process the email verification. In the example it’s https://sts.yourdomain.com.
-2	The name of the function that will be used for e-mail verification. In the example it’s verifymail.
-3	The user name. In the example it’s user=John.Doe@yourdomain.com.
-4	The user name type. In example it’s type=6 (which signifies a UPN name).
-5	Email verification data. In the example it’s data=COqe3faVtaeWdBD4ncmH4r3C9EQ. This data (COqe3faVtaeWdBD4ncmH4r3C9EQ) has to be provided in the credential object’s data field when calling the AuthenticateUser request (see below). The data will be valid for 30 minutes afterthe email is sent.
-AuthenticateUser
-To call the AuthenticateUser() method, the caller must constrict the authentication request using the "data" field of the verification URL received through email as the data field of the credential object.
-Below is an example of HTTP Body for email authentication with the Email credential described in the example above.
+&data=COqe3faVtaeWdBD4ncmH4r3C9EQ  
+~~~
+
+The URL in the example above has several components.  
+
+1. The URL of the service which will process the email verification. In the example it’s https://sts.yourdomain.com.  
+2. The name of the function that will be used for e-mail verification. In the example it’s verifymail.  
+3. The user name. In the example it’s user=John.Doe@yourdomain.com.  
+4. The user name type. In example it’s type=6 (which signifies a UPN name).  
+5. Email verification data. In the example it’s data=COqe3faVtaeWdBD4ncmH4r3C9EQ.  
+
+  This data (COqe3faVtaeWdBD4ncmH4r3C9EQ) has to be provided in the credential object’s data field when calling the AuthenticateUser request (see below). The data will be valid for 30 minutes after the email is sent.  
+
+#### AuthenticateUser  
+
+To call the AuthenticateUser() method, the caller must construct the authentication request using the "data" field of the verification URL received through the email as the data field of the credential object.  
+
+Below is an example of an HTTP Body for email authentication with the Email credential described in the example above.  
+
+~~~
 {
 	"user":
 	{
@@ -2475,10 +2535,17 @@ Below is an example of HTTP Body for email authentication with the Email credent
 		"data":"COqe3faVtaeWdBD4ncmH4r3C9EQ"
 	}
 }
-IdentifyUser
-Not supported.
-GetEnrollmentData
-As result of successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation E-mail based information. We introduce MailEnrollmentData class to represent this information:
+~~~
+
+#### IdentifyUser  
+
+This method is not supported.  
+
+#### GetEnrollmentData  
+
+The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation E-mail based information. The MailEnrollmentData class  represents this information.  
+
+~~~
 [DataContract]
 public class MailEnrollmentData
 {
@@ -2486,28 +2553,54 @@ public class MailEnrollmentData
 	public Boolean has_mail { get; set; }
 	// true if user has mail data enrolled
 }
+~~~
 
-Data member	Description
-has_mail	is True if the user has email data enrolled and False if not. Usually a user email address is stored as the "mail" attribute in AD or LDS, but in the future we may use other mechanisms as well to find a user’s email address such as querying a custom SQL database.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Parameter</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">has_mail	</td>
+  <td valign="top">Is True if the user has email data enrolled and False if not. Usually a user email address is stored as the "mail" attribute in AD or LDS, but in the future we may use other mechanisms as well to find a user’s email address such as querying a custom SQL database.</td>
+  </tr>
+</table>
 
-Below is an example of JSON representation of GetEnroomentDataResult.
+Below is an example of JSON representation of GetEnroomentDataResult.  
+
+~~~
 	{
 		"has_mail":true
 	}
-Parsing GetEnrollmentDataResult
-Use the following steps to process (parse) GetEnrollmentDataResult.
-1	Get string provided in GetEnrollmentDataResult.
-2	Base64url decode the string above to get UTF-8 representation of MailEnrollmentData.
-3	Decode UTF-8 string to a format compatible with the JSON parser (Unicode?).
-4	Using the JSON parser, parse the string to objects of the MailEnrollmentData class.
-CustomAction
-The following CustomAction operations are currently supported by the Email credential.
-Send Email Verification Request;
-The Send Email Verification Request operation Action ID is "16".
-The caller does not need to provide a valid ticket to perform this operation, so the ticket parameter may be set to "null".
-A valid user to whom the email should be sent needs needs to be provided.
-The data parameter of the Credential class does not need to be provided and can be set to “null”.
-Below is a valid example of HTTP Body of Send E-mail Verification request:
+~~~  
+
+##### Parsing GetEnrollmentDataResult  
+
+Use the following steps to process (parse) GetEnrollmentDataResult.  
+
+1. Get string provided in GetEnrollmentDataResult.  
+2. Base64url decode the string above to get UTF-8 representation of MailEnrollmentData.  
+3. Decode UTF-8 string to a format compatible with the JSON parser
+<mark style="color:Red;">(Unicode?)</mark>.
+4	Using the JSON parser, parse the string to objects of the MailEnrollmentData class.  
+
+### CustomAction  
+
+The following CustomAction operations are currently supported by the Email credential.  
+
+##### <A NAME="send-email-request"></A>Send Email Verification Request
+
+The Send Email Verification Request operation Action ID is "16".  
+
+The caller does not need to provide a valid ticket to perform this operation, so the ticket parameter may be set to "null".  
+
+A valid user to whom the email should be sent must be provided.  
+
+The data parameter of the Credential class does not need to be provided and can be set to “null”.  
+
+Below is a valid example of an HTTP Body of a Send Email Verification request.  
+
+~~~
 {
 	"ticket":{"jwt":null},
 	"user":
@@ -2522,6 +2615,7 @@ Below is a valid example of HTTP Body of Send E-mail Verification request:
 	},
 	"actionId":16
 }
+~~~
 This call will send an email verification request to the user John.Doe@yourdomain.com. An example of the email request was provided above.
 NOTE: The user must have valid e-mail address stored in our database (AD or LDS) to be able to send the email. If the email address cannot be found in the user record, the following error will be returned.
 E_ADS_PROPERTY_NOT_FOUND (0x8000500D)
