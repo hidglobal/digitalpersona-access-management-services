@@ -8,7 +8,7 @@ nav_order: 7
 ###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / WAS Credential Format&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/access-management-services)  
 
 ![](assets/HID-DPAM-access-mgmt-svcs.png)    
-## WAS Credential Format [DRAFT 5]
+## WAS Credential Format [DRAFT 6]
 
 In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 
@@ -22,7 +22,7 @@ In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number o
   <tr>
   <td valign="top"><A HREF="#password-credential">Password Credential</A>
 </td>
-  <td valign="top"><A HREF="#pin-credential">  PIN Credential</A></td>
+  <td valign="top"><A HREF="#pin-credential">PIN Credential</A></td>
   </tr>
   <tr>
   <td valign="top"><A HREF="#email-credential">
@@ -1181,7 +1181,7 @@ This call will send Password Reset request for Altus user with account name "som
 
 **Note**: We can only guarantee a successful Password Reset  for Altus Users in Altus LDS installations and can only reset the password for AD users in Altus AD installations.  
 
-### PIN Credential  
+### <A NAME="pin-credential"></A>PIN Credential  
 
 The following ID is defined for the PIN Credential.  
 
@@ -1235,7 +1235,7 @@ The PIN credential does not support the GetEnrollmentData() call, and will retur
 
 CustomAction is not currently supported for the PIN Credential.
 
-### <A HREF="recovery-questions-credential  "></A>Recovery Questions Credential  
+### <A NAME="recovery-questions-credential"></A>Recovery Questions Credential  
 
 The following ID is defined for the Recovery Questions Credential.  
 
@@ -1558,7 +1558,7 @@ The LiveQuestions credential does not support user identification, so an Identif
 
 CustomAction is not currently supported for the Live Questions Credential.  
 
-### < A NAME="prox-credential"></A>Proximity Card Credential  
+### < A NAME="prox-card-credential"></A>Proximity Card Credential  
 
 The following ID is defined for the Proximity Card Credential.  
 
@@ -1633,7 +1633,7 @@ The Proximity Card credential does not support the GetEnrollmentData() call, and
 
 CustomAction is not currently supported for the Proximity Card Credential.  
 
-### <A NAME="otp-credential"></A>Time-Based OTP (TOTP) Credential  
+### <A NAME="totp-credential"></A>Time-Based OTP (TOTP) Credential  
 
 The following ID is defined for the TOTP Credential.
 
@@ -1931,7 +1931,7 @@ Below is an example of an HTTP Body for a  Send E-Mail OTP request.
 
 This call will send the OTP code over email for the AD user with the UPN name "someone@mycompany.com".  
 
-### <A HREF="smart-card-credential"></A>Smart Card Credential    
+### <A NAME="smart-card-credential"></A>Smart Card Credential    
 
 The following ID is defined for Smart Card Credential.  
 
@@ -2053,7 +2053,7 @@ where:
 
 CustomAction is not currently supported for the Smart Card Credential.  
 
-### Face Credential
+### <A NAME="face-credential"></A>Face Credential
 
 One of the following third-party SDKs can be used to support the Face Credential in your application.  
 
@@ -2344,7 +2344,7 @@ This method is not supported.
 
 CustomAction is not supported for the Face Credential.  
 
-### Contactless Card Credential
+### A NAME="contactlesss-card-credential"></A>Contactless Card Credential
 
 The following ID is defined for the Contactless Card Credential.
 
@@ -2408,8 +2408,9 @@ To call IdentifyUser() method, you must first create the Contactless Card creden
 GetEnrollmentData
 This method is not supported.
 CustomAction
-CustomAction is not currently supported by Contactless Card Credential.
-Windows Integrated Authentication (WIA) Credential
+CustomAction is not currently supported by Contactless Card Credential.  
+
+### <A NAME="wia-credential"</A>Windows Integrated Authentication (WIA) Credential
 The following ID is defined for the WIA Credential.
 {AE922666-9667-49BC-97DA-1EB0E1EF73D2}
 The following functions are not supported by the WIA Credential:
@@ -2445,7 +2446,8 @@ Below is an example of HTTP Body to destroy WIA authentication:
 {
 	"authId":657854
 }
-#### <A HREF="email-credential"></A>Email Credential
+#### <A NAME="email-credential"></A>Email Credential  
+
 The following ID is defined for the Email Credential:
 {7845D71D-AB67-4EA7-913C-F81E75C3A087}
 The Email credential is an auxiliary credential and cannot be used alone to log on to STS. It has to be combined with other Primary credential(s).
@@ -2526,8 +2528,10 @@ This call will send an email verification request to the user John.Doe@yourdomai
 NOTE: The user must have valid e-mail address stored in our database (AD or LDS) to be able to send the email. If the email address cannot be found in the user record, the following error will be returned.
 E_ADS_PROPERTY_NOT_FOUND (0x8000500D)
 The property was not found in the cache. The property may not have an attribute, or is invalid.
-U2F Device Credential
-The following ID is defined for the U2F Credential.
+
+### <A NAME="fido-credential"></A>FIDO Credential
+
+The following ID is defined for the FIDO (U2F) Credential.
 {5D5F73AF-BCE5-4161-9584-42A61AED0E48}
 AuthenticateUser
 This method is not supported.
