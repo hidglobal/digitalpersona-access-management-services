@@ -8,7 +8,7 @@ nav_order: 7
 ###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / WAS Credential Format&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/access-management-services)  
 
 ![](assets/HID-DPAM-access-mgmt-svcs.png)    
-## WAS Credential Format [DRAFT 2]
+## WAS Credential Format [DRAFT 3]
 
 In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 
@@ -1233,7 +1233,7 @@ The PIN credential does not support the GetEnrollmentData() call, and will retur
 
 CustomAction is not currently supported for the PIN Credential.
 
-### Recovery Questions Credential  
+### <A HREF="recovery-questions-credential  ">Recovery Questions Credential</A>  
 
 The following ID is defined for the Recovery Questions Credential.  
 
@@ -1929,7 +1929,7 @@ Below is an example of an HTTP Body for a  Send E-Mail OTP request.
 
 This call will send the OTP code over email for the AD user with the UPN name "someone@mycompany.com".  
 
-### Smart Card Credential  
+### <A HREF="smart-card-credential">Smart Card Credential</A>    
 
 The following ID is defined for Smart Card Credential.  
 
@@ -2443,7 +2443,7 @@ Below is an example of HTTP Body to destroy WIA authentication:
 {
 	"authId":657854
 }
-#### Email Credential
+#### <A HREF="email-credential">Email Credential</A>
 The following ID is defined for the Email Credential:
 {7845D71D-AB67-4EA7-913C-F81E75C3A087}
 The Email credential is an auxiliary credential and cannot be used alone to log on to STS. It has to be combined with other Primary credential(s).
