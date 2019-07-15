@@ -8,7 +8,7 @@ nav_order: 7
 ###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / WAS Credential Format&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/access-management-services)  
 
 ![](assets/HID-DPAM-access-mgmt-svcs.png)    
-## WAS Credential Format
+## WAS Credential Format [DRAFT 1]
 
 In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 
@@ -2239,11 +2239,26 @@ public class CDPJsonFaceImage
 
 where:
 
-Data member	Description
-Byte Version 	Specifies the version of the CDPJsonFaceImage object. It must be set to 1.   
-DP_FACE_IMAGE_TYPE ImageType	type of image. Must be set to 1, JPEG_FILE:
-String ImageData	contains Base64Url encoded raw image data, according to the ImageType. In the current version, it's a jpeg file. If BioSampleEncryption is set to 1 (XTEA encryption), this data is encrypted.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>Version</i></td>
+  <td valign="top"> 	Specifies the version of the CDPJsonFaceImage object. It must be set to 1.  </td>
+  </tr>
+  <tr>
+  <td valign="top">DP_FACE_IMAGE_TYPE <i>ImageType</i>	</td>
+  <td valign="top">type of image. Must be set to 1, JPEG_FILE.</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>ImageData</i></td>
+  <td valign="top">Contains Base64Url encoded raw image data, according to the ImageType. In the current version, it's a jpeg file. <BR><BR>If BioSampleEncryption is set to 1 (XTEA encryption), this data is encrypted.</td>
+  </tr>
+</table>
 
+~~~
 typedef enum DP_FACE_IMAGE_TYPE
 {
 	JPEG_FILE = 1, // Base64Url encoded JPEG file
@@ -2257,7 +2272,11 @@ Below is an example of JSON representation of the CDPJsonFaceImage object contai
 	b24iOjEsIm51bWJlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ"
 		// Base64url encoded jpeg file
 }
-Example of JSON representation of the authentication array containing the raw face images (jpeg files):
+~~~
+
+This is an example of JSON representation of the authentication array containing the raw face images (jpeg files).
+
+~~~
 {
 	[{
 	"Version":1,
@@ -2302,22 +2321,37 @@ Example of JSON representation of the authentication array containing the raw fa
 	wNCwiaURhdGFBY3F1a" 											// Base64url encoded CDPJsonFaceImage object
 	}]
 }
-The following steps will be needed to create the Face authentication packet.
-1	Create JSON representation of BioSample(s).
-2	Combine those JSON representations in a JSON array ([]).
-3	Base64Url encode the string created in step #2.
-4	Create a JSON representation of the Credential class using Face Credential ID as id member and a string created in step #3 as a data member.
-IdentifyUser
-This method is not supported. The Face Credential does not support user identification.
-GetEnrollmentData
-This method is not supported.
-CustomAction
-CustomAction is not supported for the Face Credential.
-Contactless Card Credentials
-The following ID is defined for Contactless Card Credential:
-{F674862D-AC70-48ca-B73E-64A22F3BAC44}
-AuthenticateUser
-The data for the contactless card credential is a Base64url encoded UTF-8 representation of the JSON CDPJsonCLCAuthToken class:
+~~~
+
+To create the Face authentication packet, follow these steps.
+
+1. Create JSON representation of BioSample(s).
+2. Combine those JSON representations in a JSON array ([]).
+3. Base64Url encode the string created in step #2.
+4. Create a JSON representation of the Credential class using Face Credential ID as id member and a string created in step #3 as a data member.
+
+#### IdentifyUser  
+
+The Face Credential does not support user identification.  
+
+#### GetEnrollmentData  
+
+This method is not supported.  
+
+#### CustomAction
+
+CustomAction is not supported for the Face Credential.  
+
+### Contactless Card Credential
+
+The following ID is defined for the Contactless Card Credential.
+
+{F674862D-AC70-48ca-B73E-64A22F3BAC44}  
+
+#### AuthenticateUser
+The data for the contactless card credential is a Base64url encoded UTF-8 representation of the JSON CDPJsonCLCAuthToken class.  
+
+~~~
 [DataContract]
 public class CDPJsonCLCAuthToken
 {
@@ -2327,13 +2361,30 @@ public class CDPJsonCLCAuthToken
 	public String UID { get; set; }   // card UID
 	[DataMember]
 	public String OTP { get; set; }   // TOTP
-}
+}  
+~~~
 where:
 
-Data member	Description
-Byte version 	Specifies the version of CDPJsonCLCAuthToken object, must be set to 1.
-String UID 	Card's unique ID, array of 64 bytes, presented as Base64url UTF-8 encoded string.
-String OTP 	6 symbols time based one-time password, generated by the client, presented as string.
+<table style="width:95%;margin-left:auto;margin-right:auto;">
+  <tr>
+    <th style="width:20%" ALIGN="left">Data Member</th>
+    <th style="width:35%" ALIGN="left">Description</th>
+  </tr>
+  <tr>
+  <td valign="top">Byte <i>Version</i></td>
+  <td valign="top"> 	Specifies the version of the  CDPJsonCLCAuthToken object. Must be set to 1.</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>UID</i></td>
+  <td valign="top">The card's unique ID, an array of 64 bytes presented as a Base64url UTF-8 encoded string.</td>
+  </tr>
+  <tr>
+  <td valign="top">String <i>OTP</i></td>
+  <td valign="top">A six-symbol time based one-time password, generated by the client, presented as string.</td>
+  </tr>
+</table>
+
+
 
 To create the Contactless Card Credential for authentication, following steps must be performed on the client:
 1	Read the card UID and the symmetric key stored on the Contactless card, create the SHA 256 hash of this key.
@@ -2392,7 +2443,7 @@ Below is an example of HTTP Body to destroy WIA authentication:
 {
 	"authId":657854
 }
-Email Credential
+#### Email Credential
 The following ID is defined for the Email Credential:
 {7845D71D-AB67-4EA7-913C-F81E75C3A087}
 The Email credential is an auxiliary credential and cannot be used alone to log on to STS. It has to be combined with other Primary credential(s).
