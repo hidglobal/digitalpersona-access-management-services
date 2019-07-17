@@ -5,9 +5,7 @@ has_toc: false
 nav_order: 4
 ---
 
-###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / Web Authentication Service (WAS)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/access-management-services)  
-
-![](assets/HID-DPAM-access-mgmt-svcs.png)    
+{% include header.html %}
 
 ## Web Authentication Service
 

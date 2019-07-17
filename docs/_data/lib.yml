@@ -1,0 +1,6 @@
+name: DigitalPersona Access Management Services
+shortName: Access Management Services
+git: 'https://github.com/hidglobal'
+repo: digitalpersona-access-management-services
+package: '@digitalpersona/core'
+api: core
