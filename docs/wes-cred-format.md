@@ -145,7 +145,7 @@ public class BioEnrollment
   </tr>
   <tr>
   <td valign="top">  samples</td>
-  <td valign="top">	List BioSample with fingerprint data to enroll for such position. List could include one or more  [BioSamples](was-cred-format.md#biosample-class).</mark></td>
+  <td valign="top">	List BioSample with fingerprint data to enroll for such position. List could include one or more  [BioSamples](was-cred-format.md#biosample-class).</td>
   </tr>
 </table>
 

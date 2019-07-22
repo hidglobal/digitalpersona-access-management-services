@@ -115,7 +115,7 @@ List<String> GetUserCredentials(String userName, UInt16 userNameType);
   </tr>
   <tr>
   <td valign="top">userNameType</td>
-  <td valign="top">The format of the user name provided in the userName parameter. See [User Class](was.md#user-class) for a detailed description of user name formats.</td>
+  <td valign="top">The format of the user name provided in the userName parameter. See <A HREF="was.md#user-class">User Class</A> for a detailed description of user name formats.</td>
   </tr>    
 </table>
 
@@ -169,7 +169,7 @@ String GetEnrollmentData(String userName, UInt16 userNameType, String credential
   </tr>
   <tr>
   <td valign="top">userNameType</td>
-  <td valign="top">The format of the user name provided in the userName parameter. See “User class” on <mark style="color:Red;">page 68</mark> for a detailed description of the userName formats.</td>
+  <td valign="top">The format of the user name provided in the userName parameter. See <A HREF="was.md#user-class">User class</A> for a detailed description of the userName formats.</td>
   </tr>   
   <tr>
   <td valign="top">credentialId</td>
@@ -769,6 +769,7 @@ Below is an example of the JSON representation of a user.
 ~~~
 
 #### Credential class
+#### <A NAME="credential-class"></A>Credential class
 
 Credential class is credential representation in this API.
 
