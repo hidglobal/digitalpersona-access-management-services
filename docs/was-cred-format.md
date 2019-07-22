@@ -7,47 +7,46 @@ nav_order: 7
 
 {% include header.html %}
 
-## WAS Credential Format
+# WAS Credential Format
 <BR>  
 
 In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 
 <table style="width:95%;margin-left:auto;margin-right:auto;">
-
-  <tr>
+<tr>
   <td style="width:50%" ALIGN="left" valign="top"><A HREF="#fingerprint-credential">Fingerprint Credential</A>
   </td>
   <td valign="top"><A HREF="#wia-credential">Windows Integrated Authentication (WIA) Credential</A></td>
-  </tr>
-  <tr>
+</tr>
+<tr>
   <td valign="top"><A HREF="#password-credential">Password Credential</A>
-</td>
+  </td>
   <td valign="top"><A HREF="#pin-credential">PIN Credential</A></td>
-  </tr>
-  <tr>
+</tr>
+<tr>
   <td valign="top"><A HREF="#email-credential">
   Email Credential</A>
-    </td>
+  </td>
   <td valign="top"><A HREF="#contactless-card-credential">Contactless Card Credential</A></td>
-  </tr>
-  <tr>
+</tr>
+<tr>
   <td valign="top"><A HREF="#recovery-credential">Recovery  Questions Credential</A>
-</td>
+  </td>
   <td valign="top"><A HREF="#prox-card-credential">  Proximity Card Credential</A>
   </td>
-  </tr>
-  <tr>
+</tr>
+<tr>
   <td valign="top"><A HREF="#smart-card-credential">Smart Card Credential</A>
-    </td>
+  </td>
   <td valign="top"><A HREF="#face-credential">
   Face Credential</A>
   </td>
-  </tr>
-  <tr>
+</tr>
+<tr>
   <td valign="top"><A HREF="#totp-credential">Time-Based OTP (TOTP) Credential</A></td>
   <td valign="top"><A HREF="#fido-credential">
   FIDO Device Credential</A></td>
-  </tr>   
+</tr>   
 </table>
 
 The Credential class is defined as follows.
@@ -64,7 +63,7 @@ public class Credential
 ~~~
 It is obvious that the data member of the Credential class should be different for different types of credentials. For example, the data member of the Fingerprint Credential is different from the same member of the Password Credential.
 
-### <A NAME="fingerprint-credential"></A>Fingerprint Credential
+## <A NAME="fingerprint-credential"></A>Fingerprint Credential
 
 The following ID is defined for Fingerprint credentials.  
 
@@ -210,7 +209,7 @@ public class BioSample
 		// Base64url encoded biometric sample data
 }
 ~~~
-#### BioSample class  
+### BioSample class  
 
 The BioSample class represents a general biometric sample.  
 
@@ -253,7 +252,7 @@ public class BioSample
   </tr>
 </table>
 
-### BioSampleHeader class  
+## BioSampleHeader class  
 
 The BioSampleHeader provides detailed information about a Biometric sample.   
 
@@ -316,7 +315,7 @@ public class BioSampleHeader
   </tr>   
 </table>
 
-### BioSampleFormat class  
+## BioSampleFormat class  
 
 BioSampleFormat describes the vendor-specific format of the Biometric sample.
 
@@ -356,7 +355,7 @@ public class BioSampleFormat
   </tr>
 </table>
 
-### <A NAME="biosampletype-enum"></A>BioSampleType enumeration
+## <A NAME="biosampletype-enum"></A>BioSampleType enumeration
 
 The BioSampleType enumeration defines the type of Biometric sample.
 
@@ -408,7 +407,7 @@ public enum BioSampleType
   </tr>   
 </table>
 
-### BioSamplePurpose enumeration  
+## BioSamplePurpose enumeration  
 
 The BioSamplePurpose details the purpose of this biometric sample.
 
@@ -461,13 +460,13 @@ public enum BioSamplePurpose
   </tr>
 </table>
 
-#### Notes  
+### Notes  
 
 If a fingerprint image is sent as a  biometric sample, the ANY purpose should be set.  
 
 If feature extraction is done by the DigitalPersona engine, with any flag except FT_PRE_REG_FTR and FT_REG_FTR, it can be used for both verification and identification so ANY purpose could be provided.
 
-#### <A NAME="biosample-encryption-enumeration">BioSampleEncryption enumeration</A>
+### <A NAME="biosample-encryption-enumeration">BioSampleEncryption enumeration</A>
 
 BioSampleEncryption specifies the encryption algorithm that was used to protect the biometric sample.
 
@@ -497,17 +496,17 @@ public enum BioSampleEncryption
   </tr>
 </table>
 
-#### Notes  
+### Notes  
 
 We strongly recommend using XTEA encryption for biometric samples (as we do in DigitalPersona products), but we recognize the complexity of XTEA implementation on different platforms (such as Android) so unencrypted samples are accepted as well.  
 
-### Biometric Sample Data  
+## Biometric Sample Data  
 
 The following data formats for fingerprint samples are supported.  
 - Fingerprint Feature Set  
 -	Raw Fingerprint Image  
 
-#### Fingerprint Feature Set  
+### Fingerprint Feature Set  
 
 To specify a Fingerprint Feature Set in the Biometric sample, the following values in BioSampleHeader must be set.  
 
@@ -567,7 +566,7 @@ Below is an example of JSON representation of a Fingerprint Feature Set.
 		// Base64url encoded Feature Set
 }
 ~~~
-#### Fingerprint image  
+### Fingerprint image  
 
 To specify a Fingerprint Image in the Biometric sample, the following values in BioSampleHeader must be set.  
 
@@ -606,7 +605,7 @@ To specify a Fingerprint Image in the Biometric sample, the following values in 
   </tr>    
 </table>
 
-#### Notes  
+### Notes  
 
 We cannot treat fingerprint image as an opaque blob because the image has many parameters which need to be passed, such as image size, image resolution, etc.  
 
@@ -808,7 +807,7 @@ Below is an example of fingerprint image JSON representation.
 }
 ~~~
 
-#### Creating a JSON representation of a BioSample from a fingerprint image  
+### Creating a JSON representation of a BioSample from a fingerprint image  
 
 To create a JSON representation of BioSample from a fingerprint image, perform the following steps.  
 
@@ -867,7 +866,7 @@ Finally, we create a JSON representation of BioSample.
 }
 ~~~
 
-#### Creating Fingerprint Credentials from BioSample(s)  
+### Creating Fingerprint Credentials from BioSample(s)  
 
 Follow these steps to create a JSON representation of the Credential class which we can send in one of the IDPWebAuth interface methods from one or more biometric samples.  
 
@@ -941,7 +940,7 @@ Finally we create a JSON representation of the Credential class which we can sen
 "data":"W3sNCiJWZXJzaW9uIjoxLA0KIkhlYWRlciI6DQp7DQoiRmFjdG9yIjo4LA0KIkZvcm1hdCI6DQp7DQoiRm9ybWF0T3duZXIiOjUxLA0KIkZvcm1hdElEIjowDQp9LA0KIlR5cGUiOjIsDQoiUHVycG9zZSI6MCwNCiJRdWFsaXR5IjotMSwNCiJFbmNyeXB0aW9uIjowIA0KfSwNCiJEYXRhIjoiZXlKMGVYQWlPaUpLVjFRaUxBMEtJQ0poYkdjaU9pSklVekkxTmlKOSIJCQkJDQp9XQ0K"}  
 ~~~
 
-#### AuthenticateUser  
+### AuthenticateUser  
 
 To call the AuthenticateUser() method, a fingerprint credential must already have been created as described in the previous section.  
 
@@ -966,7 +965,7 @@ Below is an example of HTTP Body for fingerprint authentication with the fingerp
 }
 ~~~
 
-#### IdentifyUser  
+### IdentifyUser  
 
 To call the IdentifyUser() method, the caller must create a fingerprint credential as described previously.  
 
@@ -986,7 +985,7 @@ Below is an example of HTTP Body for fingerprint identification with the fingerp
 }
 ~~~
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 To ask information about enrolled fingerprints, the client should send an IDPWebAuth-> GetEnrollmentData request to the server. Below is an example of such a request.
 
@@ -1056,12 +1055,12 @@ The following GetEnrollmentDataResult indicates that the user has their right th
 
 [{"position":1},{"position":2},{"position":8}]  
 
-#### CustomAction
+### CustomAction
 CustimAction is not currently supported for the Fingerprint Credential.  
 
-### <A NAME="password-credential"></A>Password Credential  
+## <A NAME="password-credential"></A>Password Credential  
 
-### <A NAME="fingerprint-credential"></A>Fingerprint Credential
+## <A NAME="fingerprint-credential"></A>Fingerprint Credential
 
 The following ID is defined for Password Credential.  
 
@@ -1083,7 +1082,7 @@ Finally we create a JSON representation of the Credential class which we can sen
 "data":"UEBzc3cwcmQ"}  
 ~~~
 
-#### AuthenticateUser
+### AuthenticateUser
 To call the AuthenticateUser() method, the caller must create a password credential as described above.  
 
 Below is an example of HTTP Body for password authentication with the password credential created above.
@@ -1103,20 +1102,20 @@ Below is an example of HTTP Body for password authentication with the password c
 }
 ~~~
 
-#### IdentifyUser  
+### IdentifyUser  
 
 The Password credential does not support user identification, so an IdentifyUser() call with a Password credential will return a "Not implemented" error.  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 The password credential does not support the GetEnrollmentData() call and will return a "Not implemented"error.  
 
-#### CustomAction
+### CustomAction
 The following CustomAction operations are supported for the Password Credential.
 - Password Randomization
 - Password Reset
 
-##### Password Randomization  
+#### Password Randomization  
 
 For Password Randomization, the Action ID is "4".  
 
@@ -1149,7 +1148,7 @@ This call will send a Password Randomization request for a Non AD user with the 
 
 **Note**: We can guarantee successful Password Randomization only for Non AD Users in DigitalPersona LDS installations. We can randomize the  password for an AD user only in a  DigitalPersona AD installation.
 
-##### Password Reset
+#### Password Reset
 
 Password Reset Action ID is "13".  
 
@@ -1181,7 +1180,7 @@ This call will send Password Reset request for Altus user with account name "som
 
 **Note**: We can only guarantee a successful Password Reset  for Altus Users in Altus LDS installations and can only reset the password for AD users in Altus AD installations.  
 
-### <A NAME="pin-credential"></A>PIN Credential  
+## <A NAME="pin-credential"></A>PIN Credential  
 
 The following ID is defined for the PIN Credential.  
 
@@ -1202,7 +1201,7 @@ Follow these steps to create a PIN Credential.
 "data":"MTIzNA"}
 ~~~
 
-#### AuthenticateUser  
+### AuthenticateUser  
 
 To call the AuthenticateUser() method, the caller must create a PIN credential as described above.  
 
@@ -1223,19 +1222,19 @@ Below is an example of the HTTP Body for PIN authentication with the previously 
 }
 ~~~
 
-#### IdentifyUser  
+### IdentifyUser  
 
 The PIN credential does not support user identification, so an IdentifyUser() call with a PIN credential will return a "Not implemented" error.  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 The PIN credential does not support the GetEnrollmentData() call, and will return a "Not implemented" error.  
 
-#### CustomAction  
+### CustomAction  
 
 CustomAction is not currently supported for the PIN Credential.
 
-### <A NAME="recovery-credential"></A>Recovery Questions Credential  
+## <A NAME="recovery-credential"></A>Recovery Questions Credential  
 
 The following ID is defined for the Recovery Questions Credential.  
 
@@ -1251,7 +1250,7 @@ someone@mycompany.com&type=6&cred_id=B49E99C6-6C94-42DE-ACD7-FD6B415DF503
 ~~~
 In the following topic, details are provided about the data returned as a result of this request.  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation of the list (array) of questions enrolled by the user. The LiveQuestion class represents every question in the list.  
 
@@ -1355,7 +1354,7 @@ Below is an example of JSON representation of a Custom Live Question.
 	"text":"Date of your employment."																			// custom question text
 }
 ~~~
-##### Parsing GetEnrollmentDataResult  
+#### Parsing GetEnrollmentDataResult  
 
 These are the steps to process (parse) GetEnrollmentDataResult.  
 
@@ -1431,7 +1430,7 @@ CJ0eXBlIjoxLCJ2ZXJzaW9uIjoxfV0
 }
   ~~~
 
-##### Creating the Live Questions Credential  
+#### Creating the Recovery Questions Credential  
 
 The LiveAnswer class represents the answers to LiveQuestion.  
 
@@ -1480,7 +1479,7 @@ Below is the JSON representation of LiveAnswer to the question number 102 from t
 }
 ~~~~
 
-##### Steps to create a Live Questions Credential  
+#### Steps to create a Live Questions Credential  
 
 To create the Live Questions Credential, perform the following steps.  
 
@@ -1527,7 +1526,7 @@ To create the Live Questions Credential, perform the following steps.
 "data":"W3sidmVyc2lvbiI6MSwibnVtYmVyIjoyLCJ0ZXh0IjoiTmV3IFlvcmsifSx7InZlcnNpb24iOjEsIm51bWJlciI6NiwidGV4dCI6IkNhbnlvbiBNaWRkbGUifSx7InZlcnNpb24iOjEsIm51bWJlciI6MTAyLCJ0ZXh0IjoiMDQvMjQvMjAwOSJ9XQ"}
 ~~~  
 
-#### AuthenticateUser  
+### AuthenticateUser  
 
 To call the AuthenticateUser() method, the caller must create the LiveQuestions credential as described above.  
 
@@ -1550,15 +1549,15 @@ Below is an example of an HTTP Body for LiveQuestions authentication with the Li
 }
 ~~~
 
-#### IdentifyUser  
+### IdentifyUser  
 
 The LiveQuestions credential does not support user identification, so an IdentifyUser() call with a LiveQuestions credential will return a "Not implemented" error.  
 
-#### CustomAction  
+### CustomAction  
 
 CustomAction is not currently supported for the Live Questions Credential.  
 
-### <A NAME="prox-card-credential"></A>Proximity Card Credential  
+## <A NAME="prox-card-credential"></A>Proximity Card Credential  
 
 The following ID is defined for the Proximity Card Credential.  
 
@@ -1588,7 +1587,7 @@ Follow these steps to create the Prox Card Credential.
 "data":"eyJ0eXAiOiJKV1QiLAogImFsZyI6IiBSUzI1NiJ9"}  
   ~~~
 
-#### AuthenticateUser  
+### AuthenticateUser  
 
 To call the AuthenticateUser() method, the caller must create a Proximity Card credential as described above.  
 
@@ -1609,7 +1608,7 @@ Below is an example of an HTTP Body for Proximity Card authentication with a pre
 }
 ~~~
 
-#### IdentifyUser  
+### IdentifyUser  
 
 To call the IdentifyUser() method, the caller must create a Proximity Card credential as described above.  
 
@@ -1625,15 +1624,15 @@ Below is an example of HTTP Body for Proximity Card identification with the prev
 }
 ~~~
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 The Proximity Card credential does not support the GetEnrollmentData() call, and will return a "Not implemented" error.  
 
-#### CustomAction  
+### CustomAction  
 
 CustomAction is not currently supported for the Proximity Card Credential.  
 
-### <A NAME="totp-credential"></A>Time-Based OTP (TOTP) Credential  
+## <A NAME="totp-credential"></A>Time-Based OTP (TOTP) Credential  
 
 The following ID is defined for the TOTP Credential.
 
@@ -1667,7 +1666,7 @@ Below is example of JSON representation of Credential class which we can send fo
 "data":"cHVzaA"}
 ~~~
 
-#### AuthenticateUser  
+### AuthenticateUser  
 
 To call the AuthenticateUser() method, the caller must create a TOTP credential as described above.  
 
@@ -1705,11 +1704,11 @@ Below is an example of HTTP Body for Push Notification OTP authentication with T
 }
 ~~~  
 
-#### IdentifyUser  
+### IdentifyUser  
 
 The TOTP credential does not support user identification, so an IdentifyUser() call with a TOTP credential will return a "Not implemented" error.  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation of our OTP-based information. The  OTPEnrollmentData class  represents this information.
 
@@ -1776,7 +1775,7 @@ Below is an example of JSON representation of GetEnrollmentDataResult.
 }
 ~~~
 
-##### Parsing GetEnrollmentDataResult  
+#### Parsing GetEnrollmentDataResult  
 
 Perform the following steps to process (parse) GetEnrollmentDataResult.  
 
@@ -1786,21 +1785,21 @@ Perform the following steps to process (parse) GetEnrollmentDataResult.
 <mark style="color:Red;">(Unicode?)</mark>.
 4	Using a JSON parser, parse the string to objects of the OTPEnrollmentData class.  
 
-#### CustomAction  
+### CustomAction  
 
 The following CustomAction operations are currently supported for the TOTP Credential.  
 
 - Send SMS OTP Request  
 - Send E-Mail OTP Request  
 
-##### Send SMS OTP Request  
+#### Send SMS OTP Request  
 
 There are two possible options for an SMS OTP request.  
 
 - Send SMS request for Enrollment  
 - Send SMS request for Authentication  
 
-######	Send SMS Request for Enrollment  
+#####	Send SMS Request for Enrollment  
 
 Send SMS Request operation Action ID is "513".  
 
@@ -1866,7 +1865,7 @@ Below is an example of an HTTP Body of Send SMS request for Enrollment.
 
 This call will send Enrolment Send SMS request for DigitalPersona user with account name "someone".  
 
-###### Send SMS Request for Authentication  
+##### Send SMS Request for Authentication  
 Send SMS Request operation Action ID is "513".  
 
 The caller does not need to provide a  valid ticket to perform this operation, so the ticket parameter may be set to "null".  
@@ -1896,7 +1895,7 @@ Below is a example of an HTTP Body of Send SMS request for Authentication.
 
 This call will send Authentication Send SMS request for DigitalPersona user with account name "someone".  
 
-###### Send E-Mail OTP Request
+##### Send E-Mail OTP Request
 
 The Send E-Mail OTP Request operation Action ID is "514".  
 
@@ -1931,13 +1930,13 @@ Below is an example of an HTTP Body for a  Send E-Mail OTP request.
 
 This call will send the OTP code over email for the AD user with the UPN name "someone@mycompany.com".  
 
-### <A NAME="smart-card-credential"></A>Smart Card Credential    
+## <A NAME="smart-card-credential"></A>Smart Card Credential    
 
 The following ID is defined for Smart Card Credential.  
 
 {D66CC98D-4153-4987-8EBE-FB46E848EA98}  
 
-#### AuthenticateUser  
+### AuthenticateUser  
 
 The data for a Smart Card credential is a Base64url encoded UTF-8 representation of the JSON array of the CDPJsonSCAuthToken classes.
 
@@ -1995,11 +1994,11 @@ To create the Smart Card Credential for authentication, follow these steps on th
 4. Base64url UTF-8 encode the representation of the string created in step 3.  
 5. Create a JSON representation of the Credential class using the Smart Card Credential ID as the id member and the string created in step 4 as a data member.  
 
-#### IdentifyUser  
+### IdentifyUser  
 
 The Smart Card token does not support user identification.  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 This method returns the list of Smart Card credentials enrolled for the user. It can be used to select the Smart Card token for authentication or to delete the token using the DeleteUserCredentials method.  
 
@@ -2049,11 +2048,11 @@ where:
   </tr>   
 </table>
 
-#### CustomAction  
+### CustomAction  
 
 CustomAction is not currently supported for the Smart Card Credential.  
 
-### <A NAME="face-credential"></A>Face Credential
+## <A NAME="face-credential"></A>Face Credential
 
 One of the following third-party SDKs can be used to support the Face Credential in your application.  
 
@@ -2068,7 +2067,7 @@ The following ID is defined for Face Credentials.
 
 The [BioSample class](#biosample-class) used in the  description below is defined previously.  
 
-#### AuthenticateUser  
+### AuthenticateUser  
 
 The data for Face Authentication is a Base64url encoded UTF-8 representation of the JSON array, containing BioSample objects(s).  
 
@@ -2101,7 +2100,7 @@ The following data members for BioSample should be provided for authentication.
   </tr>   
 </table>
 
-##### DP_BIO_SAMPLE_TYPE::PROCESSED image  
+#### DP_BIO_SAMPLE_TYPE::PROCESSED image  
 
 Indicates a face template in the internal SDK format.
 - Cognitec FIR format;
@@ -2200,7 +2199,7 @@ This is an example of JSON representation of the authentication array containing
 }
 ~~~
 
-##### DP_BIO_SAMPLE_TYPE::RAW image
+#### DP_BIO_SAMPLE_TYPE::RAW image
 
 Indicates a raw face image. It's recommended to have a minimum of ten BioSample objects containing raw images in the authentication array for successful verification.  
 
@@ -2331,25 +2330,25 @@ To create the Face authentication packet, follow these steps.
 3. Base64Url encode the string created in step #2.
 4. Create a JSON representation of the Credential class using Face Credential ID as id member and a string created in step #3 as a data member.
 
-#### IdentifyUser  
+### IdentifyUser  
 
 The Face Credential does not support user identification.  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 This method is not supported.  
 
-#### CustomAction
+### CustomAction
 
 CustomAction is not supported for the Face Credential.  
 
-### <A NAME="contactless-card-credential"></A>Contactless Card Credential
+## <A NAME="contactless-card-credential"></A>Contactless Card Credential
 
 The following ID is defined for the Contactless Card Credential.
 
 {F674862D-AC70-48ca-B73E-64A22F3BAC44}  
 
-#### AuthenticateUser
+### AuthenticateUser
 The data for the contactless card credential is a Base64url encoded UTF-8 representation of the JSON CDPJsonCLCAuthToken class.  
 
 ~~~
@@ -2395,7 +2394,7 @@ To create the Contactless Card Credential for authentication, perform the follow
 4.	Base64Url encode the JSON representation of the CDPJsonCLCAuthToken class.  
 5. Create a JSON representation of the Credential class using THE Contactless Card Credential ID as THE id member and THE string created in step #4 as a data member.  
 
-#### IdentifyUser  
+### IdentifyUser  
 
 To call the IdentifyUser() method, first create the Contactless Card credential (CDPJsonCLCAuthToken) as described above.  
 
@@ -2411,15 +2410,15 @@ Below is an example of an HTTP Body for Contactless Card identification with the
 }
 ~~~
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 This method is not supported.  
 
-#### CustomAction  
+### CustomAction  
 
 The CustomAction is not currently supported by the  Contactless Card Credential.  
 
-### <A NAME="wia-credential"></A>Windows Integrated Authentication (WIA) Credential  
+## <A NAME="wia-credential"></A>Windows Integrated Authentication (WIA) Credential  
 
 The following ID is defined for the WIA Credential.  
 
@@ -2433,7 +2432,7 @@ These functions are not supported by the WIA Credential.
 - AuthenticateUserTicket
 - CustomAction  
 
-#### CreateUserAuthentication  
+### CreateUserAuthentication  
 
 The User parameter of CreateuserAuthentication is ignored, and the credentialId parameter should be set to AE922666-9667-49BC-97DA-1EB0E1EF73D2.  
 
@@ -2446,7 +2445,7 @@ Below is an example of HTTP Body required to create Extended Authentication for 
 }
 ~~~
 
-#### CreateTicketAuthentication  
+### CreateTicketAuthentication  
 
 The ticket parameter of CreateTicketAuthentication must be a valid Ticket, and the credentialId parameter should be set to AE922666-9667-49BC-97DA-1EB0E1EF73D2.  
 
@@ -2459,7 +2458,7 @@ Below is an example of an HTTP Body for creating  Extended Authentication for WI
 }
 ~~~
 
-#### ContinueAuthentication  
+### ContinueAuthentication  
 
 The authId parameter of ContinueAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.  
 
@@ -2474,7 +2473,7 @@ Below is an example of an HTTP Body for a   WIA authentication handshake.
 }
 ~~~
 
-#### DestroyAuthentication  
+### DestroyAuthentication  
 
 The authId parameter of DestroyAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.  
 
@@ -2486,7 +2485,7 @@ Below is an example of HTTP Body to destroy WIA authentication.
 }
 ~~~
 
-#### <A NAME="email-credential"></A>Email Credential  
+### <A NAME="email-credential"></A>Email Credential  
 
 The following ID is defined for the Email Credential.  
 
@@ -2537,11 +2536,11 @@ Below is an example of an HTTP Body for email authentication with the Email cred
 }
 ~~~
 
-#### IdentifyUser  
+### IdentifyUser  
 
 This method is not supported.  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation E-mail based information. The MailEnrollmentData class  represents this information.  
 
@@ -2574,7 +2573,7 @@ Below is an example of JSON representation of GetEnroomentDataResult.
 	}
 ~~~  
 
-##### Parsing GetEnrollmentDataResult  
+#### Parsing GetEnrollmentDataResult  
 
 Use the following steps to process (parse) GetEnrollmentDataResult.  
 
@@ -2584,11 +2583,11 @@ Use the following steps to process (parse) GetEnrollmentDataResult.
 <mark style="color:Red;">(Unicode?)</mark>.
 4	Using the JSON parser, parse the string to objects of the MailEnrollmentData class.  
 
-### CustomAction  
+##### CustomAction  
 
 The following CustomAction operations are currently supported by the Email credential.  
 
-##### <A NAME="send-email-request"></A>Send Email Verification Request
+#### <A NAME="send-email-request"></A>Send Email Verification Request
 
 The Send Email Verification Request operation Action ID is "16".  
 
@@ -2621,7 +2620,7 @@ This call will send an email verification request to the user John.Doe@yourdomai
 
 An example of the email request was provided above.  
 
-**Note: The user must have valid e-mail address stored in the DigitalPersona (AD or LDS) database to be able to send the email. If the email address cannot be found in the user record, the following error will be returned.  
+**Note**: The user must have valid e-mail address stored in the DigitalPersona (AD or LDS) database to be able to send the email. If the email address cannot be found in the user record, the following error will be returned.  
 
 ~~~
 E_ADS_PROPERTY_NOT_FOUND (0x8000500D)  
@@ -2629,29 +2628,29 @@ E_ADS_PROPERTY_NOT_FOUND (0x8000500D)
 The property was not found in the cache. The property may not have an attribute, or is invalid.
 ~~~
 
-### <A NAME="fido-credential"></A>FIDO Credential
+## <A NAME="fido-credential"></A>FIDO Credential
 
 The following ID is defined for the FIDO (U2F) Credential.  
 
 {5D5F73AF-BCE5-4161-9584-42A61AED0E48}  
 
-#### AuthenticateUser  
+### AuthenticateUser  
 
 This method is not supported.  
 
-#### IdentifyUser  
+### IdentifyUser  
 
 This method is not supported.  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 This method is not supported.  
 
-#### CustomAction  
+### CustomAction  
 
 The following CustomAction operations are currently supported by the FIDO U2F Credential.  
 
-##### Request Application Id from Server  
+#### Request Application Id from Server  
 
 The Application Id request operation Action ID is "17".  
 
@@ -2690,7 +2689,7 @@ Below is a valid example of an HTTP Body of an  Application Id response.
 
 If the AppId is not set on the Server, an appropriate error will be returned.  
 
-#### CreateUserAuthentication  
+### CreateUserAuthentication  
 
 The credentialId parameter should be set to 5D5F73AF-BCE5-4161-9584-42A61AED0E48.  
 
@@ -2703,7 +2702,7 @@ Below is an example of an HTTP Body required to create Extended Authentication f
 }
 ~~~
 
-#### CreateTicketAuthentication   
+### CreateTicketAuthentication   
 
 The ticket parameter of CreateTicketAuthentication must be a valid Ticket, and the credentialId parameter should be set to 5D5F73AF-BCE5-4161-9584-42A61AED0E48.  
 
@@ -2716,7 +2715,7 @@ Below is an example of an HTTP Body required to create Extended Authentication f
 }  
 ~~~
 
-#### ContinueAuthentication  
+### ContinueAuthentication  
 
 The authId parameter of ContinueAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.   
 
@@ -2788,7 +2787,7 @@ The value of handshakeData depends on the handshake type. There are four types o
 - Authentication Request
 - Authentication Respond  
 
-##### Challenge Request  
+#### Challenge Request  
 
 Client sends a Challenge Request as the first step of U2F authentication handshakes. handshakeData of the  Challenge Request is ignored and should be set to null.  
 
@@ -2801,7 +2800,7 @@ Below is an example of Json representation of Challenge Request.
  }
 ~~~
 
-##### Challenge Respond  
+#### Challenge Respond  
 
 Challenge Respond will be returned by the U2F Server as authData member of ExtendedAUTHResult returned by the Challenge Request call.  
 
@@ -2855,7 +2854,7 @@ public class U2FChallengeRespond
   </tr>   
 </table>
 
-#### Authentication Request  
+### Authentication Request  
 
 The client sends an Authentication Request as the second step of U2F authentication handshaking.  
 
@@ -2878,7 +2877,8 @@ public class U2FAuthenticationRequest
 	public String clientData { get; set; }																							
 		//		U2F token authentication													counter.
 }
-~~~
+~~~  
+
 <table style="width:95%;margin-left:auto;margin-right:auto;">
   <tr>
     <th style="width:20%" ALIGN="left">Data Member</th>
@@ -2916,11 +2916,11 @@ See the following webpage for details.
 
 Client data contains the challenge which was generated previously.  
 
-##### Authentication Respond
+#### Authentication Respond
 
 Authentication Respond is not supported at this time and is reserved for future use. The result of Authentication Request will be returned in <A HREF="extended-auth-result">ExtendedAUTHResult</A>. A Json Web Token will be returned if authentication succeeded or error if authentication failed.  
 
-##### DestroyAuthentication  
+#### DestroyAuthentication  
 
 The authId parameter of DestroyAuthentication must be a valid authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication.  
 
