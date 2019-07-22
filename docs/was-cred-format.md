@@ -807,7 +807,8 @@ Below is an example of fingerprint image JSON representation.
 }
 ~~~
 
-### Creating a JSON representation of a BioSample from a fingerprint image  
+### Creating a JSON representation of a BioSample
+### from a fingerprint image  
 
 To create a JSON representation of BioSample from a fingerprint image, perform the following steps.  
 
