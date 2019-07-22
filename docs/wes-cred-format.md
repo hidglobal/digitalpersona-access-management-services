@@ -6,9 +6,9 @@ nav_order: 6
 ---
 
 {% include header.html %}
+<BR>  
 
 ## WES Credential Format
-<BR>  
 
 In the [IDPWebEnroll interface](wes.md#idpwebenroll-interface),
 we define a number of methods for credential enrollment which have as an input parameter an object of the Credential class. This topic describes the format of the data member for each Credential supported by DigitalPersona.
