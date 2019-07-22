@@ -6,9 +6,9 @@ nav_order: 4
 ---
 
 {% include header.html %}
+<BR>
 
 ## Web Authentication Service
-<BR>  
 
 The purpose of the DigitalPersona Web Authentication Service (WAS) is user authentication and identification. WAS is a GUI-less web service which should be located inside the enterprise firewall, where it directs authentication (identification) requests to the DigitalPersona Server over DCOM. The DigitalPersona Server is the only one who can process authentication requests.  
 
@@ -115,7 +115,7 @@ List<String> GetUserCredentials(String userName, UInt16 userNameType);
   </tr>
   <tr>
   <td valign="top">userNameType</td>
-  <td valign="top">The format of the user name provided in the userName parameter. See “User class” <mark style="color:Red;">on page 68</mark> for a detailed description of user name formats.</td>
+  <td valign="top">The format of the user name provided in the userName parameter. See [User Class](#user-class) for a detailed description of user name formats.</td>
   </tr>    
 </table>
 
@@ -692,7 +692,7 @@ The above is a request to destroy an extended authentication with a handle of 52
 
 Below are the Data Contracts used in this API.
 
-#### User class
+#### <A NAME="user-class"></A>User class
 
 User class is user representation in this API.
 
