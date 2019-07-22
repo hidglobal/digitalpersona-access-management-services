@@ -8,13 +8,13 @@ nav_order: 4
 {% include header.html %}
 <BR>
 
-## Web Authentication Service
+# Web Authentication Service
 
 The purpose of the DigitalPersona Web Authentication Service (WAS) is user authentication and identification. WAS is a GUI-less web service which should be located inside the enterprise firewall, where it directs authentication (identification) requests to the DigitalPersona Server over DCOM. The DigitalPersona Server is the only one who can process authentication requests.  
 
 The result of successful authentication is a JSON token signed by the Web Service.  
 
-### IDPWebAuth interface  
+## IDPWebAuth interface  
 
 The DigitalPersona Web Authentication Service is a WCF (Windows Communication Foundation) service. The IDPWebAuth interface is the WCF interface.  
 
@@ -91,15 +91,15 @@ namespace DPWcfAuthService
 }
 ~~~
 
-### Methods  
+## Methods  
 
 The IDPWebAuth interface has 5 methods. Below we give a detailed description of each method.  
 
-#### GetUserCredentials method  
+### GetUserCredentials method  
 
 The GetUserCredentials method is a utility method which allows the caller to determine which particular credentials have been enrolled by a user.  
 
-##### Syntax  
+#### Syntax  
 
 ~~~  
 List<String> GetUserCredentials(String userName, UInt16 userNameType);
@@ -119,11 +119,11 @@ List<String> GetUserCredentials(String userName, UInt16 userNameType);
   </tr>    
 </table>
 
-##### Return values  
+#### Return values  
 
 Returns a list of credential IDs signifying the credentials enrolled by a user. The format of credential IDs is described below in “Credential class” <mark style="color:Red;">on page 69</mark>.
 
-##### Notes  
+#### Notes  
 
 GetUserCredentials is implemented as an HTTP GET using JSON as the response format.  
 
@@ -148,11 +148,11 @@ The example response would be the following.
 
 This response means that the user someone@mycompany.com has password, fingerprint and PIN credentials enrolled.  
 
-#### GetEnrollmentData method  
+### GetEnrollmentData method  
 
 The GetEnrollmentData method is a utility method which allows the caller to get some credential enrollment specific data. For example Recovery Question authentication may require knowing which particular questions were enrolled.  
 
-##### Syntax  
+#### Syntax  
 
 ~~~
 String GetEnrollmentData(String userName, UInt16 userNameType, String credentialId);  
@@ -177,15 +177,15 @@ String GetEnrollmentData(String userName, UInt16 userNameType, String credential
   </tr>     
 </table>
 
-##### Return values  
+#### Return values  
 
 Returns Base64 encoded enrollment data. The format of this enrollment data is credential-specific.  
 
-##### Notes  
+#### Notes  
 
 GetEnrollmentData is implemented as an HTTP GET using JSON as the response format.
 
-##### Example  
+#### Example  
 
 This is an example of using GetEnrollmentData. The use of braces { } is considered unsafe in URLs (see RFC 1738), which is why we use a “braceless” GUID representations in our API.
 
@@ -202,11 +202,11 @@ An example of a response might be the following.
 ~~~
 This response has fingerprint enrollment data for the user someone@mycompany.com.
 
-#### IdentifyUser method  
+### IdentifyUser method  
 
 The IdentifyUser method allows identification of the user based on a provided credential. Note that not all credentials support identification. For example, fingerprints support identification but passwords do not.  
 
-##### Syntax  
+#### Syntax  
 
 ~~~
 Ticket IdentifyUser(Credential credential);
@@ -223,11 +223,11 @@ Ticket IdentifyUser(Credential credential);
   </tr>
 </table>
 
-##### Return value
+#### Return value
 
 As a result of successful identification a Ticket will be returned. The format of this ticket is described in the section “JSON Web Token (JWT)” <mark style="color:Red;">beginning on page 71</mark>.
 
-##### Notes
+#### Notes
 
 IdentifyUser is implemented as an HTTP POST using JSON as the response format.  
 Below is an example of a URL used to POST an IdentifyUser request.
@@ -256,11 +256,11 @@ MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb29
 0Ijp0cnVlfQ.dBjftJeZ4CVP-B92K27uhbUJU1p1rwW1gFWFOEjXk”}}
 ~~~
 
-#### AuthenticateUser method  
+### AuthenticateUser method  
 
 The AuthenticateUser method allows authentication of a user based on a provided credential.
 
-##### Syntax  
+#### Syntax  
 
 ~~~
 Ticket AuthenticateUser(User user,Credential credential);
@@ -281,11 +281,11 @@ Ticket AuthenticateUser(User user,Credential credential);
   </tr>
 </table>
 
-##### Return values  
+#### Return values  
 
 As a result of successful authentication, a Ticket will be returned. The format of this ticket will be described below in detail.
 
-##### Notes  
+#### Notes  
 
 AuthenticateUser is implemented as an HTTP POST using JSON as the response format.   
 
@@ -318,11 +318,11 @@ The following is an example of an AuthenticateUser response.
 {"AuthenticateUserResult":{“jwt”:”eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ.dBjftJeZ4CVP-B92K27uhbUJU1p1rwW1gFWFOEjXk”}}
 ~~~
 
-#### AuthenticateUserTicket method
+### AuthenticateUserTicket method
 
 The AuthenticateUserTicket method allows authentication of a user through a previously issued ticket and the provided credential.
 
-##### Syntax  
+#### Syntax  
 
 ~~~Ticket AuthenticateUserTicket(Ticket ticket, Credential credential);
 ~~~
@@ -342,7 +342,7 @@ The AuthenticateUserTicket method allows authentication of a user through a prev
   </tr>
 </table>
 
-##### Return values  
+#### Return values  
 
 As a result of successful authentication, a Ticket will be returned.  
 
@@ -378,11 +378,11 @@ Below is an example of the AuthenticateUserTicket response.
 NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmN
 vbS9pc19yb290Ijp0cnVlfQ.dBjftJeZ4CVP-B92K27uhbUJU1p1rwW1gFWFOEjXk”}}  
 ~~~
-#### CustomAction method  
+### CustomAction method  
 
 The CustomAction method allows calling some specific custom action for a designated authentication token.
 
-##### Syntax  
+#### Syntax  
 
 ~~~
 String CustomAction(Ticket ticket, User user, Credential credential, UInt16 actionId);
@@ -412,7 +412,7 @@ String CustomAction(Ticket ticket, User user, Credential credential, UInt16 acti
   </tr>   
 </table>
 
-##### Return values
+#### Return values
 
 CustomAction may or may not return any data. This information is specific to each authentication token.  
 
@@ -450,11 +450,11 @@ Below is example of the HTTP BODY of an CustomAction request.
 
 The above illustrates a request to perform custom action #6 using a  fingerprint authentication token for the user someone@mycompany.com.
 
-#### CreateUserAuthentication method  
+### CreateUserAuthentication method  
 
 CreateUserAuthentication creates Extended Authentication for the designated  user and authentication token (credential).
 
-##### Syntax  
+#### Syntax  
 
 ~~~UInt32 CreateUserAuthentication(User user, String credentialId);
 ~~~
@@ -478,11 +478,11 @@ CreateUserAuthentication creates Extended Authentication for the designated  use
   </tr>   
 </table>
 
-##### Return values  
+#### Return values  
 
 A unique extended authentication handle will be returned.
 
-##### Example    
+#### Example    
 
 CreateUserAuthentication is implemented as an HTTP POST using JSON as the response format.
 
@@ -512,11 +512,11 @@ The following is an example of CreateUserAuthentication response.
 {"CreateUserAuthenticationResult":52346}
 ~~~
 
-#### CreateTicketAuthentication method
+### CreateTicketAuthentication method
 
 The CreateTicketAuthentication method creates Extended Authentication based on an existing Ticket and a specific authentication token (credential).
 
-#####Syntax  
+####Syntax  
 
 ~~~
 UInt32 CreateTicketAuthentication(Ticket ticket, String credentialId);
@@ -541,11 +541,11 @@ UInt32 CreateTicketAuthentication(Ticket ticket, String credentialId);
   </tr>   
 </table>
 
-##### Return values
+#### Return values
 
 A unique extended authentication handle will be returned.
 
-##### Example  
+#### Example  
 
 CreateTicketAuthentication is implemented as an HTTP POST using JSON as the  response format.
 
@@ -578,11 +578,11 @@ The following is an example of a CreateTicketAuthentication response.
 {"CreateTicketAuthenticationResult":52346}
 ~~~
 
-#### ContinueAuthentication method  
+### ContinueAuthentication method  
 
 ContinueAuthentication performs a single step involved in Extended Authentication. Extended Authentication may require handshakes with two or  more steps, so ContinueAuthentication may be called multiple times.
 
-##### Syntax  
+#### Syntax  
 
 ~~~
 ExtendedAUTHResult ContinueAuthentication(UInt32 authId, String authData);
@@ -602,7 +602,7 @@ ExtendedAUTHResult ContinueAuthentication(UInt32 authId, String authData);
   </tr>
 </table>
 
-##### Return values  
+#### Return values  
 
 An Extended Authentication Result will be returned
 <mark style="color:Red;">(see 4.10.12 </mark>ExtendedAUTHResult data structure for details).  
@@ -643,11 +643,11 @@ The following is an example of a ContinueAuthentication response.
 ~~~
 In this example status 2 means Extended Authentication successfully completed and a JSON Web Token is returned in the "jwt" parameter.
 
-#### DestroyAuthentication method  
+### DestroyAuthentication method  
 
 DestroyAuthentication destroys a previously created Extended Authentication and clears all associated resources. Note that it is not generally necessary to call DestroyAuthentication, as the Extended Authentication will be automatically destroyed upon successful (or unsuccessful) completion. You shuld call DestroyAuthentication only when you want to stop an authentication which has not completed yet.
 
-##### Syntax  
+#### Syntax  
 
 ~~~
 void DestroyAuthentication(UInt32 authId);
@@ -664,10 +664,10 @@ void DestroyAuthentication(UInt32 authId);
   </tr>
 </table>
 
-##### Return value  
+#### Return value  
 None.  
 
-##### Examples  
+#### Examples  
 
 DestroyAuthentication is implemented as an HTTP DELETE using JSON as the  response format.
 
@@ -688,11 +688,11 @@ Below is example of the HTTP BODY of a DestroyAuthentication request.
 
 The above is a request to destroy an extended authentication with a handle of 52346.
 
-### Data Contracts
+## Data Contracts
 
 Below are the Data Contracts used in this API.
 
-#### <A NAME="user-class"></A>User class
+### <A NAME="user-class"></A>User class
 
 User class is user representation in this API.
 
@@ -768,8 +768,7 @@ Below is an example of the JSON representation of a user.
 }
 ~~~
 
-#### Credential class
-#### <A NAME="credential-class"></A>Credential class
+### <A NAME="credential-class"></A>Credential class
 
 Credential class is credential representation in this API.
 
@@ -843,7 +842,7 @@ The following credentials are currently supported.
   </tr> 		 			
 </table>
 
-##### Examples
+#### Examples
 
 You must use “braceless” GUID representation in our API in URLs and JSON representation. Below is an example of the JSON representation of a credential.
 
@@ -856,7 +855,7 @@ You must use “braceless” GUID representation in our API in URLs and JSON rep
 	}
 }
 ~~~
-#### Ticket class
+### Ticket class
 The result of successful authentication is a Ticket.
 
 ~~~
@@ -868,7 +867,7 @@ public class Ticket
 ~~~
 The format of the Ticket is a JSON Web Token (JWT). See the next section for further details on JWT.  
 
-#### AuthenticationStatus enumeration
+### AuthenticationStatus enumeration
 
 AuthenticationStatus is enumeration for status of extended authentication operation.  
 
@@ -913,7 +912,7 @@ AuthenticationStatus is enumeration for status of extended authentication operat
   </tr>
 </table>
 
-#### <A NAME="extended-auth-result"></A>ExtendedAUTHResult class  
+### <A NAME="extended-auth-result"></A>ExtendedAUTHResult class  
 
 ExtendedAUTHResult class represents result of Extended Authentication operation.
 
@@ -951,7 +950,7 @@ public class ExtendedAUTHResult
   </tr>
 </table>
 
-### JSON Web Token (JWT)  
+## JSON Web Token (JWT)  
 
 The format of a returned Ticket upon successful authentication is a JSON Web Token.
 
@@ -970,7 +969,7 @@ All three parts are created separately as UTF-8 strings, then they are Base64url
 
 **Base64url Encoding** - For the purposes of this specification, this term always refers to the URL- and filename-safe Base64 encoding described in RFC 4648 [RFC4648], Section 5, with the (non URL-safe) '=' padding characters omitted, as permitted by Section 3.2.  
 
-#### JWT Header
+### JWT Header
 In the current version of the API, we use the following JWT header.
 
 ~~~
@@ -993,11 +992,11 @@ In the current version of the API, we use the following JWT header.
   </tr>
 </table>
 
-#### JWT Claims  
+### JWT Claims  
 
 The following claims must be included in our JWT, although the claims order is not defined so they can be presented in any order.
 
-##### "jti" (JWT ID) Claim  
+#### "jti" (JWT ID) Claim  
 
 The "jti" (JWT ID) claim provides a unique identifier for the JWT. The identifier value must be assigned in a manner that ensures that there is a negligible probability that the same value will be accidentally assigned to a different data object. The "jti" claim can be used to prevent the JWT from being replayed. The "jti" value is case sensitive. Its value must be a string.  
 
@@ -1009,7 +1008,7 @@ Below is an example of this claim.
 "jti":"AC184A13-60AB-40e5-A514-E10F777EC2F9"  
 ~~~
 
-##### "iss" (Issuer) Claim
+#### "iss" (Issuer) Claim
 
 The "iss" (issuer) claim identifies the principal that issued the JWT.  
 
@@ -1021,7 +1020,7 @@ Below is an example of this claim.
 "iss":"altus-01.mydomain.com"  
 ~~~
 
-#### "dom" (Issuer Domain) Claim  
+### "dom" (Issuer Domain) Claim  
 
 The "dom" (issuer domain) claim identifies the domain that issued the JWT. For DigitalPersona (AD LDS) users, the issuer domain is the DigitalPersona (AD LDS) instance. For DigitalPersona AD users, the issuer domain is the NETBIOS Domain name that the user belong to.  
 
@@ -1031,7 +1030,7 @@ Below is an example of this claim.
 "dom":"Software_Department"  
 ~~~
 
-#### "iat" (Issued At) Claim  
+### "iat" (Issued At) Claim  
 
 The "iat" (issued at) claim identifies the date and time when the JWT was issued. This claim can be used to determine the age of the token. Its value must be a number containing an IntDate value.  
 
@@ -1043,7 +1042,7 @@ Below is an example of this claim.
 "iat”:1300819380
 ~~~
 
-#### "exp" (Expiration Time) Claim  
+### "exp" (Expiration Time) Claim  
 
 The exp (expiration time) claim identifies the expiration time on or after which the JWT must not be accepted for processing. Use of this claim is optional.
 
@@ -1059,7 +1058,7 @@ Below is example of this claim:
 "exp":1300819380
 ~~~
 
-#### sub" (Subject) Claim  
+### sub" (Subject) Claim  
 
 The "sub" (subject) claim identifies the principal that the JWT was issued to. This should be a readable string specifying the identity of the authenticated user; for example, the user’s display name or account name.  
 
@@ -1069,7 +1068,7 @@ Below is an example of this claim.
 "sub":”Tom Jones”
 ~~~
 
-#### "uid" (Subject Unique ID) Claim  
+### "uid" (Subject Unique ID) Claim  
 
 The "uid" (subject UID) claim uniquely identifies the principal (inside a particular DigitalPersona instance) that the JWT is issued to. This is the objectGUID of the user record in the DigitalPersona (AD LDS) database.  
 
@@ -1079,7 +1078,7 @@ Below is an example of this claim.
 "uid":”6E2A0211-59E0-4EFA-89C5-68F75E6CE8B7”
 ~~~
 
-#### "crd" (Credentials) Claim  
+### "crd" (Credentials) Claim  
 
 The "crd" (Credentials) claim must list all the credentials used for the authentication, providing the credential id and the authentication timestamp in the Unix time format.  
 
@@ -1094,11 +1093,11 @@ Below is an example of this claim.
 
 The claim above means that two types of credentials were used for authentication at two separate times.  
 
-##### NOTE
+#### NOTE
 
 The JWT claim does not include an expiration time, providing the flexibility for the Service Provider to decide to accept this ticket or reject it based on their own logic. It is assumed that the SP clock is in sync with the DigitalPersona Server clock.  
 
-#### "wan" (Windows Account Name) Claim
+### "wan" (Windows Account Name) Claim
 
 The "wan" (Windows Account Name) claim uniquely identifies the user that the JWT is issued to. This claim is optional and will be issued only for Active Directory users, providing the user SAM account name of the user with the format <NETBIOS Domain Name\user account name>. For DigitalPersona Non AD users this claim will be omitted.  
 
@@ -1108,7 +1107,7 @@ Below is an example of this claim:
 "wan":"mydomain\someone"  
 ~~~
 
-#### "t24" (T24 Name) Claim  
+### "t24" (T24 Name) Claim  
 
 The "t24" (Windows Account Name) claim uniquely identifies the principal to whom JWT is issued inside the T24 database. This claim is optional and will be issued only for T24 users.  
 
@@ -1118,7 +1117,7 @@ Below is an example of this claim.
 "t24":"someone"
 ~~~
 
-#### Example of JWT claims section  
+### Example of JWT claims section  
 
 Below is an example of the claims part of a JWT.
 
@@ -1138,13 +1137,13 @@ Below is an example of the claims part of a JWT.
 
 The token above claims the user John Doe@mycompany.com” was authenticated using their password and fingerprint credentials on the  DigitalPersona server “DP-01.mycompany.com”.
 
-#### JSON Web Signature (JWS)  
+### JSON Web Signature (JWS)  
 
 The detailed description for the JWS (JSON Web Signature) is available at the following location.
 
 https://tools.ietf.org/html/draft-jones-json-web-signature-04  
 
-#### Rules for Creating and Validating a JWS  
+### Rules for Creating and Validating a JWS  
 
 To create a JWS, you need to perform the following steps.  
 
@@ -1172,7 +1171,7 @@ Comparisons between JSON strings and other Unicode strings must be performed as 
 2. Unicode Normalization [USA15] must NOT be applied at any point to either the JSON string or to the string it is to be compared against.  
 3. Comparisons between the two strings must be performed as a Unicode code point to code point equality comparison.
 
-#### Creating a JWS with RSA SHA-256  
+### Creating a JWS with RSA SHA-256  
 
 This section defines the use of the RSASSA-PKCS1-v1_5 signature algorithm as defined in RFC 3447 [RFC3447], Section 8.2 (commonly known as PKCS#1), using SHA-256, SHA-384, or SHA-512 as the hash function. The RSASSA-PKCS1-v1_5 algorithm is described in FIPS 186-3 [FIPS.186-3], Section 5.5, and the SHA-256, SHA-384, and SHA-512 cryptographic hash functions are defined in FIPS 180-3 [FIPS.180-3].  
 
@@ -1192,7 +1191,7 @@ The RSA SHA-256 signature for a JWS is validated as follows.
 2. Submit the UTF-8 representation of the JWS Signing Input and the public key corresponding to the private key used by the signer to the RSASSA-PKCS1-V1_5-VERIFY algorithm using SHA-256 as the hash function.   
 3. If the validation fails, the signed content must be rejected.  
 
-#### JWT Example
+### JWT Example
 
 The following example JWS Header declares that the data structure is a JSON Web Token (JWT) [JWT] and the JWS Signing Input is signed using the RSA SHA-256 algorithm.  Note that white space is explicitly allowed in JWS Header strings and no canonicalization is performed before encoding.
 
@@ -1277,7 +1276,7 @@ eyJqdGkiOiJ7QUMxODRBMTMtNjBBQi00MGU1LUE1MTQtRTEwRjc3N0VDMkY5fSIsCiJpc3MiOiJhbHR1
 dBjftJeZ4CVPmB92K27uhbUJU1p1r_wW1gFWFOEjXk  
 ~~~
 
-### Error Handling  
+## Error Handling  
 
 If the DigitalPersona Server failed process authentication request, HTTP status of the request would be set to 404 (Not found) and WebFaultException of the WebFault class will be fired so the HTTP response will have Json representation of the WebFault class.
 
