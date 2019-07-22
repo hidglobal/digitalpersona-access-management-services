@@ -7,12 +7,12 @@ nav_order: 8
 
 {% include header.html %}
 
-## Web Smart Card Support  
+# Web Smart Card Support  
 <BR>  
 
 This topic describes describes the use of contacted PKI Smart Cards in DigitalPersona  v1.3 and above for WEB authentication, including the authentication and enrollment algorithms, workflows, implementation and data formats.  
 
-### Overview  
+## Overview  
 
 Contacted PKI Smart Card is a powerful authentication token. The combination of two authentication factors (the card belonging to the user and a PIN known only to the user) along with using the card’s RSA private key (which never leaves the card), makes it a perfect, strong solution for Web authentication.
 
@@ -20,7 +20,7 @@ The format of database user record of enrolled Smart Card credentials is defined
 
 The PKI SC WEB authentication token for DigitalPersona (Altus) v1.3 and above is built according to the requirements described in <A HREF="was.md">this topic</A>.  
 
-### Authentication algorithm  
+## Authentication algorithm  
 
 Unlike the commonly used PKI SSL protocol, which needs multiple transactions between the client and server to establish a secure WEB connection, the Altus SC authentication algorithm is built to use only one operation, the single call to the server. This remarkably simplifies the operation, especially in the multi-server environment, with impacting security.  \
 
@@ -102,7 +102,7 @@ If ( Sigi  = = VeryfySignature( PuKj )( Noncei + Hashi ) )
 
     If the signature verification succeeds, the Jason authentication Web Token (JWT) is returned to the client, as described in “Altus Web AUTH Service.docx”. . If the signature verification fails, the “Access denied” error is returned.  
 
-##### Authentication Implementation  
+#### Authentication Implementation  
 
 The Altus WEB SC (WASSC) authentication token is implemented according to < A HREF="was-cred-format.md">this credentials format</A>, to comply with the demands of the IDPWebAuth interface and Credential class. The Credential class is defined as follows.  
 
@@ -123,7 +123,7 @@ The following ID is defined for the Smart Card Credential.
 
 The following methods of the IDPWebAuth interface are supported by the WASSC authentication token.  
 
-#### WebAthenticate  
+### WebAthenticate  
 
 To call this method, the client should send IDPProWebAUTHMgr -> AuthenticateUser request to the server.  
 
@@ -196,11 +196,11 @@ To create the Smart Card Credential for authentication, perform these steps on t
 
 5. Finally, create a JSON representation of the Credential class using Smart Card Credential ID as the id member and the string created in step #4 as a data member.  
 
-#### WebIdentify  
+### WebIdentify  
 
 The Smart Card token does not support user identification.  
 
-#### WebGetData  
+### WebGetData  
 
 This method returns the list of Smart Card credentials enrolled for the user. It can be used to select the Smart Card token for authentication or to delete with the WebDelete method. There’s no need to insert the Smart Card into the reader to call this method.  
 
@@ -270,7 +270,7 @@ where:
    </tr>   
 </table>
 
-#### Enrollment algorithm  
+### Enrollment algorithm  
 
 On WEB Smart Card enrollment, one of the public keys stored on the card must be selected and sent to the server.  
 
@@ -288,7 +288,7 @@ On WEB Smart Card enrollment, one of the public keys stored on the card must be 
 
   The time of the enrollment is added to the record, alone with the token’s nickname.  
 
-## Enrollment Implementation  
+# Enrollment Implementation  
 
 The WEB enrollment of the WASSC authentication token is implemented according to the details in the < HREF="wes.md>Web Enrollment Service</A> topic to comply with the demands of the IDPWebEnroll interface and the  Credential class.  
 
@@ -362,7 +362,7 @@ To create the Smart Card Credential for enrollment, perform the following steps 
 3. Base64Url encode string created in step #2.  
 4. Finally, create a JSON representation of the Credential class using the Smart Card Credential ID as the id member and the string created in step #3 as a data member.  
 
-#### WebDelete  
+### WebDelete  
 
 To call this method, the client should send a  IDPProWebEnrollMgr -> DeleteUserCredentials request to the server.  
 

@@ -8,7 +8,7 @@ nav_order: 2
 {% include header.html %}
 <BR>  
 
-## Web Enrollment Service
+# Web Enrollment Service
 
 The DigitalPersona Web Enrollment Service (WES) provides the methods necessary for  
 - Creating users in the DigitalPersona LDS database  
@@ -19,7 +19,7 @@ Web Enrollment features are accessed through the WES, implemented as a GUI-less 
 
 A sample program is available [here](https://hidglobal.github.io/digitalpersona-web-sample/index.html), which provides a simple GUI-based application  illustrating the main features of the service provided through this API.  
 
-## IDPWebEnroll interface  
+# IDPWebEnroll interface  
 
 The IDPWebEnroll interface is a Windows Foundation Class (WCF) interface, and is described below.  
 
@@ -152,13 +152,13 @@ namespace WebServices.DPWebEnroll
 }
 ~~~  
 
-## Methods
+# Methods
 The methods available through the Web Enrollment Servicec API are as follows.  
 
-### GetUserCredentials method  
+## GetUserCredentials method  
 The GetUserCredentials method allows the caller to request information about the credentials that have been enrolled by a specified user. GetUserCredentials should be implemented as HTTP GET using JSON as the response format.
 
-#### Syntax
+### Syntax
 
 ~~~
 List<String> GetUserCredentials(String userName, UInt16 userNameType);
@@ -209,10 +209,10 @@ List<String> GetUserCredentials(String userName, UInt16 userNameType);
   </tr>                
 </table>
 
-#### Return values
+### Return values
 List of credential IDs of all credentials enrolled by a user. For full details on all supported credential IDs, see [this section](wes-cred-format.md).  
 
-#### Examples  
+### Examples  
 
 ~~~
 https://www.somecompany.com/DPWebEnrollervice.svc/						GetUserCredentials?
@@ -234,14 +234,14 @@ The example response would be the following:
 
 This response means that the user john.doe@somecompany.com has password, fingerprint and PIN credentials enrolled.  
 
-### GetEnrollmentData method  
+## GetEnrollmentData method  
 
 The GetEnrollmentData method is a utility method which allows the caller to get credential enrollment specific data.  
 
 For example, Live Question authentication may require knowing which particular questions were enrolled, for fingerprint - fingerprint positions enrolled, etc.
 GetEnrollmentData should be implemented as HTTP GET using JSON as response format.  
 
-#### Syntax  
+### Syntax  
 
 ~~~  
 String GetEnrollmentData(String userName, UInt16 userNameType, String credentialId);
@@ -296,10 +296,10 @@ String GetEnrollmentData(String userName, UInt16 userNameType, String credential
   </tr>                   
 </table>
 
-#### Return values
+### Return values
 Base64Url encoded enrollment data. The format of such enrollment data is credential-specific and will be detailed in separate document(s).  
 
-#### Example  
+### Example  
 
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/GetEnrollmentData?
@@ -308,7 +308,7 @@ user=john.doe@somecompany.com&type=6&cred_id=AC184A13-60AB-40e5-A514-E10F777EC2F
 
 Here the user name is john.doe@somecompany.com, the user name type is 6 which means UPN name and the credential ID is {AC184A13-60AB-40e5-A514-E10F777EC2F9}, which means information about a fingerprint credential was requested.  
 
-#### Note  
+### Note  
 
 The use of braces {} is considered unsafe in URLs (see RFC 1738), which is why "braceless" GUID representation is used in the API.
 The example response would be the following:  
@@ -319,13 +319,13 @@ The example response would be the following:
 
 This response shows fingerprint enrollment data for the user john.doe@somecompany.com.
 
-### CreateUser method
+## CreateUser method
 
 The CreateUser method creates a user account in the DigitalPersona database. This method makes sense only if DigitalPersona is used as the  backend server. In DigitalPersona AD user account is created in Active Directory and Administrator must use standard Active Directory tools to create it.  
 
 CreateUser should be implemented as HTTP PUT using JSON as the response format.
 
-#### Syntax
+### Syntax
 
 ~~~
 void CreateUser(Ticket secOfficer, User user, String password);
@@ -350,7 +350,7 @@ void CreateUser(Ticket secOfficer, User user, String password);
   </tr>    
 </table>
 
-#### Example
+### Example
 
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/CreateUser
@@ -372,7 +372,7 @@ Below is an example of an HTTP BODY of CreateUser request.
 
 The call above creates an account in DigitalPersona (AD LDS) database for Active Directory user with UPN name john.doe@somecompany.com.
 
-### DeleteUser method  
+## DeleteUser method  
 
 The DeleteUser method deletes a user account from the DigitalPersona database.  
 
@@ -380,7 +380,7 @@ This method makes sense only if DigitalPersona is used as the backend server. In
 
 DeleteUser should be implemented as HTTP DELETE using JSON as the response format.  
 
-#### Syntax  
+### Syntax  
 ~~~
 void DeleteUser(Ticket secOfficer, User user);
 ~~~  
@@ -400,7 +400,7 @@ void DeleteUser(Ticket secOfficer, User user);
   </tr>  
 </table>  
 
-#### Examples  
+### Examples  
 
 Below is example of a URL that can be used to activate a DeleteUser request:
 
@@ -428,7 +428,7 @@ The call above deletes an account from DigitalPersona (AD LDS) database for Acti
 The EnrollUserCredentials method enrolls (or re-enrolls) specific credentials for a named user and stores their credential data in the DigitalPersona AD database. This method will work for both DigitalPersona AD and DigitalPersona LDS backend servers.
 EnrollUserCredentials should be implemented as HTTP PUT using JSON as response format.  
 
-#### Syntax
+### Syntax
 
 ~~~
 void EnrollUserCredentials(Ticket secOfficer, Ticket owner, Credential credential);
@@ -456,7 +456,7 @@ void EnrollUserCredentials(Ticket secOfficer, Ticket owner, Credential credentia
 	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td></tr>
 </table>  
 
-#### Examples
+### Examples
 Below is an example of a URL which can be used to PUT the EnrollUserCredentials request:
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/EnrollUserCredentials
@@ -474,13 +474,13 @@ Below is example of HTTP BODY of EnrollUserCredentials request:
 
 The call above enrolls fingerprint credentials for the user specified in the "owner" token.
 
-### DeleteUserCredentials method
+## DeleteUserCredentials method
 
 The DeleteUserCredentials method deletes (un-enrolls) specific credentials for a user and removes the credential data from the DigitalPersona database. This method will work for both DigitalPersona AD and DigitalPersona LDS backend servers.  
 
 DeleteUserCredentials should be implemented as HTTP DELETE using JSON as the response format.
 
-##### Syntax
+#### Syntax
 ~~~
 void DeleteUserCredentials(Ticket secOfficer, Ticket owner, Credential credential);
 ~~~
@@ -508,7 +508,7 @@ void DeleteUserCredentials(Ticket secOfficer, Ticket owner, Credential credentia
 	</tr>
 </table>
 
-#### Example
+### Example
 Below is an example of a URL which can be used to DELETE DeleteUserCredentials request:
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/DeleteUserCredentials
@@ -525,7 +525,7 @@ Below is example of HTTP BODY of DeleteUserCredentials request:
 ~~~
 The call above deletes any fingerprint credentials for the user specified in the "owner" token.  
 
-### EnrollAltusUserCredentials method
+## EnrollAltusUserCredentials method
 The EnrollAltusUserCredentials method enrolls (or re-enrolls) specific credentials for specific user and store credential data in the DigitalPersona database.  
 
 This method will work only for Non AD users and the DigitalPersona LDS Server backend. For AD users, the function will return Access Denied.  
@@ -536,7 +536,7 @@ By default the DigitalPersona Server requires the user to be authenticated to en
 - If this GPO is not configured or is set to 0, the EnrollAltusUserCredentials function will always return an 'Access Denied' error.  
 - If this GPO set to 1 and Security Officer has rights to enroll this particular user, enrollment will be performed.  
 
-#### Syntax
+### Syntax
 ~~~
 void EnrollAltusUserCredentials(Ticket secOfficer, User user, Credential credential);
 ~~~
@@ -600,7 +600,7 @@ NOTE: This method can be used to Reset a Non AD user’s password without user i
 }
 ~~~
 
-### DeleteAltusUserCredentials method  
+## DeleteAltusUserCredentials method  
 
 The DeleteAltusUserCredentials method deletes (un-enrolls) specific credentials for a specific Non AD user and removes the associated credential data from the DigitalPersona database. This method will work only for Non AD users. For AD users it will return Access Denied.  
 
@@ -610,7 +610,7 @@ By default the DigitalPersona Server requires the user to be authenticated to de
 - If this GPO is not configured or is set to 0, the DeleteAltusUserCredentials function will always return an 'Access Denied' error.  
 - If this GPO set to 1 and the Security Officer has rights to delete this particular user, credential deletion will be performed.  
 
-#### Syntax
+### Syntax
 ~~~
 void DeleteAltusUserCredentials(Ticket secOfficer, User user, Credential credential);
 ~~~
@@ -658,13 +658,13 @@ Below is example of HTTP BODY of DeleteAltusUserCredentials request:
 ~~~
 The call above deletes the fingerprint credentials for the Non AD user "someone".  
 
-### GetUserAttribute method
+## GetUserAttribute method
 
 The GetUserAttribute method requests some public (biographic) information about a user, such as their user surname, date of birth, e-mail address, etc.  
 
 GetUserAttribute should be implemented as HTTP POST using JSON as the response format.  
 
-#### Syntax
+### Syntax
 ~~~
 Attribute GetUserAttribute(Ticket ticket, User user, String attributeName);
 ~~~
@@ -689,11 +689,11 @@ Attribute GetUserAttribute(Ticket ticket, User user, String attributeName);
 	</tr>
 </table>
 
-#### Return values  
+### Return values  
 
 JSON representation of object of Attribute class will be returned if the call succeeds. For details on the Attribute class, see the topic Attribute class on page 29.  
 
-#### Examples
+### Examples
 Below is an example of a URL which can be used to POST a GetUserAttribute request.  
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/GetUserAttribute
@@ -721,7 +721,7 @@ An example of the return value for this call might be:
 }
 }
 ~~~
-### PutUserAttribute method  
+## PutUserAttribute method  
 
 The PutUserAttribute method writes, updates or clears specific public data (attribute) for the named user.  
 
@@ -729,7 +729,7 @@ This method makes sense only when using DigitalPersona as the backend server (AD
 
 PutUserAttribute should be implemented as HTTP PUT using JSON as the response format.  
 
-#### Syntax
+### Syntax
 ~~~
 void PutUserAttribute(Ticket ticket, User user, String attributeName,
 		 AttributeAction action, Attribute attributeData);
@@ -765,7 +765,7 @@ void PutUserAttribute(Ticket ticket, User user, String attributeName,
 	</tr>
 </table>
 
-#### Examples
+### Examples
 
 Below is an example of URL which can be used to submit a PutUserAttribute request:  
 ~~~
@@ -790,10 +790,10 @@ Below is example of HTTP BODY of PutUserAttribute request:
 
 The call above requests an update to the "Surname" attribute for the Active Directory user with a UPN name of john.doe@somecompany.com. The new value should be "smith".
 
-## Data Contracts
+# Data Contracts
 Below are the Data Contracts used in the Web Enrollment API. Only the data specific to Web Enrollment is described below. For a description of additional data contracts used in the ,Web Authentication Service API, see page 68 and following.  
 
-### AttributeAction enumeration  
+## AttributeAction enumeration  
 
 AttributeAction enumeration specifies the action to be taken with an attribute through the PutUserAttribute call.
 
@@ -835,7 +835,7 @@ public enum AttributeAction
 	</tr>
 </table>  
 
-### AttributeType enumeration   
+## AttributeType enumeration   
 The AttributeType enumeration specifies the value type of the attribute.
 
 ~~~
@@ -876,7 +876,7 @@ public enum AttributeType
 	</tr>
 </table>
 
-### Attribute class  
+## Attribute class  
 
 The Attribute class is Attribute representation in the Web Enrollment API.
 
@@ -907,7 +907,7 @@ The Attribute class is Attribute representation in the Web Enrollment API.
 	</tr>
 </table>
 
-#### Boolean attributes
+### Boolean attributes
 For Boolean attributes, the Json representation is Json Boolean. Below is an example of the "isDeleted" attribute in Active Directory.
 
 ~~~
@@ -918,7 +918,7 @@ For Boolean attributes, the Json representation is Json Boolean. Below is an exa
 ~~~
 
 The attribute above claims user is deleted from Active Directory.
-#### Integer attributes
+### Integer attributes
 
 For Integer attributes, the Json representation is Json Integer. It is used for all types of integers, such as  Uin8, Uint16, Uint32 and Uint64. Timestamps are  represented as long integers (Uint64). Below is an example of the "userAccountControl" attribute in Active Directory.
 
@@ -931,7 +931,7 @@ For Integer attributes, the Json representation is Json Integer. It is used for 
 
 The attribute above claims users’ password never expires.  
 
-#### String attributes  
+### String attributes  
 
 For String attributes, the Json representation is Json String.  
 
@@ -946,7 +946,7 @@ Below is an example of the "otherMailbox" (users' e-mail addresses) attribute in
 
 The attribute above contains all of the user's e-mail addresses.  
 
-#### Blob attributes
+### Blob attributes
 
 For Blob attributes,  the Json representation is the Json String. To convert the Blob to a string, we use  Base64UrlEncoding. Below is an example of the  "thumbnailPhoto" attribute in Active Directory.
 
@@ -959,13 +959,13 @@ For Blob attributes,  the Json representation is the Json String. To convert the
 
 The attribute above has the Base64UrlEncoded user's  thumbnail photo.
 
-### CustomAction method
+## CustomAction method
 
 The CustomAction method performs credential specific operations (custom actions) for a specified user.
 
 CustomAction should be implemented as HTTP POST using JSON as the response format. For further details, see the CustomAction method on page 64.  
 
-#### Syntax
+### Syntax
 
 ~~~
 void CustomAction(Ticket ticket, User user, Credential credential, UInt16 actionId);
@@ -1018,11 +1018,11 @@ Below is example of the HTTP BODY of the CustomAction request.
 The call above sends a CustomAction request to fingerprint credentials with actionId 6 for DigitalPersona user "someone".
 This call should return Base64Encoded output data of CustomAction call. The returned information is credential specific **<mark style="color:Red;"> and should be provided "Web Authentication Service Credentials Data Format" document.</mark>**  
 
-### UnlockUser method  
+## UnlockUser method  
 
 The UnlockUser method performs self unlocking for a currently locked user.  
 
-#### Syntax  
+### Syntax  
 
 ~~~
 void UnlockUser(User user, Credential credential);

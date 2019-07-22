@@ -8,7 +8,7 @@ nav_order: 3
 {% include header.html %}
 <BR>  
 
-## Web Secret Management Service
+# Web Secret Management Service
 
 The Web Secret Management Service (WSMS) is part of the DigitalPersona Web Secret Service Provider (WSSP), a set of Web Services whose goal is to provide Secret Management functionality such as writing, reading and deleting protected data (Secrets). Generally speaking the main goal is to give access to Secret Management by applications running on computers outside the firewall. The actual secrets are stored protected in the DigitalPersona Server Database and to access them WSSP needs to send a request to the DigitalPersona Server.  
 
@@ -27,7 +27,7 @@ WSMS opens one or several Web endpoints listening on the HTTPS protocol. These e
 
 HTTPS (Transport Layer Security) is used by the Web Service in order to simplify client side implementation and protect user Secrets from man-in-the-middle attacks during transactions. This requires the Web Service hosting environment to have a Certificate which is accepted by the Client.  
 
-## IDPWebSecretMgr interface
+# IDPWebSecretMgr interface
 We define the IDPWebSecretMgr interface as a WCF interface.
 
 ~~~
@@ -124,13 +124,13 @@ namespace DPWcfSecretService
     }
 }
 ~~~
-## Methods  
+# Methods  
 
-### GetAuthPolicy method  
+## GetAuthPolicy method  
 
 The GetAuthPolicy() method returns a list of policies (credentials) which are required in order to access (read, write or delete) specific Secret of a named user.
 
-#### Syntax  
+### Syntax  
 
 ~~~
 List<Policy> GetAuthPolicy(String userName, UInt16 nameType, String secretName,
@@ -160,11 +160,11 @@ ResourceActions action);
   </tr>        
 </table>
 
-#### Return values   
+### Return values   
 
 Returns a list of policies (credentials) required to access the Secret.  
 
-#### Notes  
+### Notes  
 
 GetAuthPolicy () is implemented as an HTTP GET using JSON as the response format.  
 
@@ -195,11 +195,11 @@ An example of a response might be the following:
 
 This response means that the user someone@mycompany.com needs to provide either their “Fingerprint AND PIN” or their “Fingerprint AND Bluetooth” credentials in order to be allowed to read the SystemLogonInfo Secret. Note that “braceless” GUID representations must be used in all of our APIs for URLs and JSON representation.
 
-### DoesSecretExist method
+## DoesSecretExist method
 
 The DoesSecretExist method verifies whether or not a specific secret exists for a specified user.
 
-#### Syntax
+### Syntax
 
 ~~~
 bool DoesSecretExist(String userName, UInt16 nameType, String secretName);
@@ -229,13 +229,13 @@ for a detailed description of user name formats.
   </tr>     
 </table>
 
-#### Return values  
+### Return values  
 
 true – If secret with the specified name exists in the DigitalPersona database.  
 
 false – If secret with the specified name exists in the DigitalPersona database.  
 
-#### Notes  
+### Notes  
 
 DoesSecretExist () is implemented as an HTTP GET using JSON as the response format.  
 
@@ -256,11 +256,11 @@ The following is an example of the HTTP response to the request.
 
 This response means that a secret with the name “SystemLogonInfo” exists for the user someone@mycompany.com.  
 
-### ReadSecret method  
+## ReadSecret method  
 
 The ReadSecret method returns the content of a specific secret for the user if the authentication provided in the ticket satisfies the policy.  
 
-#### Syntax  
+### Syntax  
 
 ~~~
 String ReadSecret(Ticket ticket, String secretName);
@@ -281,11 +281,11 @@ String ReadSecret(Ticket ticket, String secretName);
   </tr>   
 </table>
 
-#### Returns  
+### Returns  
 
 A string which represents the Base64url encoded secret content.  
 
-#### Notes  
+### Notes  
 
 ReadSecret () is implemented as HTTP POST using JSON as the response format.  
 
@@ -309,13 +309,13 @@ Below is an example of a response.
 {"ReadSecretResult":"eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9"}   
 ~~~
 
-### WriteSecret method  
+## WriteSecret method  
 
 The WriteSecret method writes the content of a user's specific secret if the authentication provided in the  ticket satisfies the policy.  
 
 If a secret with the specified name does not exist, it will be created. There is no separate CreateSecret method or separate authorization for secret creation.
 
-#### Syntax  
+### Syntax  
 
 ~~~
 void WriteSecret(Ticket ticket, String secretName, String secretData);
@@ -340,11 +340,11 @@ void WriteSecret(Ticket ticket, String secretName, String secretData);
   </tr>     
 </table>
 
-#### Returns  
+### Returns  
 
 None  
 
-#### Notes  
+### Notes  
 
 WriteSecret () is implemented as an HTTP PUT using JSON as the response format.  
 
@@ -363,11 +363,11 @@ Below is an example of HTTP BODY of the WriteSecret request.
 }
 ~~~
 
-### DeleteSecret method  
+## DeleteSecret method  
 
 The DeleteSecret method will clear the secret content and delete the secret object (if it exists). The caller must provide a ticket which satisfies the policy.  
 
-#### Syntax  
+### Syntax  
 
 ~~~
 void DeleteSecret(Ticket ticket, String secretName);  
@@ -388,11 +388,11 @@ void DeleteSecret(Ticket ticket, String secretName);
   </tr>  
 </table>
 
-#### Returns  
+### Returns  
 
 None.
 
-#### Notes  
+### Notes  
 
 DeleteSecret () should be implemented as an HTTP DELETE using JSON as the response format.  
 
@@ -413,9 +413,9 @@ Below is an example of HTTP BODY of a DeleteSecret request.
 }
 ~~~
 
-## Data Contracts
+# Data Contracts
 
-### ResourceActions enumerator  
+## ResourceActions enumerator  
 
 ResourceActions enumerates possible actions the caller may perform with a particular resource (Secret).
 public enum ResourceActions
@@ -433,7 +433,7 @@ We support only these actions in the current version of the API.
 - Write  
 - Delete  
 
-### PolicyElement class  
+## PolicyElement class  
 
 The PolicyElement class describes one policy element or credential.  
 
@@ -497,11 +497,11 @@ The following credentials are supported in this version.
 	</tr> 				 			 	
 </table>
 
-#### Note
+### Note
 
 You must use the “braceless” GUID representation in our API in URLs and JSON representation
 
-#### Example  
+### Example  
 
 Below is an example of the JSON representation for a credential. This policy element describes a Fingerprint credential.
 
@@ -509,7 +509,7 @@ Below is an example of the JSON representation for a credential. This policy ele
 {"cred_id":"AC184A13-60AB-40e5-A514-E10F777EC2F9"}
 ~~~
 
-### Policy class
+## Policy class
 
 This class describes one authentication policy. To access a resource, multiple authentication policies can be applied. In this case, the relationship between the authentication policies would be OR.  
 
@@ -524,7 +524,7 @@ This class describes one authentication policy. To access a resource, multiple a
 }
 ~~~  
 
-#### Example  
+### Example  
 
 Below is an example of the JSON representation of a policy. This policy describes an authentication policy requiring that “Fingerprint AND PIN” credentials must be provided.  
 
@@ -537,7 +537,7 @@ Below is an example of the JSON representation of a policy. This policy describe
 },
 ~~~  
 
-### Ticket class
+## Ticket class
 
 The result of a successful authentication is a ticket. The format of the ticket is a JSON Web Token (JWT). Additional details about JWT are provided in the topic “JSON Web Token (JWT)” <mark style="color:Red;">on page 71</mark>.
 

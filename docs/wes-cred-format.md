@@ -8,7 +8,7 @@ nav_order: 6
 {% include header.html %}
 <BR>  
 
-## WES Credential Format
+# WES Credential Format
 
 In the [IDPWebEnroll interface](wes.md#idpwebenroll-interface),
 we define a number of methods for credential enrollment which have as an input parameter an object of the Credential class. This topic describes the format of the data member for each Credential supported by DigitalPersona.
@@ -23,7 +23,7 @@ we define a number of methods for credential enrollment which have as an input p
 - Contactless Card Credential
 - U2F Device Credential
 
-### Credential class  
+## Credential class  
 
 The Credential class is defined as follows.
 
@@ -40,7 +40,7 @@ public class Credential
 
 The data member of the Credential class is different for each credential. For example, the data member for the Fingerprint Credential is different from the same member for the Password Credential.
 
-#### Fingerprint Credential  
+### Fingerprint Credential  
 
 The following ID is defined for Fingerprint Credentials.
 
@@ -48,7 +48,7 @@ The following ID is defined for Fingerprint Credentials.
 
 The [BioSample class](was-cred-format.md#biosample-class) will be used in the description below.
 
-##### GetEnrollmentDataResult  
+#### GetEnrollmentDataResult  
 
 To ask information about enrolled fingerprints, the client should send an IDPWebEnroll-> GetEnrollmentData request to the server. Below is an example of such a request.
 
@@ -214,7 +214,7 @@ The following steps will be needed to create Fingerprint Enrollment packet:
 5. Set Fingerprint Credential ID as the id member and the string created in step #4 as the data member.
 **Note**: If the user already has fingerprint data enrolled at this position, the old data will be replaced with new data. If the user does not have fingerprint data enrolled at this position, the new data will be added.
 
-##### DeleteUserCredentials
+#### DeleteUserCredentials
 To delete user fingerprint credentials you will need send a Base64Url encoded array of fingerprint positions you would like to delete. For example if you want to delete  "Right thumb", "Right index finger" and "Left middle finger, you would construct  the following JSON string.
 
 ~~~
@@ -231,12 +231,12 @@ For example:
 "data":null}  
 ~~~
 
-##### CustomAction  
+#### CustomAction  
 
 CustomAction information is specific to each credential. See CustomAction under each credential in the
 [WAS Credential Format](was-cred-format.md) topic.
 
-#### Password Credential  
+### Password Credential  
 
 The following ID is defined for the Password Credential.
 
@@ -244,11 +244,11 @@ The following ID is defined for the Password Credential.
 {D1A1F561-E14A-4699-9138-2EB523E132CC}  
 ~~~
 
-##### GetEnrollmentDataResult  
+#### GetEnrollmentDataResult  
 
 This call is not supported for the Password credential.  
 
-##### EnrollUserCredentials
+#### EnrollUserCredentials
 The following class is used to represent Password Enrollment credentials.
 
 ~~~
@@ -286,16 +286,16 @@ The following is an example of a JSON representation of a Password Enrollment re
 
 To send this enrollment request you need to Base64Url encode the JSON representation of Password Enrollment credentials as shown abovee and provide the obtained string as the data member of the credential argument of an EnrollUserCredentials call.
 
-##### DeleteUserCredentials
+#### DeleteUserCredentials
 
 This call is not supported for password credential.  
 
-##### CustomAction  
+#### CustomAction  
 
 CustomAction information is specific to each credential. See CustomAction under each credential in the
 [WAS Credential Format](was-cred-format.md) topic.  
 
-#### PIN Credential  
+### PIN Credential  
 
 The following ID is defined for the PIN Credential.  
 
@@ -303,11 +303,11 @@ The following ID is defined for the PIN Credential.
 {8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05}
 ~~~
 
-##### GetEnrollmentDataResult  
+#### GetEnrollmentDataResult  
 
 This call is not supported for the PIN credential.  
 
-##### EnrollUserCredentials  
+#### EnrollUserCredentials  
 
 The following steps need to be done to create a PIN Enrollment Credential.
 
@@ -326,16 +326,16 @@ The following steps need to be done to create a PIN Enrollment Credential.
 
 **Note**: If the PIN is already enrolled, it will be replaced with new data.
 
-##### DeleteUserCredentials  
+#### DeleteUserCredentials  
 
 The data member of the credential argument of DeleteUserCredential should be null and will be ignored.  
 
-##### CustomAction  
+#### CustomAction  
 
 CustomAction information is specific to each credential. See CustomAction under each credential in the
 [WAS Credential Format](was-cred-format.md) topic.   
 
-#### Recovery Questions Credential
+### Recovery Questions Credential
 
 The following ID is defined for the Recovery Questions Credential.  
 
@@ -343,12 +343,12 @@ The following ID is defined for the Recovery Questions Credential.
 {B49E99C6-6C94-42DE-ACD7-FD6B415DF503}
 ~~~
 
-##### GetEnrollmentData  
+#### GetEnrollmentData  
 
 The result of a successful GetEnrollmentData call is detailed in the
 <mark style="color:Red;">"Web Authentication Service Credentials Data Format" document</mark>.
 
-##### EnrollUserCredentials  
+#### EnrollUserCredentials  
 
 The following class is used to represent Recovery Questions Enrollment data.
 
@@ -393,15 +393,15 @@ The following steps will be needed to create Live Questions Enrollment packet.
 
 **Note**: We always replace Live Question data enrolled previously on the enrollment request. Merging of the data is not supported.
 
-##### DeleteUserCredentials
+#### DeleteUserCredentials
 The data member of the credential argument of DeleteUserCredential should be null and will be ignored. All Recovery Questions will be deleted by this request.
 
-##### CustomAction  
+#### CustomAction  
 
 CustomAction information is specific to each credential. See CustomAction under each credential in the
 [WAS Credential Format](was-cred-format.md) topic.  
 
-#### Proximity Card Credential  
+### Proximity Card Credential  
 
 The following ID is defined for the Proximity Card Credential.
 
@@ -409,7 +409,7 @@ The following ID is defined for the Proximity Card Credential.
 {1F31360C-81C0-4EE0-9ACD-5A4400F66CC2}
 ~~~
 
-##### GetEnrollmentData  
+#### GetEnrollmentData  
 
 We treat the Proximity Card Data (Prox Card ID) as an opaque blob.   
 
@@ -435,16 +435,16 @@ Follow these steps to create the Prox Card Credential.
 ~~~
 **Note**: If the Proximity Card is already enrolled, its data will be replaced with the new data.
 
-##### DeleteUserCredentials  
+#### DeleteUserCredentials  
 
 The data member of the credential argument of the DeleteUserCredential should be null and will be ignored.  
 
-##### CustomAction  
+#### CustomAction  
 
 CustomAction information is specific to each credential. See CustomAction under each credential in the
 [WAS Credential Format](was-cred-format.md) topic.   
 
-#### Time-Based OTP (TOTP) Credential  
+### Time-Based OTP (TOTP) Credential  
 
 The following ID is defined for the TOTP Credential.
 
@@ -452,11 +452,11 @@ The following ID is defined for the TOTP Credential.
 {324C38BD-0B51-4E4D-BD75-200DA0C8177F}
 ~~~
 
-##### GetEnrollmentData  
+#### GetEnrollmentData  
 
 The result of a GetEnrollmentData call is specific to each credential. See GetEnrollmentData under each credential in the [WAS Credentials Data Format](was-cred-format.md) topic.
 
-##### EnrollUserCredentials  
+#### EnrollUserCredentials  
 
 There are two types of OTP tokens supported.
 - Software
@@ -464,7 +464,7 @@ There are two types of OTP tokens supported.
 
 Software tokens are found on smart phones and other mobile devices. Hardware tokens are found on spe4cificaly manufactured hardware. Enrollment data is different for software and hardware tokens.
 
-###### Software OTP token enrollment  
+##### Software OTP token enrollment  
 
 The following class will represent an enrollment sample for TOTP credentials.
 
@@ -535,7 +535,7 @@ The following steps are needed to create a  TOTP Enrollment Credential.
 	~~~
 **Note**: If a TOTP is already enrolled, it will be replaced with new data.  
 
-###### Hardware OTP token enrollment  
+##### Hardware OTP token enrollment  
 
 The following class will represent an  enrollment sample for TOTP credentials.  
 
@@ -599,16 +599,16 @@ The following steps are needed to create a TOTP Enrollment Credential.
 
 **Note**: If a TOTP is already enrolled, it will be replaced with the new data.
 
-#### DeleteUserCredentials  
+### DeleteUserCredentials  
 
 The data member of the credential argument of DeleteUserCredential should be null and will be ignored.  
 
-#### CustomAction  
+### CustomAction  
 
 CustomAction information is specific to each credential. See CustomAction under each credential in the
 [WAS Credential Format](was-cred-format.md) topic.  
 
-### Smart Card Credential  
+## Smart Card Credential  
 
 The following ID is defined for the Smart Card Credential.
 
@@ -616,11 +616,11 @@ The following ID is defined for the Smart Card Credential.
 {D66CC98D-4153-4987-8EBE-FB46E848EA98}
 ~~~
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 This method is not supported for the Smart Card credential.  
 
-#### EnrollUserCredntials  
+### EnrollUserCredntials  
 
 The data for the Smart Card credential is a Base64url encoded UTF-8 representation of the JSON representation of the CDPJsonSCEnrollData class.  
 
@@ -669,7 +669,7 @@ To create the Smart Card Credential for enrollment, the following steps must be 
 3. Base64Url encode string created in step #2 above.
 4. Finally, create a JSON representation of the Credential class using the Smart Card Credential ID as the id member and the string created in step #3 as a data member.  
 
-#### DeleteUserCredentials
+### DeleteUserCredentials
 To delete the particular Smart Card credential, the input data for this call must be a string presenting the Smart Card Public key's hash, calculated or received from the server as described in [Web Smart Card Support](web-smart-card-support.md) topic.  
 
 <table style="width:95%;margin-left:auto;margin-right:auto;">
@@ -689,11 +689,11 @@ To delete the particular Smart Card credential, the input data for this call mus
 
 To delete all the Smart Card credentials enrolled for a particular user, the input data for this call must be an empty string (not a NULL pointer).
 
-#### CustomAction
+### CustomAction
 CustomAction information is specific to each credential. See CustomAction under each credential in the
 [WAS Credential Format](was-cred-format.md) topic.  
 
-### Face Credential  
+## Face Credential  
 
 The following ID is defined for Face Credentials.  
 
@@ -709,7 +709,7 @@ One of the following third-party SDKs can be used to support the Face Credential
 
 The [BioSample class](was-cred-format#biosample-class) is used in the description below.  
 
-#### EnrollUserCredentials  
+### EnrollUserCredentials  
 
 The data for Face credential enrollment is a Base64url encoded UTF-8 representation of the JSON array, containing BioSample objects(s).  
 
@@ -742,7 +742,7 @@ The following data members for BioSample should be provided for authentication.
 
 The following types of BioSampleType are supported for Face credential enrollment.
 
-##### DP_BIO_SAMPLE_TYPE::PROCESSED image  
+#### DP_BIO_SAMPLE_TYPE::PROCESSED image  
 
 Indicates a face template in one of the following internal SDK formats.
 - Cognitec FIR format  
@@ -852,7 +852,7 @@ This is an example of JSON representation of the enrollment array containing the
 }
 ~~~
 
-##### DP_BIO_SAMPLE_TYPE::RAW image  
+#### DP_BIO_SAMPLE_TYPE::RAW image  
 
 Indicates a raw face image. It's recommended to have a minimum of ten BioSample objects containing raw images in the authentication array for successful verification.  
 
@@ -989,7 +989,7 @@ The following steps will be needed to create the Face credential enrollment pack
 
 If a user does not have the face credentials enrolled at this position, then the face credentials will be added to the user record.  
 
-#### DeleteUserCredentials  
+### DeleteUserCredentials  
 
 The data member of the credential argument of DeleteUserCredential should be null and will be ignored.  
 For example:  
@@ -998,27 +998,27 @@ For example:
 {"id":"85AEAA44-413B-4DC1-AF09-ADE15892730A","data":null}  
 ~~~  
 
-#### GetEnrollmentDataResult  
+### GetEnrollmentDataResult  
 
 This method is not supported.  
 
-#### CustomAction  
+### CustomAction  
 
-#### CustomAction
+### CustomAction
 CustomAction information is specific to each credential. See CustomAction under each credential in the
 [WAS Credential Format](was-cred-format.md) topic.
 
-### Contactless Card Credential  
+## Contactless Card Credential  
 
 The following ID is defined for the Contactless Card Credential.
 
 {F674862D-AC70-48ca-B73E-64A22F3BAC44}  
 
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 This method is not supported by the Contactless Card credential.  
 
-#### EnrollUserCredentials  
+### EnrollUserCredentials  
 
 The data for the Contactless Card credential is a Base64url encoded UTF-8 representation of the JSON CDPJsonCLCEnrollData class, which is defined as follows.
 
@@ -1080,25 +1080,25 @@ To create the Contactless Card Credential for enrollment, following steps must b
 4. Base64Url encode the JSON representation of the CDPJsonCLCAuthToken class;
 5. Create a JSON representation of the Credential class using Contactless Card Credential ID as id member and string created in step #4 as a data member.  
 
-#### DeleteUserCredentials
+### DeleteUserCredentials
 The data member of the credential argument of DeleteUserCredential should be null and will be ignored.  
 
-#### CustomAction  
+### CustomAction  
 
 CustomAction is not currently supported for the Contactless Card credential.  
 
-### FIDO Device Credential  
+## FIDO Device Credential  
 
 The following ID is defined for the U2F Credential.  
 
 ~~~
 {5D5F73AF-BCE5-4161-9584-42A61AED0E48}
 ~~~
-#### GetEnrollmentData  
+### GetEnrollmentData  
 
 This method is not supported.  
 
-#### EnrollUserCredentials  
+### EnrollUserCredentials  
 
 The data for the FIDO Device credential is a Base64url encoded UTF-8 representation of the JSON representation of the CDPJsonU2FEnrollData class.  
 
@@ -1150,9 +1150,9 @@ where:
   </tr> 	
 </table>
 
-#### DeleteUserCredentials  
+### DeleteUserCredentials  
 
 The data member of credential argument of DeleteUserCredential should be null and will be ignored.  
 
-#### CustomAction  
+### CustomAction  
 CustomAction is not currently supported for this credential.
