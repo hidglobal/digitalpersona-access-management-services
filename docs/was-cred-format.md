@@ -1790,7 +1790,7 @@ Perform the following steps to process (parse) GetEnrollmentDataResult.
 The following CustomAction operations are currently supported for the TOTP Credential.  
 
 - Send SMS OTP Request  
-- Send E-Mail OTP Request  
+- Send EMail OTP Request  
 
 #### Send SMS OTP Request  
 
@@ -1895,13 +1895,13 @@ Below is a example of an HTTP Body of Send SMS request for Authentication.
 
 This call will send Authentication Send SMS request for DigitalPersona user with account name "someone".  
 
-##### Send E-Mail OTP Request
+##### Send Email OTP Request
 
-The Send E-Mail OTP Request operation Action ID is "514".  
+The Send EMail OTP Request operation Action ID is "514".  
 
 The caller does not need to provide a  valid ticket to perform this operation, so the ticket parameter may be set to "null".  
 
-A valid user to whom the email needs to be sent has to be provided. The user email address would be retrieved from the "E-mail-Addresses" attribute (Ldap-Display-Name is "mail") of the user account object in Active Directory.  
+A valid user to whom the email needs to be sent has to be provided. The user email address would be retrieved from the "Email-Addresses" attribute (Ldap-Display-Name is "mail") of the user account object in Active Directory.  
 
 If the "mail" attribute is not set in the user account in AD, the call will fail. If multiple mail attributes are  set in AD, the OTP code will be sent to all of the addresses.  
 
@@ -1909,7 +1909,7 @@ A valid user to whom the OTP code requests are to be mailed must be provided.
 
 The Data parameter of the Credential class should be set "null".  
 
-Below is an example of an HTTP Body for a  Send E-Mail OTP request.  
+Below is an example of an HTTP Body for a  Send EMail OTP request.  
 
 ~~~
 {
@@ -2508,7 +2508,7 @@ https://sts.yourdomain.com/verifymail&user=John.Doe@yourdomain.com&type=6
 The URL in the example above has several components.  
 
 1. The URL of the service which will process the email verification. In the example it’s https://sts.yourdomain.com.  
-2. The name of the function that will be used for e-mail verification. In the example it’s verifymail.  
+2. The name of the function that will be used for email verification. In the example it’s verifymail.  
 3. The user name. In the example it’s user=John.Doe@yourdomain.com.  
 4. The user name type. In example it’s type=6 (which signifies a UPN name).  
 5. Email verification data. In the example it’s data=COqe3faVtaeWdBD4ncmH4r3C9EQ.  
@@ -2542,7 +2542,7 @@ This method is not supported.
 
 ### GetEnrollmentData  
 
-The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation E-mail based information. The MailEnrollmentData class  represents this information.  
+The result of a successful GetEnrollmentData request should be a Base64url encoded UTF-8 representation Email based information. The MailEnrollmentData class  represents this information.  
 
 ~~~
 [DataContract]
@@ -2620,7 +2620,7 @@ This call will send an email verification request to the user John.Doe@yourdomai
 
 An example of the email request was provided above.  
 
-**Note**: The user must have valid e-mail address stored in the DigitalPersona (AD or LDS) database to be able to send the email. If the email address cannot be found in the user record, the following error will be returned.  
+**Note**: The user must have a valid email address stored in the DigitalPersona (AD or LDS) database to be able to send the email. If the email address cannot be found in the user record, the following error will be returned.  
 
 ~~~
 E_ADS_PROPERTY_NOT_FOUND (0x8000500D)  
