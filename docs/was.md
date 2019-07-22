@@ -115,7 +115,7 @@ List<String> GetUserCredentials(String userName, UInt16 userNameType);
   </tr>
   <tr>
   <td valign="top">userNameType</td>
-  <td valign="top">The format of the user name provided in the userName parameter. See [User Class](#user-class) for a detailed description of user name formats.</td>
+  <td valign="top">The format of the user name provided in the userName parameter. See [User Class](was.md#user-class) for a detailed description of user name formats.</td>
   </tr>    
 </table>
 
