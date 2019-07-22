@@ -6,8 +6,9 @@ nav_order: 7
 ---
 
 {% include header.html %}
- 
+
 ## WAS Credential Format
+<BR>  
 
 In the [IDPWebAuth interface](was.md#idpwebauth-interface), we define a number of methods for user authentication and identification which have as an input parameter an object of the Credential class. This topic describes the data members associated with each credential.
 

@@ -8,6 +8,7 @@ nav_order: 4
 {% include header.html %}
 
 ## Web Authentication Service
+<BR>  
 
 The purpose of the DigitalPersona Web Authentication Service (WAS) is user authentication and identification. WAS is a GUI-less web service which should be located inside the enterprise firewall, where it directs authentication (identification) requests to the DigitalPersona Server over DCOM. The DigitalPersona Server is the only one who can process authentication requests.  
 

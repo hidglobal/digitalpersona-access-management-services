@@ -8,6 +8,7 @@ nav_order: 8
 {% include header.html %}
 
 ## Web Smart Card Support  
+<BR>  
 
 This topic describes describes the use of contacted PKI Smart Cards in DigitalPersona  v1.3 and above for WEB authentication, including the authentication and enrollment algorithms, workflows, implementation and data formats.  
 
