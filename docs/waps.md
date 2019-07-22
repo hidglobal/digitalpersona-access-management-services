@@ -7,7 +7,7 @@ nav_order: 5
 
 {% include header.html %}   
 
-## Web Authentication Policy Service
+# Web Authentication Policy Service
 
 The goal of the Web Authentication Policy Service (WAPS) is to specify the authentication policy required for a specific user to manage a Resource.  
 
@@ -17,7 +17,7 @@ WAPS can use any protocol the customer chooses for listening. However, it is imp
 
 WAPS can be hosted in any supported environment and developed using any Web development framework as long as the SP can communicate with it.  
 
-### IDPWebPolicy interface  
+## IDPWebPolicy interface  
 
 The DigitalPersona Web Authentication Policy Service (WAPS) is implemented as a WCF service. The IDPWebPolicy interface has only one method, GetPolicyList(), as described in the next topic.  
 
@@ -104,13 +104,13 @@ namespace DPWcfPolicyService
 }
 ~~~
 
-### Methods  
+## Methods  
 
-#### GetPolicyList method
+### GetPolicyList method
 
 The GetPolicyList() method returns a list of policies representing authentication options; at least one of them must be met in order to access (read, write or delete) the specific Secret of the user.
 
-##### Syntax  
+#### Syntax  
 
 ~~~List<Policy> GetPolicyList(String userName, UInt16 nameType, String resourceUri,
 ResourceActions action);
@@ -141,11 +141,11 @@ ResourceActions action);
   </tr>       
 </table>
 
-##### Returns  
+#### Returns  
 
 Returns a list of policies of which one must be met in order to access the resource.  
 
-##### Notes  
+#### Notes  
 
 GetPolicyList () should be implemented as HTTP GET using JSON as the response format.
 The following is an example of using GetPolicyList().  
@@ -175,11 +175,11 @@ The example response would be the following.
 
 This response means that the user someone@mycompany.com needs to provide “Fingerprint AND PIN” or “Fingerprint AND Bluetooth” to be allowed to read the SystemLogonInfo Secret.  
 
-#### GetPolicyListEx method  
+### GetPolicyListEx method  
 
 The GetPolicyListEx() method is an extension of the  GetPolicyList() method which adds Contextual/Behavior information and returns a list of policies which are  authentication options of which at least one must met in order to access (read, write or delete) the specific Secret of the specific user.  
 
-##### Syntax  
+#### Syntax  
 
 ~~~
 List<Policy> GetPolicyListEx(User user, String resourceUri, ResourceActions
@@ -210,11 +210,11 @@ action, ContextualInfo info);
   </tr>      
 </table>
 
-##### Returns  
+#### Returns  
 
 Returns a list of policies of which one must be met to access the resource.
 
-##### Examples  
+#### Examples  
 
 GetPolicyListEx () should be implemented as HTTP POST using JSON as response format.
 The following is an example of the use of GetPolicyListEx().
@@ -266,9 +266,9 @@ The example response would be the following.
 
 This response means that the user someone@mycompany.com needs to provide "Fingerprint AND PIN" or "Fingerprint AND Bluetooth" to be allowed to read the SystemLogonInfo Secret.
 
-### Data Contracts  
+## Data Contracts  
 
-#### ResourceActions enumerator  
+### ResourceActions enumerator  
 
 ResourceActions enumerates the possible actions the caller may apply to a particular resource.
 
@@ -289,7 +289,7 @@ We support only three actions in this version of WAPS.
 - Write
 - Delete
 
-#### PolicyElement class  
+### PolicyElement class  
 
 The PolicyElement class describes one policy element.
 
@@ -367,7 +367,7 @@ Below is an example of JSON representation of a fingerprint credential. The rela
 {"cred_id":"AC184A13-60AB-40e5-A514-E10F777EC2F9"}
 ~~~
 
-#### Policy class  
+### Policy class  
 
 This class describes one authentication policy. To access a particular resource, multiple authentication policies could be applied. In this case the relationship between the authentication policies would be OR.
 
@@ -392,7 +392,7 @@ Below is an example of the JSON representation of a policy. This policy describe
 ]},
 ~~~
 
-#### ContextualInfo class  
+### ContextualInfo class  
 
 This class describes Contextual/Behavior information.  
 
@@ -480,9 +480,9 @@ Below is an example of the JSON representation of ContextualInfo.
 }
 ~~~
 
-### Policy Configuration  
+## Policy Configuration  
 
-#### dpWebDefaultPolicies configuration element  
+### dpWebDefaultPolicies configuration element  
 
 The dpWebDefaultPolicies element in the Web.config file contains general configuration information about the Authentication Policies.  
 
@@ -490,7 +490,7 @@ Put the dpWebDefailtPolicies  element within the configuration element in a Web.
 
 The dpWebDefaultPolicies  element may include the following elements.
 
-##### dpWebPolicies configuration element  
+#### dpWebPolicies configuration element  
 
 The dpWebPolicies element in the Web.config file contains configuration information about standard Authentication Policies (authentication policies when step-up authentication is not triggered).  
 
@@ -498,7 +498,7 @@ Put the dpWebPolicies element within the dpWebDefaultPolicies element in a Web.c
 
 The dpWebPolicies  element may include the following elements.
 
-###### dpWebPolicy configuration element.
+##### dpWebPolicy configuration element.
 
 The dpWebPoliciy element in the Web.config file contains configuration information about one particular Authentication Policy.  
 
@@ -544,7 +544,7 @@ A514-E10F777EC2F9; D1A1F561-E14A-4699-9138-2EB523E132CC" />
 
 The element above represents a Fingerprint AND Password policy.
 
-######Example of dpWebPolicies Configuration Element  
+##### Example of dpWebPolicies Configuration Element  
 
 Below is an example of dpWebPolicies Configuration Element.
 
@@ -560,7 +560,7 @@ Below is an example of dpWebPolicies Configuration Element.
 
 The above policies should allow using Password OR Fingerprint OR Contactless cards OR Smart Cards OR OTP if step up authentication is not triggered.  
 
-###### dpWebStepUpPolicies configuration element  
+##### dpWebStepUpPolicies configuration element  
 
 The dpWebStepUpPolicies element in the Web.config file contains configuration information about step-up Authentication Policies (authentication policies when step-up authentication is triggered).  
 
@@ -581,7 +581,7 @@ Below is an example of dpWebStepUpPolicies Configuration Element.
 
 Those policies would force the user to use Fingerprint AND Password OR Fingerprint AND PIN if step-up authentication is triggered.  
 
-##### dpWebStepUpTriggers configuration element  
+#### dpWebStepUpTriggers configuration element  
 
 The dpWebStepUpTriggers element in the Web.config file contains configuration information about triggers which can trigger Step-up Authentication.  
 
@@ -589,12 +589,10 @@ Put the dpWebStepUpTriggers  element within the dpWebDefailtPolicies element in 
 
 The dpWebStepUpTriggers  element may include the following elements.
 
-###### dpWebStepUpTrigger Configuration Element
+##### dpWebStepUpTrigger Configuration Element
 The dpWebStepUpTrigger element in the Web.config file contains configuration information about one particular Step Up Authentication trigger.  
 
 The following table describes the attributes of the dpWebStepUpTrigger element.  
-
-
 
 <table style="width:95%;margin-left:auto;margin-right:auto;">
   <tr>
@@ -622,7 +620,7 @@ The element above represents the Behavior trigger, which initiates step-up authe
 ~~~
 The element above represents the inside firewall trigger, which initiates step up authentication if the user's machine is located outside the corporate network.
 
-###### List of Triggers supported  
+##### List of Triggers supported  
 
 In this release we support the following triggers.  
 
@@ -670,7 +668,7 @@ In this release we support the following triggers.
   </tr>            
 </table>
 
-######Example of dpWebStepUpTriggers Element  
+##### Example of dpWebStepUpTriggers Element  
 
 Below is an example of the dpWebStepUpTriggers Configuration Element.
 
@@ -683,7 +681,7 @@ Below is an example of the dpWebStepUpTriggers Configuration Element.
 
 The above settings will trigger step-up authentication if user behavior does not match or when the local machine is  located outside of the firewall.
 
-###### Example of dpWebDefaultPolicies Element  
+##### Example of dpWebDefaultPolicies Element  
 
 Below is an example of the dpWebDefaultPolicies configuration element.
 

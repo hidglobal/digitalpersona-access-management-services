@@ -7,7 +7,7 @@ nav_order: 9
 
 {% include header.html %}
 
-## Smart Card Data Format  
+# Smart Card Data Format  
 
 This topic describes the data format used with Smart Card enrollment.  
 
@@ -23,4 +23,4 @@ Version 2.0 defines five valid record tags. They are:
 - RT – Transport key record
 - RD – Card nickname record.
 
-![](assets/smart-card-data-blob.png.png)
+![](assets/smart-card-data-blob.png)
