@@ -807,8 +807,8 @@ Below is an example of fingerprint image JSON representation.
 }
 ~~~
 
-### Creating a JSON representation of a BioSample
-### from a fingerprint image  
+### Creating a JSON representation of a
+### BioSample from a fingerprint image  
 
 To create a JSON representation of BioSample from a fingerprint image, perform the following steps.  
 
@@ -1060,8 +1060,6 @@ The following GetEnrollmentDataResult indicates that the user has their right th
 CustimAction is not currently supported for the Fingerprint Credential.  
 
 ## <A NAME="password-credential"></A>Password Credential  
-
-## <A NAME="fingerprint-credential"></A>Fingerprint Credential
 
 The following ID is defined for Password Credential.  
 
