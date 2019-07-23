@@ -121,7 +121,7 @@ List<String> GetUserCredentials(String userName, UInt16 userNameType);
 
 #### Return values  
 
-Returns a list of credential IDs signifying the credentials enrolled by a user. The format of credential IDs is described below in “Credential class” <mark style="color:Red;">on page 69</mark>.
+Returns a list of credential IDs signifying the credentials enrolled by a user. The format of credential IDs is described [here](#credential-class).
 
 #### Notes  
 
@@ -173,7 +173,7 @@ String GetEnrollmentData(String userName, UInt16 userNameType, String credential
   </tr>   
   <tr>
   <td valign="top">credentialId</td>
-  <td valign="top">The unique ID of the credential whose data needs to be returned. The format of credential IDs is described below in “Credential class” <mark style="color:Red;"on page 69</mark></td>
+  <td valign="top">The unique ID of the credential whose data needs to be returned. The format of credential IDs is described in the section [Credential class](credential-class).</td>
   </tr>     
 </table>
 
@@ -225,7 +225,7 @@ Ticket IdentifyUser(Credential credential);
 
 #### Return value
 
-As a result of successful identification a Ticket will be returned. The format of this ticket is described in the section “JSON Web Token (JWT)” <mark style="color:Red;">beginning on page 71</mark>.
+As a result of successful identification a Ticket will be returned. The format of this ticket is described in the section [JSON Web Token (JWT)](json-web-token-jwt).
 
 #### Notes
 
@@ -725,8 +725,13 @@ public class User
 
 The following user name formats are currently supported.
 
+<A NAME="user-name-formats"></A>
+
 <table style="width:95%;margin-left:auto;margin-right:auto;">
   <tr>
+    <th colspan="2" style="text-align:center">User Name Formats</th>
+  </tr>
+	<tr>
     <th style="width:5%" ALIGN="left">Type</th>
     <th style="width:90%" ALIGN="left">Description</th>
   </tr>
@@ -793,7 +798,7 @@ public class Credential
   </tr>
   <tr>
   <td valign="top">data	</td>
-  <td valign="top">Base64url encoded credential data. The format of this data depends on the credential and is explained in <mark style="color:Red;">the chapter “Credentials Data Format” on page 44.</mark></td>
+  <td valign="top">Base64url encoded credential data. The format of this data depends on the credential and is explained in the <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/was-cred-format.html">WAS Credentials Data Format</A> topic.</td>
   </tr>
 </table>
 
@@ -950,7 +955,7 @@ public class ExtendedAUTHResult
   </tr>
 </table>
 
-## JSON Web Token (JWT)  
+## <A NAME="json-web-token-jwt"></A> JSON Web Token (JWT)  
 
 The format of a returned Ticket upon successful authentication is a JSON Web Token.
 

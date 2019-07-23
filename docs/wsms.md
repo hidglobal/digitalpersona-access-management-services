@@ -148,7 +148,7 @@ ResourceActions action);
   </tr>
   <tr>
   <td valign="top">userNameType</td>
-  <td valign="top">The format of the user name provided in the userName parameter. See **<mark style="color:Red;">“User class” on page 65</mark>** for a detailed description of user name formats.</td>
+  <td valign="top">The format of the user name provided in the userName parameter. See the table [here](user-name-formats) for a detailed description of user name formats.</td>
   </tr>
   <tr>
   <td valign="top">secretName</td>
@@ -217,10 +217,7 @@ bool DoesSecretExist(String userName, UInt16 nameType, String secretName);
   </tr>
   <tr>
   <td valign="top">userNameType</td>
-  <td valign="top">The format of the user name provided in the userName parameter. See
-
-<mark style="color:Red;">“User class” on page 65  </mark>
-for a detailed description of user name formats.
+  <td valign="top">The format of the user name provided in the userName parameter. See the table [here](user-name-formats) for a detailed description of user name formats.
     </td>
   </tr>
   <tr>
@@ -539,7 +536,7 @@ Below is an example of the JSON representation of a policy. This policy describe
 
 ## Ticket class
 
-The result of a successful authentication is a ticket. The format of the ticket is a JSON Web Token (JWT). Additional details about JWT are provided in the topic “JSON Web Token (JWT)” <mark style="color:Red;">on page 71</mark>.
+The result of a successful authentication is a ticket. The format of the ticket is a JSON Web Token (JWT). Additional details about JWT are provided in the topic [JSON Web Token (JWT](was.html#jasxon-web-token-jwt).
 
 ~~~ public class Ticket
 	{

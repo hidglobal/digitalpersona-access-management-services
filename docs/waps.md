@@ -129,7 +129,7 @@ ResourceActions action);
   </tr>
   <tr>
   <td valign="top">userNameType</td>
-  <td valign="top">The format of the user name provided in the userName parameter. See “User class” <mark style="color:Red;">on page 68</mark> for a detailed description of user name formats.</td>
+  <td valign="top">The format of the user name provided in the userName parameter. See the table [here](user-name-formats) for a detailed description of user name formats.</td>
   </tr>
   <tr>
   <td valign="top">resourceUri</td>

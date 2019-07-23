@@ -27,3 +27,4 @@ Also, see the following topics:
 - [WAS Credential Format](was-cred-format.html)
 - [Web Smart Card Support](web-smart-card-support.html)
 - [Smart Card Data Format](smart-card-data-format.html)
+- [Custom Authentication Policies](custom-auth-policies.html)
