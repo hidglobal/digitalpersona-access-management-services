@@ -767,7 +767,7 @@ void PutUserAttribute(Ticket ticket, User user, String attributeName,
 
 ### Examples
 
-Below is an example of URL which can be used to submit a PutUserAttribute request:  
+Below is an example of a URL which can be used to submit a PutUserAttribute request:  
 ~~~
 https://www.somecompany.com/DPWebEnrollService.svc/PutUserAttribute
 Below is example of HTTP BODY of PutUserAttribute request:
@@ -877,7 +877,7 @@ public enum AttributeType
 	</tr>
 </table>
 
-## <A NAME="attribute-class></A> Attribute class  
+## <A NAME="attribute-class"></A> Attribute class  
 
 The Attribute class is the Attribute representation in the Web Enrollment API.
 
