@@ -342,7 +342,7 @@ void CreateUser(Ticket secOfficer, User user, String password);
   </tr>
   <tr>
   <td valign="top">user	</td>
-  <td valign="top" colspan="2">User account that needs to be created. See the definition of the User class on page 68.</td>
+  <td valign="top" colspan="2">User account that needs to be created. See the definition of the User class  <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/was.html#user-class">here.</A></td>
   </tr>  
   <tr>
   <td valign="top">password</td>
@@ -453,7 +453,7 @@ void EnrollUserCredentials(Ticket secOfficer, Ticket owner, Credential credentia
 	2. One of the Primary credentials (or the same credentials) must be used to acquire this token.</td>
   </tr>
 	<tr><td>credential</td>
-	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td></tr>
+	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class  <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/wes-cred-format.html#credentials-class">here.</A></td></tr>
 </table>  
 
 ### Examples
@@ -504,7 +504,7 @@ void DeleteUserCredentials(Ticket secOfficer, Ticket owner, Credential credentia
 	2. One of the Primary credentials (or the same credentials) must be used to acquire this token.</td>
   </tr>
 	<tr><td>credential</td>
-	<td>Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+	<td>Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/wes-cred-format.html#credentials-class">here.</A></td>
 	</tr>
 </table>
 
@@ -555,10 +555,10 @@ void EnrollAltusUserCredentials(Ticket secOfficer, User user, Credential credent
 	</tr>
 	<tr>
 	<td>user</td>
-	<td>User which credentials needs to be enrolled. Only Non AD users can be accepted by this function. See the definition of the User class on page 68.</td>
+	<td>User which credentials needs to be enrolled. Only Non AD users can be accepted by this function. See the definition of the User class <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/was.html#user-class">here.</A></td>
   </tr>
 	<tr><td>credential</td>
-	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td></tr>
+	<td>Credential to be enrolled. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class  <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/wes-cred-format.html#credentials-class">here.</A></td></tr>
 </table>
 
 EnrollAltusUserCredentials should be implemented as HTTP PUT using JSON as the response format.  
@@ -629,10 +629,10 @@ void DeleteAltusUserCredentials(Ticket secOfficer, User user, Credential credent
 	</tr>
 	<tr>
 	<td>user</td>
-	<td>User which credentials needs to be deleted. See the definition of the User class on page 68.</td>
+	<td>User which credentials needs to be deleted. See the definition of the User class <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/was.html#user-class">here.</A>.</td>
   </tr>
 	<tr><td>credential</td>
-	<td>Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class on page 33 and following.</td>
+	<td>Credential to be deleted. Note that the Data field of this parameter is specific to each credential. See the definition of the Credential class <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/wes-cred-format.html#credentials-class">here.</A></td>
 	</tr>
 </table>
 
@@ -681,7 +681,7 @@ Attribute GetUserAttribute(Ticket ticket, User user, String attributeName);
   </tr>
 	<tr>
 	<td valign="top">user</td>
-	<td valign="top">The user requesting the information. See the definition of the User class on page 68.</td>
+	<td valign="top">The user requesting the information. See the definition of the User class <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/was.html#user-class">here.</A></td>
 	</tr>
 	<tr>
 	<td valign="top">attributeName</td>
@@ -749,7 +749,7 @@ void PutUserAttribute(Ticket ticket, User user, String attributeName,
   </tr>
 	<tr>
 	<td valign="top">user</td>
-	<td valign="top">The user whose attribute is to be modified. See the definition of the User class on page 68.</td>
+	<td valign="top">The user whose attribute is to be modified. See the definition of the User class <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/was.html#user-class">here.</A></td>
 	</tr>
 	<tr>
 	<td valign="top">attributeName</td>

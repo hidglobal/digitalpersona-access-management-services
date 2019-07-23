@@ -23,7 +23,7 @@ we define a number of methods for credential enrollment which have as an input p
 - Contactless Card Credential
 - U2F Device Credential
 
-## Credential class  
+## <A NAME="credential-class"></A>Credential class  
 
 The Credential class is defined as follows.
 
