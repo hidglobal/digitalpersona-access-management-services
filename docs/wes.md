@@ -791,7 +791,7 @@ Below is example of HTTP BODY of PutUserAttribute request:
 The call above requests an update to the "Surname" attribute for the Active Directory user with a UPN name of john.doe@somecompany.com. The new value should be "smith".
 
 # Data Contracts
-Below are the Data Contracts used in the Web Enrollment API. Only the data specific to Web Enrollment is described below. For a description of additional data contracts used in the ,Web Authentication Service API, see page 68 and following.  
+Below are the Data Contracts used in the Web Enrollment Service (WES) API. Only the data specific to Web Enrollment is described below. For a description of additional data contracts used in the Web Authentication Service (WAS) API, see  <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/was.html#was-data-contracts">this section</A>.  
 
 ## AttributeAction enumeration  
 

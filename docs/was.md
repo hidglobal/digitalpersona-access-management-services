@@ -688,7 +688,7 @@ Below is example of the HTTP BODY of a DestroyAuthentication request.
 
 The above is a request to destroy an extended authentication with a handle of 52346.
 
-## Data Contracts
+## <A NAME="was-data-contracts"></A> Data Contracts
 
 Below are the Data Contracts used in this API.
 
