@@ -378,7 +378,7 @@ Below is an example of the AuthenticateUserTicket response.
 NiJ9.eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmN
 vbS9pc19yb290Ijp0cnVlfQ.dBjftJeZ4CVP-B92K27uhbUJU1p1rwW1gFWFOEjXk”}}  
 ~~~
-### CustomAction method  
+### <A NAME="was-custom-action></A>Custom Action method  
 
 The CustomAction method allows calling some specific custom action for a designated authentication token.
 

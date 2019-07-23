@@ -691,7 +691,7 @@ Attribute GetUserAttribute(Ticket ticket, User user, String attributeName);
 
 ### Return values  
 
-JSON representation of object of Attribute class will be returned if the call succeeds. For details on the Attribute class, see the topic Attribute class on page 29.  
+JSON representation of object of Attribute class will be returned if the call succeeds. For details on the Attribute class, see the [Attribute class](#attribute-class topic.  
 
 ### Examples
 Below is an example of a URL which can be used to POST a GetUserAttribute request.  
@@ -757,11 +757,11 @@ void PutUserAttribute(Ticket ticket, User user, String attributeName,
 	</tr>
 	<tr>
 	<td valign="top">action</td>
-	<td valign="top">Action that needs to be taken. It could be Append, Update, Delete or Clear. For additional information, see page 28.</td>
+	<td valign="top">Action that needs to be taken. It could be Append, Update, Delete or Clear. For additional information, see the AttributAction parameters in the table [here](#attribute-action-params).</td>
 	</tr>
 	<tr>
 	<td valign="top">atttributeData</td>
-	<td valign="top">Attribute data that needs to be written. For details on the Attribute class, see the topic Attribute class on page 29.</td>
+	<td valign="top">Attribute data that needs to be written. For details on the Attribute class, see the topic [Attribute class](attribute-class)</td>
 	</tr>
 </table>
 
@@ -811,6 +811,7 @@ public enum AttributeAction
 	Delete = 4,
 }
 ~~~
+<A NAME="attribute-action-params"></A>
 
 <table style="width:95%;margin-left:auto;margin-right:auto;">
   <tr>
@@ -876,9 +877,9 @@ public enum AttributeType
 	</tr>
 </table>
 
-## Attribute class  
+## <A NAME="attribute-class></A> Attribute class  
 
-The Attribute class is Attribute representation in the Web Enrollment API.
+The Attribute class is the Attribute representation in the Web Enrollment API.
 
 ~~~
 [DataContract]
@@ -963,7 +964,7 @@ The attribute above has the Base64UrlEncoded user's  thumbnail photo.
 
 The CustomAction method performs credential specific operations (custom actions) for a specified user.
 
-CustomAction should be implemented as HTTP POST using JSON as the response format. For further details, see the CustomAction method on page 64.  
+CustomAction should be implemented as HTTP POST using JSON as the response format. For further details, see the WAS CustomAction method described <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/was.html#was-custom-action">here.</A>.  
 
 ### Syntax
 
