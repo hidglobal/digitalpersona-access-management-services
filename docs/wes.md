@@ -396,7 +396,7 @@ void DeleteUser(Ticket secOfficer, User user);
   </tr>
   <tr>
   <td valign="top">user</td>
-  <td valign="top">The user account that needs to be deleted. See the definition of the User class <A HREF="https://lenhodgeman.github.io/digitalpersona-access-management-services.html#user-class">here.</A> (Needs link to User Class on page 68)</td>
+  <td valign="top">The user account that needs to be deleted. See the definition of the User class <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services.html#user-class">here.</A> (Needs link to User Class on page 68)</td>
   </tr>  
 </table>  
 
