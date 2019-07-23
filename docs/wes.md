@@ -757,11 +757,11 @@ void PutUserAttribute(Ticket ticket, User user, String attributeName,
 	</tr>
 	<tr>
 	<td valign="top">action</td>
-	<td valign="top">Action that needs to be taken. It could be Append, Update, Delete or Clear. For additional information, see the AttributAction parameters in the table [here](#attribute-action-params).</td>
+	<td valign="top">Action that needs to be taken. It could be Append, Update, Delete or Clear. For additional information, see the AttributAction parameters in the table <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/wes.html#attribute-action-params">here</A>.</td>
 	</tr>
 	<tr>
 	<td valign="top">atttributeData</td>
-	<td valign="top">Attribute data that needs to be written. For details on the Attribute class, see the topic [Attribute class](attribute-class)</td>
+	<td valign="top">Attribute data that needs to be written. For details on the Attribute class, see the topic <A HREF="https://hidglobal.github.io/digitalpersona-access-management-services/wes.html#attribute-class">Attribute class</A></td>
 	</tr>
 </table>
 
