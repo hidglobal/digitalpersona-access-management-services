@@ -1,15 +1,6 @@
----
-layout: default
-title: Overview
-nav_exclude: true
----
-###### [DigitalPersona Access Management API ](https://hidglobal.github.io/digitalpersona-access-management-api/)/ DigitalPersona Access Management Services / Overview&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[\| View Repo \|](https://github.com/hidglobal/digitalpersona-access-management-services/)  
+# Overview
 
-![](docs/assets/HID-DPAM-access-mgmt-svcs.png)    
-
-## Overview
-
-The DigitalPersona Access Management Services are a collection of RESTful services used to implement various features of the DigitalPersona solution in web-applications.
+The DigitalPersona Access Management Services are a collection of RESTful services used to implement various features of the DigitalPersona solution in web-based applications.
 
 These services are:
 
