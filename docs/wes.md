@@ -15,7 +15,7 @@ The DigitalPersona Web Enrollment Service (WES) provides the methods necessary f
 - Enrolling both DigitalPersona AD and DigitalPersona LDS users  
 - Managing credentials and other data relating to users
 
-Web Enrollment features are accessed through the WES, implemented as a GUI-less web service. It should be located inside the enterprise’s firewall, and will direct enrollment requests to an existing DigitalPersona Server. WES uses a simple RESTful API with HTTP GET/POST/PU/DELETE for stateless communication. It also requires one or more open web endpoints listening on the HTTPS protocol for intranet and/or internet use.  
+Web Enrollment features are accessed through the WES, implemented as a Web API. It should be deployd inside the enterprise’s firewall, and will direct enrollment requests to an existing DigitalPersona Server. It also requires one or more open web endpoints listening on the HTTPS protocol for intranet and/or internet use.  
 
 A sample program is available [here](https://hidglobal.github.io/digitalpersona-native-api/docs/sample-applications.html), which provides a simple GUI-based application  illustrating the main features of the service provided through this API.  
 
