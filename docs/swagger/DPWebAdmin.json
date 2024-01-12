@@ -1,0 +1,889 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DigitalPersona Web Administration Service API",
+    "description": "The goal of DigitalPersona Web Administration Service (WAdS) is Administration tasks for AD and LDS users.",
+    "version": "4.2.0"
+  },
+  "servers": [
+    {
+      "url": "/DPWebAdmin/DPWebAdminService.svc"
+    }
+  ],
+  "paths": {
+    "/Ping": {
+      "get": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "Ping server",
+        "responses": {
+          "200": {
+            "description": "DigitalPersona Web Administration Service is running",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "{\"PingResult\": \"Running...\"}"
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ExecuteSearch": {
+      "post": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "executes search on DigitalPersona Server",
+        "description": "ExecuteSearch method executes search on DigitalPersona Server and return the result of search operation. NOTE: The result of search operation is limited to 100 records.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExecuteSearchBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns a String which represents list of the object requested",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecuteSearchResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PSKCImport": {
+      "post": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "imports PSKC data to DigitalPersona database",
+        "description": "PSKCImport method imports PSKC data to DigitalPersona database.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PSKCImportBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Returns list of objects in DPPSKCOutput format. It gives us information about result of importing operation for every OTP token inside PSKC file.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PSKCImportResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetServerSettings": {
+      "post": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "queries list of settings from DigitalPersona Server",
+        "description": "GetServerSettings queries list of settings from DigitalPersona Server.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetServerSettingsBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns list of the settings requested in a format of DPVariant objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetServerSettingsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/SetServerSettings": {
+      "put": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "sets list of settings",
+        "description": "SetServerSettings sets list of settings to DigitalPersona Server.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetServerSettingsBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "settings are successfully set",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetLicenseInfo": {
+      "get": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "returns information about DigitalPersona licenses",
+        "description": "GetLicenseInfo returns information about DigitalPersona licenses.",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of the license information needs to be returned.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "enum": [
+                1,
+                2
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns object of DPLicenseInfo class with detailed information about particular type of license",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetLicenseInfoResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetUserRecoveryPassword": {
+      "post": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "returns user Recovery Password",
+        "description": "GetUserRecoveryPassword returns user Recovery Password.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUserRecoveryPasswordBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns a clear text Recovery Password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserRecoveryPasswordResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AdminDeleteUserCredentials": {
+      "delete": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "deletes user credentials",
+        "description": "AdminDeleteUserCredentials allows Administrator to delete specified user credentials without user presence.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDeleteUserCredentialsBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "user credentials are successfully deleted",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetUserInfo": {
+      "post": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "returns information about user",
+        "description": "GetUserInfo method allows Administrator to query information about specific user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUserInfoBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns an information about specific user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserInfoResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/UnlockUserAccount": {
+      "put": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "unlocks previously locked user account",
+        "description": "UnlockUserAccount method allows Administrator to unlock previously locked user account.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUserInfoBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "account was successfully unlocked",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/SetUserAccountControl": {
+      "put": {
+        "tags": [
+          "IDPWebAdmin"
+        ],
+        "summary": "sets DigitalPersona User Account Control",
+        "description": "SetUserAccountControl method allows Administrator to set DigitalPersona User Account Control bits to specific user account.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetUserAccountControlBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User Account Control was successfully set",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the user.",
+            "example": "administrator@maui.com"
+          },
+          "type": {
+            "type": "integer",
+            "description": "Form (or type) of user name.",
+            "example": 6,
+            "enum": [
+              3,
+              6,
+              9
+            ]
+          }
+        }
+      },
+      "Credential": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique id (Guid) of credential.",
+            "example": "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+            "enum": [
+              "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+              "D1A1F561-E14A-4699-9138-2EB523E132CC",
+              "8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05",
+              "B49E99C6-6C94-42DE-ACD7-FD6B415DF503",
+              "1F31360C-81C0-4EE0-9ACD-5A4400F66CC2",
+              "324C38BD-0B51-4E4D-BD75-200DA0C8177F",
+              "85AEAA44-413B-4DC1-AF09-ADE15892730A",
+              "F674862D-AC70-48ca-B73E-64A22F3BAC44",
+              "5D5F73AF-BCE5-4161-9584-42A61AED0E48",
+              "3B658B41-BD96-4CD5-9123-EE0ADCE61ED8",
+              "2BB38A2-63EA-43C9-BADB-E0D186C590E9"
+            ]
+          },
+          "data": {
+            "type": "string",
+            "description": "Base64 encoded credential data."
+          }
+        }
+      },
+      "Ticket": {
+        "type": "object",
+        "properties": {
+          "jwt": {
+            "type": "string",
+            "description": "JSON Web Token."
+          }
+        }
+      },
+      "DPLicenseInfo": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "Type of the license.",
+            "example": 1,
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "licenses_deployed": {
+            "type": "integer",
+            "description": "Total number of license of particular type deployed.",
+            "example": 20
+          },
+          "licenses_used": {
+            "type": "integer",
+            "description": "Total number of license of particular type used.",
+            "example": 10
+          }
+        }
+      },
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "User's UID",
+            "example": "{11A53106-C0F5-4E49-B382-9AE23D941EF0}"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "User's display name.",
+            "example": "John Smith"
+          },
+          "type": {
+            "type": "integer",
+            "description": "User's account type.",
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "example": 2
+          },
+          "accountControl": {
+            "type": "integer",
+            "description": "User's account control bits.",
+            "example": 0
+          },
+          "locked": {
+            "type": "boolean",
+            "description": "True if user account is locked.",
+            "example": false
+          },
+          "licensed": {
+            "type": "boolean",
+            "description": "True if user holds DigitalPersona license.",
+            "example": true
+          }
+        }
+      },
+      "DPVariantData": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "Type of data value(s).",
+            "example": 3,
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Values of data. We assume all data has multivalued.",
+            "example": [
+              "administrator@digitalpersona.com",
+              "administrator@CrossMatch.com"
+            ]
+          }
+        }
+      },
+      "DPVariant": {
+        "type": "object",
+        "properties": {
+          "name ": {
+            "type": "string",
+            "description": "Variant name.",
+            "example": "upn"
+          },
+          "data": {
+            "description": "Variant data.",
+            "$ref": "#/components/schemas/DPVariantData"
+          }
+        }
+      },
+      "DPPSKCOutput": {
+        "type": "object",
+        "properties": {
+          "serial_number": {
+            "type": "string",
+            "description": "Serial number of hardware OTP token imported."
+          },
+          "error": {
+            "type": "integer",
+            "description": "Error occurred during OTP token import. The error is 0 if OTP token is imported successfully."
+          },
+          "error_text": {
+            "type": "string",
+            "description": "Error message if OTP token failed to import."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the error, for example “Access is denied” for access denied error.",
+            "example": "Access is denied."
+          },
+          "error_code": {
+            "type": "integer",
+            "description": "Error code returned by DigitalPersona Server, for example -2147024891 (0x80070005) for access denied error.",
+            "example": -2147024891
+          }
+        }
+      },
+      "ExecuteSearchBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to initiate search operation. This token is required for access control reason (to check if user has rights to perform a search in LDAP database).",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "baseDN": {
+            "type": "string",
+            "description": "A string that contains the distinguished name of the entry at which to start the search. This is optional parameter and if it set to null we will perform the search from default base. Default base for DigitalPersona AD Server will be domain server belongs to, for DigitalPersona LDS Server – base for our LDS partition.",
+            "example": "DC=maui,DC=com"
+          },
+          "scope": {
+            "type": "integer",
+            "description": "Specifies the scope of a directory search operation.",
+            "example": 2,
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "filter": {
+            "type": "string",
+            "description": "A string that specifies the search filter. Please check here https://msdn.microsoft.com/en-us/library/aa746475(v=vs.85).aspx to find more information about Search Filter Syntax.",
+            "example": "(&(objectClass=user)(objectCategory=person))"
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specifies list of LDAP attributes requested.",
+            "example": [
+              "cn",
+              "memberOf"
+            ]
+          },
+          "sort": {
+            "type": "string",
+            "description": "A string which specifies attribute name to perform result sorting for example “cn” will sort users search results based on “cn” attribute.",
+            "example": "cn"
+          }
+        }
+      },
+      "ExecuteSearchResponse": {
+        "type": "object",
+        "properties": {
+          "ExecuteSearchResult": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "PSKCImportBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to import PSKC data to DigitalPersona database. This token is required for access control reason and user must have rights to import the data.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "PSKCData": {
+            "type": "string",
+            "description": "A string that contains the content of PSKC file provided by OTP vendor in Base64Url encoded format."
+          },
+          "PSKCFileName": {
+            "type": "string",
+            "description": "A string that contains name PSKC file provided by OTP vendor. This name is required for audit purpose only."
+          },
+          "password": {
+            "type": "string",
+            "description": "A string which contains password which protects PSKC data. This parameter is optional and will required only if Encryption Based on Passphrase-Based Keys is used for data protection in PSKC (see topic 6.2 of RFC6030, https://tools.ietf.org/html/rfc6030 for details)."
+          },
+          "sharedKey": {
+            "type": "string",
+            "description": "A string which contains encoded value of Pre-Shared key for PSKC secrets. The format of the encoding is manufacturer depended and unknown. It is server responsibility to find out encoding format and decode the key. This parameter is optional and will required only if Encryption Based on Pre-Shared Keys is used for data protection in PSKC (see topic 6.1 of RFC6030, https://tools.ietf.org/html/rfc6030 for details)."
+          }
+        }
+      },
+      "PSKCImportResponse": {
+        "type": "object",
+        "properties": {
+          "PSKCImportResult": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DPPSKCOutput"
+            }
+          }
+        }
+      },
+      "GetServerSettingsBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to get settings from DigitalPersona Server. This token is required for access control reason and user must have rights to get settings. This parameter is optional and if set to null, settings will be queried anonymously.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User whom settings will be queried. User name will direct to particular DigitalPersona Server where information about this user saved. This parameter is optional and can be set to null. If set to null, we direct call to DigitalPersona Server where information about ticket owner is saved. If both user and ticket set to null, we direct call to DigitalPersona Server where DP WMC is installed.",
+            "$ref": "#/components/schemas/User"
+          },
+          "settings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of settings to query.",
+            "example": [
+              "LockoutThreshold",
+              "LockoutDuration"
+            ]
+          }
+        }
+      },
+      "GetServerSettingsResponse": {
+        "type": "object",
+        "properties": {
+          "GetServerSettingsResult": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DPVariant"
+            }
+          }
+        }
+      },
+      "SetServerSettingsBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to set settings to DigitalPersona Server. This token for access control reason to check if caller has rights to set those settings.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "type": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "example": 1,
+            "description": "Settings type."
+          },
+          "settings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DPVariant"
+            },
+            "description": "List of settings to set."
+          }
+        }
+      },
+      "GetLicenseInfoResponse": {
+        "type": "object",
+        "properties": {
+          "GetLicenseInfoResult": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DPLicenseInfo"
+            }
+          }
+        }
+      },
+      "GetUserRecoveryPasswordBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to get Recover Password from DigitalPersona Server. This token is required for access control reason and user must have rights to get Recovery Password.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User which Recovery Password is requested.",
+            "$ref": "#/components/schemas/User"
+          },
+          "encrypedPwd": {
+            "type": "string",
+            "description": "Recovery Password encrypted by user Recovery Key. This encrypted password is provided by our Cred Provider during Windows Logon recovery procedure.",
+            "example": "ADBGDTREDGYHTF"
+          }
+        }
+      },
+      "GetUserRecoveryPasswordResponse": {
+        "type": "object",
+        "properties": {
+          "GetUserRecoveryPasswordResult": {
+            "type": "string",
+            "example": "HGFDSERTYUITRE"
+          }
+        }
+      },
+      "AdminDeleteUserCredentialsBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to delete user credentials. This token is required for access control reason and user must have rights to reset user credentials.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User which credentials need to be deleted.",
+            "$ref": "#/components/schemas/User"
+          },
+          "credentials": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Credential"
+            },
+            "description": "Credentials need to be deleted. NOTE: data part of Credential object will be ignored and should be set to null."
+          }
+        }
+      },
+      "GetUserInfoBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to get user information. This token is required for access control reason and user must have rights to get user information.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User which credentials need to be deleted.",
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "GetUserInfoResponse": {
+        "type": "object",
+        "properties": {
+          "GetUserInfoResult": {
+            "$ref": "#/components/schemas/UserInfo"
+          }
+        }
+      },
+      "SetUserAccountControlBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to set Account Control bits. This token is required for access control reason and user must have rights to set Account Control.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User which Account Control needs to be modified.",
+            "$ref": "#/components/schemas/User"
+          },
+          "control": {
+            "type": "integer",
+            "description": "Account Control bits needs to be set.",
+            "example": 2
+          }
+        }
+      }
+    }
+  }
+}

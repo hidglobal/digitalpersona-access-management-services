@@ -18,6 +18,10 @@ WAPS can use any protocol the customer chooses for listening. However, it is imp
 
 WAPS can be hosted in any supported environment and developed using any Web development framework as long as the SP can communicate with it.  
 
+## Open API schemas
+
+Open API (Swagger) schemas are available [here](swagger/DPWebAUTH.json).
+
 ## IDPWebPolicy interface  
 
 The DigitalPersona Web Authentication Policy Service (WAPS) is implemented as a WCF service. The IDPWebPolicy interface has only one method, GetPolicyList(), as described in the next topic.  

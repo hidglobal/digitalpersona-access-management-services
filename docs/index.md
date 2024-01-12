@@ -28,3 +28,9 @@ Also, see the following topics:
 - [Web Smart Card Support](web-smart-card-support.html)
 - [Smart Card Data Format](smart-card-data-format.html)
 - [Custom Authentication Policies](custom-auth-policies.html)
+
+Open API (Swagger) schemas are available as well:
+
+* [Web Enrollment Services (WES)](swagger/DPWebEnroll.json)
+* [Web Authentication Service (WAS)](swagger/DPWebAUTH.json)
+* [Web Administration Service](swagger/DPWebAdmin.json)

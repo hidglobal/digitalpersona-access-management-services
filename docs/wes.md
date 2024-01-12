@@ -19,6 +19,10 @@ Web Enrollment features are accessed through the WES, implemented as a Web API. 
 
 A sample program is available [here](https://hidglobal.github.io/digitalpersona-native-api/docs/sample-applications.html), which provides a simple GUI-based application  illustrating the main features of the service provided through this API.  
 
+# Open API schemas
+
+Open API (Swagger) schemas are available [here](swagger/DPWebEnroll.json).
+
 # IDPWebEnroll interface  
 
 The IDPWebEnroll interface is a Windows Foundation Class (WCF) interface, and is described below.  
@@ -29,8 +33,7 @@ namespace WebServices.DPWebEnroll
 	[ServiceContract]
 	public interface IDPWebEnroll
 	{
-		/*
-		* Return information which credentials are enrolled for specific user
+		/* Return information which credentials are enrolled for specific user
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "GET",
@@ -38,8 +41,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate ="GetUserCredentials?user={userName}&type={userNameType}")]
 		Object GetUserCredentials(String userName, UInt16 userNameType);
-		/*
-		* Return credential specific public enrollment information
+
+		/* Return credential specific public enrollment information
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "GET",
@@ -47,8 +50,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate = "GetEnrollmentData?user={userName}&type={userNameType}&cred_id={credentialId}")]
 		String GetEnrollmentData(String userName, UInt16 userNameType, String credentialId);
-		/*
-		* Creates specific user
+
+		/* Creates specific user
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "PUT",
@@ -56,8 +59,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate = "CreateUser")]
 		void CreateUser(Ticket secOfficer, User user, String password);
-		/*
-		* Deletes specific user
+
+		/* Deletes specific user
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "DELETE",
@@ -65,8 +68,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate = "DeleteUser")]
 		void DeleteUser(Ticket secOfficer, User user);
-		/*
-		* Enroll specific credentials for specific user
+
+		/* Enroll specific credentials for specific user
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "PUT",
@@ -74,8 +77,8 @@ namespace WebServices.DPWebEnroll
 				BodyStyle = WebMessageBodyStyle.Wrapped,
 				UriTemplate = "EnrollUserCredentials")]
 		void EnrollUserCredentials(Ticket secOfficer, Ticket owner, Credential credential);
-		/*
-		* Delete specific credentials for specific user
+
+		/* Delete specific credentials for specific user
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "DELETE",
@@ -84,8 +87,7 @@ namespace WebServices.DPWebEnroll
 			UriTemplate = "DeleteUserCredentials")]
 		void DeleteUserCredentials(Ticket secOfficer, Ticket owner, Credential credential);
 
-		/*
-		* Enroll specific credentials for Non AD user without user authentication
+		/* Enroll specific credentials for Non AD user without user authentication
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "PUT",
@@ -93,8 +95,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate = "EnrollAltusUserCredentials")]
 		void EnrollAltusUserCredentials(Ticket secOfficer, User user, Credential credential);
-		/*
-		* Delete specific credentials for Non AD user without user authentication
+
+		/* Delete specific credentials for Non AD user without user authentication
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "DELETE",
@@ -102,8 +104,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate = "DeleteAltusUserCredentials")]
 		void DeleteAltusUserCredentials(Ticket secOfficer, User user, Credential credential);
-		/*
-		* Get specific attribute for specific user
+
+		/* Get specific attribute for specific user
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "POST",
@@ -111,8 +113,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate = "GetUserAttribute")]
 		Attribute GetUserAttribute(Ticket ticket, User user, String attributeName);
-		/*
-		* Put specific attribute to specific user
+
+		/* Put specific attribute to specific user
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "PUT",
@@ -121,8 +123,8 @@ namespace WebServices.DPWebEnroll
 			UriTemplate = "PutUserAttribute")]
 	void PutUserAttribute(Ticket ticket, User user, String attributeName,
 			AttributeAction action, Attribute attributeData);
-		/*
-		* Self Unlock user account
+
+		/* Self Unlock user account
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "POST",
@@ -130,8 +132,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate = "UnlockUser")]
 		void UnlockUser(User user, Credential credential);
-		/*
-		* Call for credential specific Custom Action.
+
+		/* Call for credential specific Custom Action.
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "POST",
@@ -139,8 +141,8 @@ namespace WebServices.DPWebEnroll
 			BodyStyle = WebMessageBodyStyle.Wrapped,
 			UriTemplate = "CustomAction")]
 		String CustomAction(Ticket ticket, User user, Credential credential, UInt16 actionId);
-		/*
-		*   Check if enrollment allowed for specific user
+
+		/* Check if enrollment allowed for specific user
 		*/
 		[OperationContract()]
 		[WebInvoke(Method = "POST",

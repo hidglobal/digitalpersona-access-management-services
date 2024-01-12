@@ -1,0 +1,879 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DigitalPersona Web Enrollment Service API",
+    "description": "The goal of DigitalPersona Web Enrollment Service (DP WES) is user enrollment.",
+    "version": "4.2.0"
+  },
+  "servers": [
+    {
+      "url": "/DPWebEnroll/DPWebEnrollService.svc"
+    }
+  ],
+  "paths": {
+    "/Ping": {
+      "get": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "Ping server",
+        "responses": {
+          "200": {
+            "description": "DigitalPersona Web Enrollment Service is running",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "{\"PingResult\": \"Running...\"}"
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetUserCredentials": {
+      "get": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "returns list of credentials enrolled by user",
+        "description": "GetUserCredentials method is utility method which allows caller to request list of credentials enrolled by particular user.",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Name of the user which credentials needs to be verified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "administrator@maui.com"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Format of username provided.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 6,
+              "enum": [
+                3,
+                6,
+                9
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns list of credentials enrolled by the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserCredentialsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetEnrollmentData": {
+      "get": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "returns credential enrollment specific data",
+        "description": "GetEnrollmentData method is utility method which allows caller to get some credential enrollment specific data. For example, Live Question authentication may require knowing which particular questions were enrolled.",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Name of the user which credential needs to be verified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "administrator@maui.com"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Format of username provided.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 6,
+              "enum": [
+                3,
+                6,
+                9
+              ]
+            }
+          },
+          {
+            "name": "cred_id",
+            "in": "query",
+            "description": "Unique ID of credential which data needs to be returned.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+              "enum": [
+                "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+                "D1A1F561-E14A-4699-9138-2EB523E132CC",
+                "8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05",
+                "B49E99C6-6C94-42DE-ACD7-FD6B415DF503",
+                "1F31360C-81C0-4EE0-9ACD-5A4400F66CC2",
+                "324C38BD-0B51-4E4D-BD75-200DA0C8177F",
+                "85AEAA44-413B-4DC1-AF09-ADE15892730A",
+                "F674862D-AC70-48ca-B73E-64A22F3BAC44",
+                "5D5F73AF-BCE5-4161-9584-42A61AED0E48",
+                "3B658B41-BD96-4CD5-9123-EE0ADCE61ED8",
+                "2BB38A2-63EA-43C9-BADB-E0D186C590E9"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns credential enrollment specific data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEnrollmentDataResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CreateUser": {
+      "put": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "creates user account in DigitalPersona LDS database",
+        "description": "CreateUser method creates user account in DigitalPersona LDS database. This method makes sense only if DP LDS is used as backend server. In DP AD user accounts are created in Active Directory and Administrator must use standard Active Directory tools to create it.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "user was successfully created",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/DeleteUser": {
+      "delete": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "deletes user account from DigitalPersona LDS database",
+        "description": "DeleteUser method deletes user account from DigitalPersona LDS database. This method makes sense only if DP LDS is used as backend server. In DP AD user account is deleted in Active Directory and Administrator should use standard Active Directory tools to do so.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "user was successfully deleted",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EnrollUserCredentials": {
+      "put": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "enrolls (or re-enrolls) specific credentials for specific user",
+        "description": "EnrollUserCredentials method enrolls (or re-enrolls) specific credentials for specific user and store credential data in DigitalPersona database.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollUserCredentialsBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "user credentials was successfully enrolled",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/DeleteUserCredentials": {
+      "delete": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "deletes (un-enrolls) specific credentials for specific user",
+        "description": "DeleteUserCredentials method deletes (un-enrolls) specific credentials for specific user and remove credential data from DigitalPersona database.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollUserCredentialsBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/EnrollAltusUserCredentials": {
+      "put": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "enrolls (or re-enrolls) specific credentials for specific non-AD user",
+        "description": "EnrollAltusUserCredentials method enrolls (or re-enrolls) specific credentials for specific user and store credential data in DigitalPersona LDS database. This method will work only for non-AD users and DP LDS backend Server. For AD users function will return Access Denied.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollAltusUserCredentialsBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "user credentials was successfully enrolled",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/DeleteAltusUserCredentials": {
+      "delete": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "deletes (un-enrolls) specific credentials for specific non-AD user",
+        "description": "DeleteAltusUserCredentials method deletes (un-enrolls) specific credentials for specific non-AD user and remove credential data from DigitalPersona LDS database. This method will work only for non-AD users and DP LDS backend Server. For AD users function will return Access Denied.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollAltusUserCredentialsBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "user credentials was successfully deleted",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetUserAttribute": {
+      "post": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "requests information about user",
+        "description": "GetUserAttribute method requests some public (biographic) information about user, like user surname, date of birth, e-mail address, etc.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUserAttributeBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns JSON representation of object of Attribute class",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserAttributeResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/PutUserAttribute": {
+      "put": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "writes, updates or clears specific attribute for specific user",
+        "description": "PutUserAttribute method writes, updates or clears specific public data (attribute) for specific user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutUserAttributeBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "attribute was successfully modified",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/UnlockUser": {
+      "post": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "performs self-unlocking currently locked user",
+        "description": "UnlockUser method performs self-unlocking currently locked user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnlockUserBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "user account was successfully unlocked",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CustomAction": {
+      "post": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "performs some specific custom action for specific credential",
+        "description": "CustomAction method allows to call some specific custom action for specific credential.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomActionBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "CustomAction may or may not return some data. This information is specific for particular credential.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomActionResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/IsEnrollmentAllowed": {
+      "post": {
+        "tags": [
+          "IDPWebEnroll"
+        ],
+        "summary": "IsEnrollmentAllowed",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IsEnrollmentAllowedBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Enrollment is allowed",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the user.",
+            "example": "administrator@maui.com"
+          },
+          "type": {
+            "type": "integer",
+            "description": "Form (or type) of username.",
+            "example": 6,
+            "enum": [
+              3,
+              6,
+              9
+            ]
+          }
+        }
+      },
+      "Credential": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "unique id (Guid) of credential",
+            "example": "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+            "enum": [
+              "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+              "D1A1F561-E14A-4699-9138-2EB523E132CC",
+              "8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05",
+              "B49E99C6-6C94-42DE-ACD7-FD6B415DF503",
+              "1F31360C-81C0-4EE0-9ACD-5A4400F66CC2",
+              "324C38BD-0B51-4E4D-BD75-200DA0C8177F",
+              "85AEAA44-413B-4DC1-AF09-ADE15892730A",
+              "F674862D-AC70-48ca-B73E-64A22F3BAC44",
+              "5D5F73AF-BCE5-4161-9584-42A61AED0E48",
+              "3B658B41-BD96-4CD5-9123-EE0ADCE61ED8",
+              "2BB38A2-63EA-43C9-BADB-E0D186C590E9"
+            ]
+          },
+          "data": {
+            "type": "string",
+            "description": "Base64 encoded credential data."
+          }
+        }
+      },
+      "Ticket": {
+        "type": "object",
+        "properties": {
+          "jwt": {
+            "type": "string",
+            "description": "JSON Web Token."
+          }
+        }
+      },
+      "Attribute": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "Type of the attribute.",
+            "example": 3,
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "values": {
+            "type": "array",
+            "description": "Attribute values.",
+            "items": {}
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the error, for example “Access is denied” for access denied error.",
+            "example": "Access is denied."
+          },
+          "error_code": {
+            "type": "integer",
+            "description": "Error code returned by DigitalPersona Server, for example -2147024891 (0x80070005) for access denied error.",
+            "example": -2147024891
+          }
+        }
+      },
+      "GetUserCredentialsResponse": {
+        "type": "object",
+        "properties": {
+          "GetUserCredentialsResult": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "GetEnrollmentDataResponse": {
+        "type": "object",
+        "properties": {
+          "GetEnrollmentDataResult": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUserBody": {
+        "type": "object",
+        "properties": {
+          "secOfficer": {
+            "description": "JSON Web Token of Security Officer.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User account needs to be created.",
+            "$ref": "#/components/schemas/User"
+          },
+          "password": {
+            "description": "String which represents initial password for newly created user account. We cannot create user accounts without setting initial. Password must satisfy password complexity policy set for LDS database otherwise call will fail.",
+            "type": "string"
+          }
+        }
+      },
+      "DeleteUserBody": {
+        "type": "object",
+        "properties": {
+          "secOfficer": {
+            "description": "JSON Web Token of Security Officer.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User account needs to be deleted.",
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "EnrollUserCredentialsBody": {
+        "type": "object",
+        "properties": {
+          "secOfficer": {
+            "description": "JSON Web Token of Security Officer.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "owner": {
+            "description": "JSON Web Token of the owner of credentials.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "credential": {
+            "description": "Credential to be enrolled.",
+            "$ref": "#/components/schemas/Credential"
+          }
+        }
+      },
+      "EnrollAltusUserCredentialsBody": {
+        "type": "object",
+        "properties": {
+          "secOfficer": {
+            "description": "JSON Web Token of Security Officer.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User which credentials needs to be enrolled.",
+            "$ref": "#/components/schemas/User"
+          },
+          "credential": {
+            "description": "Credential to be enrolled.",
+            "$ref": "#/components/schemas/Credential"
+          }
+        }
+      },
+      "GetUserAttributeBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of user who requests this information. This could be an attribute owner, Security Officer, Administrator or any user who has rights to read this information.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User which attribute is requested.",
+            "$ref": "#/components/schemas/User"
+          },
+          "attributeName": {
+            "description": "Name of the attribute requested.",
+            "type": "string"
+          }
+        }
+      },
+      "GetUserAttributeResponse": {
+        "type": "object",
+        "properties": {
+          "GetUserAttributeResult": {
+            "$ref": "#/components/schemas/Attribute"
+          }
+        }
+      },
+      "PutUserAttributeBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of user who requests attribute modification. This could be an attribute owner, Security Officer, Administrator, or any user who has rights to write this information.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User which attribute needs to be modified.",
+            "$ref": "#/components/schemas/User"
+          },
+          "attributeName": {
+            "description": "Name of the attribute needs to be modified. ",
+            "type": "string"
+          },
+          "action": {
+            "type": "integer",
+            "description": "Specifies action which could be taken with attribute.",
+            "example": 2,
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "attributeData": {
+            "description": "Attribute data needs to be written.",
+            "$ref": "#/components/schemas/Attribute"
+          }
+        }
+      },
+      "UnlockUserBody": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "description": "User which account needs to be unlocked.",
+            "$ref": "#/components/schemas/User"
+          },
+          "credential": {
+            "description": "A valid user credentials (we consider Live Questions credentials here) to be verified before account gets unlocked.",
+            "$ref": "#/components/schemas/Credential"
+          }
+        }
+      },
+      "CustomActionBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "schema": null,
+            "description": "JSON Web Token of the user who would like to initiate Custom Action. This token is required for access control reason (to check if user has rights to perform a particular Custom Action).",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "schema": null,
+            "$ref": "#/components/schemas/User"
+          },
+          "credential": {
+            "schema": null,
+            "description": "User to which credential custom action needs to be applied.",
+            "$ref": "#/components/schemas/Credential"
+          },
+          "actionId": {
+            "type": "integer",
+            "description": "ID of specific action needs to be applied. This ID is specific for each credential."
+          }
+        }
+      },
+      "CustomActionResponse": {
+        "type": "object",
+        "properties": {
+          "CustomActionResult": {
+            "type": "string"
+          }
+        }
+      },
+      "IsEnrollmentAllowedBody": {
+        "type": "object",
+        "properties": {
+          "secOfficer": {
+            "description": "JSON Web Token of security officer whose rights to be verified.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "description": "User whose credentials needs to be enrolled (modified).",
+            "$ref": "#/components/schemas/User"
+          },
+          "credentialId": {
+            "description": "Credential which needs to be enrolled. This parameter is for future use and is ignored now.",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

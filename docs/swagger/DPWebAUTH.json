@@ -1,0 +1,780 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DigitalPersona Web Authentication Service API",
+    "description": "The goal of DigitalPersona Web Authentication Service (DP WAS) is user authentication and identification.",
+    "version": "4.2.0"
+  },
+  "servers": [
+    {
+      "url": "/DPWebAuth/DPWebAuthService.svc"
+    }
+  ],
+  "paths": {
+    "/Ping": {
+      "get": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "Ping server",
+        "responses": {
+          "200": {
+            "description": "DigitalPersona Web Authentication Service is running",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "{\"PingResult\": \"Running...\"}"
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetUserCredentials": {
+      "get": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "returns list of credentials enrolled by user",
+        "description": "GetUserCredentials method is utility method which allows caller to request list of credentials enrolled by particular user.",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Name of the user which credentials needs to be verified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "administrator@maui.com"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Format of username provided.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 6,
+              "enum": [
+                3,
+                6,
+                9
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns list of credentials enrolled by the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserCredentialsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/GetEnrollmentData": {
+      "get": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "returns credential enrollment specific data",
+        "description": "GetEnrollmentData method is utility method which allows caller to get some credential enrollment specific data. For example, Live Question authentication may require knowing which particular questions were enrolled.",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Name of the user which credential needs to be verified.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "administrator@maui.com"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Format of username provided.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 6,
+              "enum": [
+                3,
+                6,
+                9
+              ]
+            }
+          },
+          {
+            "name": "cred_id",
+            "in": "query",
+            "description": "Unique ID of credential which data needs to be returned.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+              "enum": [
+                "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+                "D1A1F561-E14A-4699-9138-2EB523E132CC",
+                "8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05",
+                "B49E99C6-6C94-42DE-ACD7-FD6B415DF503",
+                "1F31360C-81C0-4EE0-9ACD-5A4400F66CC2",
+                "324C38BD-0B51-4E4D-BD75-200DA0C8177F",
+                "85AEAA44-413B-4DC1-AF09-ADE15892730A",
+                "F674862D-AC70-48ca-B73E-64A22F3BAC44",
+                "5D5F73AF-BCE5-4161-9584-42A61AED0E48",
+                "3B658B41-BD96-4CD5-9123-EE0ADCE61ED8",
+                "2BB38A2-63EA-43C9-BADB-E0D186C590E9"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns credential enrollment specific data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEnrollmentDataResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/IdentifyUser": {
+      "post": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "identifies user based on provided credential",
+        "description": "IdentifyUser method allows identify user based on provided credential. NOTE: Not all credentials support identification for example fingerprints are supporting identification but passwords are not.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "credential": {
+                    "$ref": "#/components/schemas/Credential"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns JSON Web Token for identified user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentifyUserResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AuthenticateUser": {
+      "post": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "authenticates user based on provided credential",
+        "description": "AuthenticateUser method allows authenticate user based on provided credential.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticateUserBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns JSON Web Token for authenticated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticateUserResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AuthenticateUserTicket": {
+      "post": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "authenticates user using previously issued ticket and provided credential",
+        "description": "AuthenticateUserTicket method allows authenticate user using previously issued ticket and provided credential.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticateUserTicketBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns JSON Web Token for authenticated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticateUserTicketResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CustomAction": {
+      "post": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "performs some specific custom action for specific credential",
+        "description": "CustomAction method allows to call some specific custom action for specific credential.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomActionBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "CustomAction may or may not return some data. This information is specific for particular credential.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomActionResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CreateUserAuthentication": {
+      "post": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "creates Extended Authentication operation",
+        "description": "CreateUserAuthentication creates Extended Authentication for specific user and specific credential.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserAuthenticationBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns unique extended authentication handle",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserAuthenticationResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CreateTicketAuthentication": {
+      "post": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "creates Extended Authentication based on existent Ticket",
+        "description": "CreateUserAuthentication creates Extended Authentication for specific user and specific authentication token (credential).",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTicketAuthenticationBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns unique extended authentication handle",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTicketAuthenticationResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ContinueAuthentication": {
+      "post": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "performs one step of Extended Authentication",
+        "description": "ContinueAuthentication performs one step of Extended Authentication. Extended Authentication would require handshake with two or even more steps so ContinueAuthentication could be called multiple times.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContinueAuthenticationBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns Extended Authentication Result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContinueAuthenticationResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/DestroyAuthentication": {
+      "delete": {
+        "tags": [
+          "IDPWebAuth"
+        ],
+        "summary": "destroys previously created Extended Authentication",
+        "description": "DestroyAuthentication destroys previously created Extended Authentication and clears all associated resources. NOTE: it is not necessary to call DestroyAuthentication, it will be automatically destroyed upon successful (or unsuccessful) completion.  Call DestroyAuthentication only if you want to stop authentication which is not completed yet.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "authId": {
+                    "type": "integer",
+                    "description": "Extended Authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication call."
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Extended Authentication is successfully destroyed",
+            "content": {}
+          },
+          "default": {
+            "description": "failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the user.",
+            "example": "administrator@maui.com"
+          },
+          "type": {
+            "type": "integer",
+            "description": "Form (or type) of username.",
+            "example": 6,
+            "enum": [
+              3,
+              6,
+              9
+            ]
+          }
+        }
+      },
+      "Credential": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique id (Guid) of credential.",
+            "example": "D1A1F561-E14A-4699-9138-2EB523E132CC",
+            "enum": [
+              "AC184A13-60AB-40e5-A514-E10F777EC2F9",
+              "D1A1F561-E14A-4699-9138-2EB523E132CC",
+              "8A6FCEC3-3C8A-40c2-8AC0-A039EC01BA05",
+              "B49E99C6-6C94-42DE-ACD7-FD6B415DF503",
+              "1F31360C-81C0-4EE0-9ACD-5A4400F66CC2",
+              "324C38BD-0B51-4E4D-BD75-200DA0C8177F",
+              "85AEAA44-413B-4DC1-AF09-ADE15892730A",
+              "F674862D-AC70-48ca-B73E-64A22F3BAC44",
+              "5D5F73AF-BCE5-4161-9584-42A61AED0E48",
+              "3B658B41-BD96-4CD5-9123-EE0ADCE61ED8",
+              "2BB38A2-63EA-43C9-BADB-E0D186C590E9"
+            ]
+          },
+          "data": {
+            "type": "string",
+            "description": "Base64 encoded credential data.",
+            "example": "YWFhQUFBMTIz"
+          }
+        }
+      },
+      "Ticket": {
+        "type": "object",
+        "properties": {
+          "jwt": {
+            "type": "string",
+            "description": "JSON Web Token."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the error, for example “Access is denied” for access denied error.",
+            "example": "Access is denied."
+          },
+          "error_code": {
+            "type": "integer",
+            "description": "Error code returned by DigitalPersona Server, for example -2147024891 (0x80070005) for access denied error.",
+            "example": -2147024891
+          }
+        }
+      },
+      "ExtendedAUTHResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "Status of Extended Authentication operation.",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "example": 2
+          },
+          "authData": {
+            "type": "string",
+            "description": "Authentication data returned by DigitalPersona server. This data would be required to proceed with authentication handshake. This is optional parameter and could be returned if operation status is Continue (handshake continuation is required)."
+          },
+          "jwt": {
+            "type": "string",
+            "description": "JSON Web Token returned by server upon successful authentication. This is optional parameter and should be returned if operation status is Completed (authentication handshake is suucessfuly completed)."
+          }
+        }
+      },
+      "GetUserCredentialsResponse": {
+        "type": "object",
+        "properties": {
+          "GetUserCredentialsResult": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "GetEnrollmentDataResponse": {
+        "type": "object",
+        "properties": {
+          "GetEnrollmentDataResult": {
+            "type": "string"
+          }
+        }
+      },
+      "IdentifyUserResponse": {
+        "type": "object",
+        "properties": {
+          "IdentifyUserResult": {
+            "$ref": "#/components/schemas/Ticket"
+          }
+        }
+      },
+      "AuthenticateUserBody": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "description": "User which credentials need to be authenticated.",
+            "$ref": "#/components/schemas/User"
+          },
+          "credential": {
+            "description": "User credentials need to be authenticated.",
+            "$ref": "#/components/schemas/Credential"
+          }
+        }
+      },
+      "AuthenticateUserResponse": {
+        "type": "object",
+        "properties": {
+          "AuthenticateUserResult": {
+            "$ref": "#/components/schemas/Ticket"
+          }
+        }
+      },
+      "AuthenticateUserTicketBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token previously issued by authentication authority.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "credential": {
+            "description": "User credentials need to be authenticated.",
+            "$ref": "#/components/schemas/Credential"
+          }
+        }
+      },
+      "AuthenticateUserTicketResponse": {
+        "type": "object",
+        "properties": {
+          "AuthenticateUserTicketResult": {
+            "$ref": "#/components/schemas/Ticket"
+          }
+        }
+      },
+      "CustomActionBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "description": "JSON Web Token of the user who would like to initiate Custom Action. This token is required for access control reason (to check if user has rights to perform a particular Custom Action).",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "credential": {
+            "description": "User to which credential custom action needs to be applied.",
+            "$ref": "#/components/schemas/Credential"
+          },
+          "actionId": {
+            "type": "integer",
+            "description": "ID of specific action needs to be applied. This ID is specific for each credential."
+          }
+        }
+      },
+      "CustomActionResponse": {
+        "type": "object",
+        "properties": {
+          "CustomActionResult": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUserAuthenticationBody": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "description": "User for whom extended authentication needs to be created.",
+            "$ref": "#/components/schemas/User"
+          },
+          "credentialId": {
+            "type": "string",
+            "description": "Credential ID of authentication token (credential) for which extended authentication needs to be created.",
+            "example": "AC184A13-60AB-40e5-A514-E10F777EC2F9"
+          }
+        }
+      },
+      "CreateUserAuthenticationResponse": {
+        "type": "object",
+        "properties": {
+          "CreateUserAuthenticationResponse": {
+            "type": "integer"
+          }
+        }
+      },
+      "CreateTicketAuthenticationBody": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "schema": null,
+            "description": "Ticket previously issued by authentication authority.",
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "credentialId": {
+            "type": "string",
+            "description": "Credential ID of authentication token (credential) for which extended authentication needs to be created.",
+            "example": "AC184A13-60AB-40e5-A514-E10F777EC2F9"
+          }
+        }
+      },
+      "CreateTicketAuthenticationResponse": {
+        "type": "object",
+        "properties": {
+          "CreateTicketAuthenticationResult": {
+            "type": "integer"
+          }
+        }
+      },
+      "ContinueAuthenticationBody": {
+        "type": "object",
+        "properties": {
+          "authId": {
+            "type": "integer",
+            "description": "Extended Authentication handle returned by CreateUserAuthentication or CreateTicketAuthentication call."
+          },
+          "authData": {
+            "type": "string",
+            "description": "Credential specific authentication data."
+          }
+        }
+      },
+      "ContinueAuthenticationResponse": {
+        "type": "object",
+        "properties": {
+          "ContinueAuthenticationResult": {
+            "$ref": "#/components/schemas/ExtendedAUTHResult"
+          }
+        }
+      }
+    }
+  }
+}
